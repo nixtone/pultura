@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained();
+            $table->integer('status')->default(1);
 
             $table->integer('stella_form')->default(0);
             $table->string('stella_size');
@@ -40,6 +41,7 @@ return new class extends Migration
             $table->text('delivery_point');
 
             $table->text('comment');
+            $table->date('deadline_date')->nullable();
 
             $table->timestamps();
         });

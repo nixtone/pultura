@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\OrderController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+Route::get('/', [OrderController::class, 'list'])->name('home');
+
+Route::name('order.')->group(function() {
+    Route::get('/order/create', [OrderController::class, 'create'])->name('create');
+    Route::get('/order/{order}', [OrderController::class, 'item'])->name('item');
+
 });
