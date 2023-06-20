@@ -1,0 +1,18 @@
+AddDefaultCharset UTF-8
+
+Options -Indexes
+ErrorDocument 404 /404
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteBase /
+	
+	# Единая точка входа
+	RewriteCond %{THE_REQUEST} ^(GET|HEAD)\ /index\.php
+	RewriteRule .* / [R=301,L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_URI} !\..+$
+	RewriteRule ^(.*)$ /index.php [L,QSA]
+	
+</IfModule>
