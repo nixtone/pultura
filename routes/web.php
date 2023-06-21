@@ -23,21 +23,26 @@ Route::get('/', [OrderController::class, 'list'])->name('home');
 
 // Заказы
 Route::name('order.')->group(function() {
-    Route::get('/order/create', [OrderController::class, 'create'])->name('create');
+    Route::get('/order/new', [OrderController::class, 'create'])->name('create');
+    Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('edit');
     Route::get('/order/{order}', [OrderController::class, 'item'])->name('item');
 });
 
 // Клиенты
 Route::name('client.')->group(function() {
     Route::get('/client', [ClientController::class, 'list'])->name('list');
-    Route::get('/client/create', [ClientController::class, 'create'])->name('create');
+    Route::get('/client/new', [ClientController::class, 'create'])->name('create');
     Route::get('/client/{client}', [ClientController::class, 'item'])->name('item');
+    Route::get('/client/{client}/edit', [ClientController::class, 'edit'])->name('edit');
+    Route::patch('/client/{client}/update', [ClientController::class, 'update'])->name('update');
+    Route::post('/client/store', [ClientController::class, 'store'])->name('store');
+    Route::delete('/client/{client}/delete', [ClientController::class, 'destroy'])->name('delete');
 });
 
 // Услуги и наименования
 Route::name('product.')->group(function() {
     Route::get('/product', [ProductController::class, 'list'])->name('list');
-    Route::get('/product/create', [ProductController::class, 'create'])->name('create');
+    Route::get('/product/new', [ProductController::class, 'create'])->name('create');
     Route::get('/product/{product}', [ProductController::class, 'item'])->name('item');
 });
 

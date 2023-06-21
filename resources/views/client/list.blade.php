@@ -14,10 +14,12 @@
             <th>Телефон</th>
             <th>E-mail</th>
             <th>Адрес</th>
+            <th></th>
+            <th></th>
         </tr>
         @if($clientList->isEmpty())
         <tr>
-            <td colspan="5" style="text-align: center">Клиентов нет</td>
+            <td colspan="7" style="text-align: center">Клиентов нет</td>
         </tr>
         @else
         @foreach($clientList as $client)
@@ -26,6 +28,14 @@
             <td>{{ $client->phone }}</td>
             <td>{{ $client->email }}</td>
             <td>{{ $client->addr }}</td>
+            <td><a href="{{ route('client.edit', $client->id) }}" class="btn">Редактировать</a></td>
+            <td>
+                <form action="{{ route('client.delete', $client->id) }}" method="post">
+                    @csrf
+                    @method('delete')
+                    <input type="submit" value="Удалить" class="btn">
+                </form>
+            </td>
         </tr>
         @endforeach
         @endif

@@ -50,6 +50,10 @@ a:hover {
 	text-decoration: underline;
 }
 
+.err {
+    color: #ff0000;
+}
+
 .overlay {
     position: fixed;
     top: 0;
@@ -157,14 +161,15 @@ form .field_area:first-child {
 }
 
 .btn {
-	padding: 7px 10px 9px;
-	display: block;
-	text-decoration: none;
-	background: #dcf0e7;
-	border-radius: 2px;
-	border: 0;
-	cursor: pointer;
-	transition: .3s;
+    padding: 7px 10px 9px;
+    display: block;
+    text-decoration: none;
+    background: #dcf0e7;
+    border-radius: 2px;
+    border: 0;
+    cursor: pointer;
+    transition: .3s;
+    text-align: center;
 }
 .btn:hover {
 	background: #b8dfcd;
@@ -195,10 +200,11 @@ table.list tr:nth-child(odd) {
 table.list tr:hover {
 	background: #dcf0e7;
 }
-table.list td,
-table.list th {
-	padding: 10px;
-	box-sizing: border-box;
+table.list td, table.list th {
+    padding: 10px;
+    box-sizing: border-box;
+    border-left: 1px solid #dddbdb;
+    border-right: 1px solid #dddbdb;
 }
 
 /* БЭМ */

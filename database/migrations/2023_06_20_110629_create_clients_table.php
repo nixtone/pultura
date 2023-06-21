@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone')->unique();
-            $table->string('email');
-            $table->text('addr');
-            $table->text('comment');
+            $table->string('email')->default('');
+            $table->text('addr')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }
