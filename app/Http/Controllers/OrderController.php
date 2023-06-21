@@ -8,12 +8,12 @@ use App\Models\Order;
 class OrderController extends Controller
 {
     public function list() {
+        // TODO: вывод в обратном порядке
         $orderList = Order::all();
         return view('order.list', compact('orderList'));
     }
 
     public function item(Order $order) {
-        // $order = Order::find($id);
         return view('order.item', compact('order'));
     }
 

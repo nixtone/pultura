@@ -1,6 +1,6 @@
 @extends('design')
 
-@section('title', 'или наименование или услуга')
+@section('title', 'тиу: '.$product->name)
 @section('content')
 
 @endsection

@@ -1,24 +1,50 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/ico" href="{{ asset('favicon.ico') }}">
-    <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{ asset('static/custom.css') }}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="icon" type="image/ico" href="{{ asset('/favicon.ico') }}">
+<title>@yield('title')</title>
+<link rel="stylesheet" href="{{ asset('/static/custom.css') }}">
+<style>
+@font-face {
+    font-family: 'Open Sans';
+    src: url('{{ asset('/static/opensans/OpenSans-Extrabold.woff2') }}') format('woff2'),
+    url('{{ asset('/static/opensans/OpenSans-Extrabold.woff') }}') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Open Sans';
+    src: url('{{ asset('/static/opensans/OpenSans-Bold.woff2') }}') format('woff2'),
+    url('{{ asset('/static/opensans/OpenSans-Bold.woff') }}') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Open Sans';
+    src: url('{{ asset('/static/opensans/OpenSans.woff2') }}') format('woff2'),
+    url('{{ asset('/static/opensans/OpenSans.woff') }}') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+</style>
 </head>
 <body>
 <div id="wrapper">
 
     <header>
         <div class="container">
-            <a href="{{ route('home') }}" id="logo"><img src="{{ asset('static/images/logo.png') }}" alt="" class="bimg" style="width: 36px;"></a>
+            <a href="{{ route('home') }}" id="logo"><img src="{{ asset('/static/images/logo.png') }}" alt="" class="bimg" style="width: 36px;"></a>
             <nav>
-                <a href="/" class="active">Заказы</a>
-                <a href="/client-list">Клиенты</a>
-                <a href="/product-list">Услуги и наименования</a>
-                <a href="/personal">Сотрудники</a>
+                <a href="{{ route('home') }}" class="active">Заказы</a>
+                <a href="{{ route('client.list') }}">Клиенты</a>
+                <a href="{{ route('product.list') }}">Услуги и наименования</a>
+                <a href="">Сотрудники</a>
             </nav>
         </div>
     </header>
@@ -60,8 +86,8 @@
     </div>
 </div>
 
-<script src="{{ asset('static/jquery-3.6.0.min.js') }}"></script>
-<script src="{{ asset('static/jquery.maskedinput.min.js') }}"></script>
-<script src="{{ asset('static/custom.js') }}"></script>
+<script src="{{ asset('/static/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('/static/jquery.maskedinput.min.js') }}"></script>
+<script src="{{ asset('/static/custom.js') }}"></script>
 </body>
 </html>
