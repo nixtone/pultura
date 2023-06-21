@@ -1,5 +1,6 @@
 https://каменная-чаша.рф/
 
+Laravel v10.13.5
 ----
 # Страницы
 
@@ -29,8 +30,8 @@ https://каменная-чаша.рф/
 - id
 - name
 - price
-- type (int) товар или услуга
-- category_id
+- type (int) 1товар или 2услуга
+- product_category_id
 
 # client
 - id
@@ -43,12 +44,13 @@ https://каменная-чаша.рф/
 # order
 - id
 - client_id
+- status (int) 1принят 2выполняется 3готов
 
 - stella_forma (int) модель1, модель2
 - stella_size (string) размер стеллы
 - material (int) 1гранит, 2мрамор, 3стекло
 - portrait (int) 1по плечи, 2по пояс, 3рост
-- portrait_sizes (string) 30x40, 30x20, 35x25
+- portrait_size (string) 30x40, 30x20, 35x25
 
 - fullname (string)
 - birth_date (date)
@@ -65,10 +67,11 @@ https://каменная-чаша.рф/
 - bird (int)
 - tombstone (int)
 
-- delivery (int)
-- delivery_point (string)
+- delivery_km (int)
+- delivery_point (text)
 
-- comment (string) комментарий к заказу
+- comment (text) комментарий к заказу
+- deadline_date (date)
 
 # order_pay
 - id
