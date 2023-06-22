@@ -26,6 +26,7 @@ Route::name('order.')->group(function() {
     Route::get('/order/new', [OrderController::class, 'create'])->name('create');
     Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('edit');
     Route::get('/order/{order}', [OrderController::class, 'item'])->name('item');
+    Route::post('/order/store', [OrderController::class, 'store'])->name('store');
 });
 
 // Клиенты

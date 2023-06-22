@@ -3,28 +3,30 @@
 @section('title', 'Новый заказ')
 @section('content')
 <div id="order" class="new block">
-
     <div class="inner">
-        <form method="post">
-
+        <form action="{{ route('order.store') }}" method="post">
+            @csrf
             <div class="field_group user_choose">
                 <h2>Клиент</h2>
 
+{{--
+                @error('status_id') <span class="err">{{ $message }}</span> @enderror
+                <input type="hidden" name="status_id" value="1">
+--}}
                 <div class="field_area inline">
                     <input type="radio" name="choose_client" id="choose_client1" value="1" checked>
                     <label for="choose_client1">Новый</label>
                 </div>
                 <div class="row c1 active">
                     <div class="field_area">
-                        <label for="client_name">Имя</label>
-                        <input type="text" name="name" id="client_name" class="field">
+                        <label for="client_name">Имя @error('name') <span class="err">{{ $message }}</span>@enderror</label>
+                        <input type="text" name="name" id="client_name" class="field" value="{{ old('name') }}">
                     </div>
                     <div class="field_area">
-                        <label for="client_phone">Телефон</label>
-                        <input type="text" name="phone" id="client_phone" class="field phonemask">
+                        <label for="client_phone">Телефон @error('phone') <span class="err">{{ $message }}</span>@enderror</label>
+                        <input type="text" name="phone" id="client_phone" class="field phonemask" value="{{ old('phone') }}">
                     </div>
                 </div>
-
                 <div class="field_area inline">
                     <input type="radio" name="choose_client" id="choose_client2" value="2">
                     <label for="choose_client2">Зарегестированный</label>
@@ -32,16 +34,15 @@
                 <div class="row c2">
                     <div class="field_area">
                         <select name="client_id" class="field">
-                            <option value=""></option>
-                            <option value="">Петров Юрий Васильевич +7 (950) 123-45-67</option>
-                            <option value="">Садовский Антон Григорьевич +7 (950) 123-45-67</option>
-                            <option value="">Пень Юлия Климентьевна +7 (950) 123-45-67</option>
+                            <option value="0"></option>
+                            @foreach($clientList as $client)
+                            <option value="{{ $client->id }}">{{ $client->name }} / {{ $client->phone }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
-
             </div>
-
+            {{--
             <div class="field_group">
                 <h2>Характеристики памятника</h2>
                 <div class="field_area inline">
@@ -81,6 +82,7 @@
                     </select>
                 </div>
             </div>
+            --}}
 
             <div class="field_group">
                 <h2>Текст для памятника</h2>
@@ -98,11 +100,11 @@
                     <input type="text" name="fathername" id="fathername" class="field">
                 </div>
                 <div class="field_area">
-                    <label for="birth_date">Дата рождения (день.месяц.год)</label>
+                    <label for="birth_date">Дата рождения (дд.мм.гггг)</label>
                     <input type="text" name="birth_date" id="birth_date" class="field datemask">
                 </div>
                 <div class="field_area">
-                    <label for="death_date">Дата смерти (день.месяц.год)</label>
+                    <label for="death_date">Дата смерти (дд.мм.гггг)</label>
                     <input type="text" name="death_date" id="death_date" class="field datemask">
                 </div>
                 <!-- <div class="advice">Если фокус стоит на выпадающем списке, можно выбирать его пукты стрелками ↑↓</div> -->
@@ -112,6 +114,7 @@
                 </div>
             </div>
 
+            {{--
             <div class="field_group">
                 <h2>Украшения</h2>
                 <div class="field_area inline">
@@ -187,6 +190,7 @@
                     </table>
                 </div>
             </div>
+            --}}
 
             <!-- div.field_area>label -->
 

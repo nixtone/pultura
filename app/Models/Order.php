@@ -9,6 +9,8 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $guarded = false;
+
     /*
     protected $appends = [
         'statusLabel'

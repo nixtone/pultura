@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    
+
     // Маска телефона
     $(".phonemask").mask("+7 (999) 999-99-99").on('click', function (e) {
         var caret = e.target.selectionStart;
@@ -34,7 +34,7 @@ $(document).ready(function() {
         $(this).addClass('active').siblings().removeClass('active');
     });
 
-    // 
+    //
     $(".field_group.user_choose input[name='choose_client']").click(function(event) {
         // console.log($(this).val());
         // $(".field_group.user_choose .row").removeClass('active');

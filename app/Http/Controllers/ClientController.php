@@ -10,7 +10,7 @@ use App\Http\Requests\ClientRequest;
 class ClientController extends Controller
 {
     public function list() {
-        $clientList = Client::all();
+        $clientList = Client::all()->reverse();
         return view('client.list', compact('clientList'));
     }
 

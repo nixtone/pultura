@@ -17,15 +17,15 @@ return new class extends Migration
             $table->foreignId('status_id')->constrained()->default(1);
 
             $table->integer('stella_form')->default(0);
-            $table->string('stella_size');
+            $table->string('stella_size')->nullable();
             $table->integer('material')->default(0);
             $table->integer('portrait')->default(0);
-            $table->string('portrait_size');
+            $table->string('portrait_size')->nullable();
 
-            $table->string('fullname');
+            $table->string('fullname')->nullable();
             $table->date('birth_date')->nullable();
             $table->date('death_date')->nullable();
-            $table->string('epitafia');
+            $table->string('epitafia')->nullable();
 
             $table->integer('crescent')->default(0);
             $table->integer('cross')->default(0);
@@ -38,9 +38,9 @@ return new class extends Migration
             $table->integer('tombstone')->default(0);
 
             $table->integer('delivery_km')->default(0);
-            $table->text('delivery_point');
+            $table->text('delivery_point')->nullable();
 
-            $table->text('comment');
+            $table->text('comment')->nullable();
             $table->date('deadline_date')->nullable();
 
             $table->timestamps();

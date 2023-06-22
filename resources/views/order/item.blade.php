@@ -9,6 +9,13 @@
         <input type="submit" value="Печать" onClick="window.print()" class="btn">
     </div> -->
 
+
+    @include('client.inc.item', ['client' => $order->client])
+
+    {{ dump($order) }}
+
+
+    {{--
     <div>
         <p>Имя клиента: <a href="/client-item">Стрельбицкая Жанна Олеговна</a></p>
         <p>Монтажные работы (чьи, где): кл. Песчаная Глинка</p>
@@ -100,7 +107,7 @@
             <td class="td">Аванс</td>
         </tr>
     </table>
-
+    --}}
 </div>
 
 @endsection

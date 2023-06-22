@@ -188,8 +188,9 @@ table {
 	width: 100%;
 }
 table.list {
-	border-bottom: 2px solid #d4d9e1;
-	border-collapse: collapse;
+    border-bottom: 2px solid #d4d9e1;
+    border-collapse: collapse;
+    margin: 15px 0;
 }
 table.list th {
 	background: #d4d9e1;
@@ -205,6 +206,29 @@ table.list td, table.list th {
     box-sizing: border-box;
     border-left: 1px solid #dddbdb;
     border-right: 1px solid #dddbdb;
+}
+table.list .tac {
+    text-align: center;
+}
+
+.ico {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    opacity: 0.3;
+    transition: .3s;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+}
+.ico:hover {
+    opacity: 0.8;
+}
+.edit.ico {
+    background: url(/static/images/edit.png);
+}
+.delete.ico {
+    background: url(/static/images/delete.png);
 }
 
 /* БЭМ */
