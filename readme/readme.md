@@ -20,6 +20,15 @@ Laravel v10.13.5
 
 
 ----
+# Статусы
+
+Принят
+Выполняется
+Готов
+Отказ
+Остановлен
+
+----
 # БД
 
 # product_category
@@ -78,3 +87,18 @@ Laravel v10.13.5
 - pay (float)
 - order_id (int)
 - comment (string)
+
+# status
+- id
+- name
+- color
+
+# users
+- id
+- name
+- email
+- email_verified_at
+- password
+- remember_token
+- user_group
+
