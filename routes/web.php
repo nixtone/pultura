@@ -3,8 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PayController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,31 +23,53 @@ use App\Http\Controllers\ProductController;
 
 
 Route::get('/', [OrderController::class, 'list'])->name('home');
+Route::view('/help', 'help')->name('help');
 
 // Заказы
-Route::name('order.')->group(function() {
-    Route::get('/order/new', [OrderController::class, 'create'])->name('create');
-    Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('edit');
-    Route::get('/order/{order}', [OrderController::class, 'item'])->name('item');
-    Route::post('/order/store', [OrderController::class, 'store'])->name('store');
+// TODO: добавить механизм обновления
+Route::name('order.')->prefix('order')->group(function() {
+    Route::get('/new', [OrderController::class, 'create'])->name('create');
+    Route::get('/edit/{order}', [OrderController::class, 'edit'])->name('edit');
+    Route::get('/{order}', [OrderController::class, 'item'])->name('item');
+    Route::post('/store', [OrderController::class, 'store'])->name('store');
+});
+
+// Платежи
+Route::name('pay.')->prefix('pay')->group(function() {
+    Route::get('/new/{order}', [PayController::class, 'create'])->name('create');
+    Route::get('/edit/{pay}', [PayController::class, 'edit'])->name('edit');
+    // TODO: добавить механизм обновления
+    Route::patch('/update/{pay}', [PayController::class, 'update'])->name('update');
+    Route::get('/store', [PayController::class, 'store'])->name('store');
 });
 
 // Клиенты
-Route::name('client.')->group(function() {
-    Route::get('/client', [ClientController::class, 'list'])->name('list');
-    Route::get('/client/new', [ClientController::class, 'create'])->name('create');
-    Route::get('/client/{client}', [ClientController::class, 'item'])->name('item');
-    Route::get('/client/{client}/edit', [ClientController::class, 'edit'])->name('edit');
-    Route::patch('/client/{client}/update', [ClientController::class, 'update'])->name('update');
-    Route::post('/client/store', [ClientController::class, 'store'])->name('store');
-    Route::delete('/client/{client}/delete', [ClientController::class, 'destroy'])->name('delete');
+Route::name('client.')->prefix('client')->group(function() {
+    Route::get('/', [ClientController::class, 'list'])->name('list');
+    Route::get('/new', [ClientController::class, 'create'])->name('create');
+    Route::get('/{client}', [ClientController::class, 'item'])->name('item');
+    Route::get('/edit/{client}', [ClientController::class, 'edit'])->name('edit');
+    Route::patch('/update/{client}', [ClientController::class, 'update'])->name('update');
+    Route::post('/store', [ClientController::class, 'store'])->name('store');
+    Route::delete('/delete/{client}', [ClientController::class, 'destroy'])->name('delete');
 });
 
-// Услуги и наименования
-Route::name('product.')->group(function() {
-    Route::get('/product', [ProductController::class, 'list'])->name('list');
-    Route::get('/product/new', [ProductController::class, 'create'])->name('create');
-    Route::get('/product/{product}', [ProductController::class, 'item'])->name('item');
+// Каталог
+Route::name('catalog.')->prefix('catalog')->group(function() {
+    // Категории
+    Route::get('/', [CategoryController::class, 'list'])->name('category.list');
+    Route::get('/category/new', [CategoryController::class, 'create'])->name('category.new');
+    Route::get('/category/{category}', [CategoryController::class, 'item'])->name('category.item');
+    Route::get('category/edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
+
+    // Товары
+    Route::name('product.')->prefix('product')->group(function() {
+        Route::get('/new', [ProductController::class, 'create'])->name('create');
+        Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('edit');
+    });
 });
 
 // Сотрудники
+Route::name('personal.')->prefix('personal')->group(function() {
+    Route::get('/', [UserController::class, 'list'])->name('list');
+});

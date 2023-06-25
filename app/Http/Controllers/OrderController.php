@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Order;
 use App\Models\Client;
+use App\Models\Pay;
 use App\Http\Requests\OrderRequest;
 
 class OrderController extends Controller
@@ -54,14 +55,34 @@ class OrderController extends Controller
             ]);
             $client_id = $newClient->id;
         }
+
         // Стандартная валидация
         $data = $request->validated();
-        // Формируем массив заказа
+
+        // Формируем данные заказа
         $data['status_id'] = 1;
         $data['client_id'] = $client_id;
-        $data['fullname'] = implode(" ", [$request->lastname, $request->firstname, $request->fathername]);
+        //
+        $data['fullname'] = $request->lastname;
+        $data['fullname'] = $request->firstname;
+        $data['fullname'] = $request->fathername;
+        if($request->birth_date) $data['birth_date'] = date("Y-m-d", strtotime($request->birth_date));
+        if($request->death_date) $data['death_date'] = date("Y-m-d", strtotime($request->death_date));
+        $data['epitafia'] = $request->epitafia;
+
         // Создаем заказ
         $newOrder = Order::create($data);
+
+        // Прием оплаты
+        if($request->pay_amount) {
+            Pay::create([
+                'amount' => $request->pay_amount,
+                'order_id' => $newOrder->id,
+                'comment' => $request->pay_comment,
+            ]);
+        }
+
+        // На страницу заказа
         return redirect()->route('order.item', $newOrder->id);
     }
 

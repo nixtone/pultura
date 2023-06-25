@@ -19,7 +19,23 @@ $(document).ready(function() {
         }
     });
     // Маска даты
-    $(".datemask").mask('99.99.9999');
+    $(".datemask").mask('99.99.9999').on('click', function (e) {
+        var caret = e.target.selectionStart;
+        var text = $(this).val();
+        var lastChar = text.indexOf('_');
+        if (lastChar < caret && lastChar !== -1) {
+            $(this).caret(lastChar);
+        }
+    }).on('keydown', function (e) {
+        if (e.keyCode === 39 || e.keyCode === 37) {
+            var caret = e.target.selectionStart;
+            var text = $(this).val();
+            var lastChar = text.indexOf('_');
+            if (lastChar <= caret && lastChar !== -1) {
+                $(this).caret(lastChar - 1);
+            }
+        }
+    });
 
     // Попап
     $(".cpp").click(function(event) {
@@ -41,6 +57,14 @@ $(document).ready(function() {
         $(".field_group.user_choose .row").removeClass('active').parent().find(".row.c" + $(this).val()).addClass('active');
     });
 
+    /*
+    $(".delete").click(function(event) {
+        event.preventDefault();
+        if(confirm("Точно удаляем?")) {
+            $(this).trigger('click');
+        }
+    });
+    */
 
     // Цена с пробелами
     function priceFormat(number, decimals = 0, dec_point = '', thousands_sep = ' ') {  // Format a number with grouped thousands

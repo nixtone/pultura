@@ -9,11 +9,52 @@
         <input type="submit" value="Печать" onClick="window.print()" class="btn">
     </div> -->
 
-
+    <h2>Клиент: {{ $order->client->name }}</h2>
     @include('client.inc.item', ['client' => $order->client])
 
-    {{ dump($order) }}
+    <h2>Текст для памятника</h2>
+    <table class="list">
+        <tr>
+            <th>ФИО</th>
+            <th>Дата рождения</th>
+            <th>Дата смерти</th>
+            <th>Эпитафия</th>
+        </tr>
+        <tr>
+            <td>{{ $order->fullname }}</td>
+            <td>{{ $order->birth_date }}</td>
+            <td>{{ $order->death_date }}</td>
+            <td>{{ $order->epitafia }}</td>
+        </tr>
+    </table>
 
+    <h2>Внесенные платежи</h2>
+    <table class="list">
+        <tr>
+            <th>Сумма</th>
+            <th>Комментрий</th>
+            <th>Внесено</th>
+            <th colspan="2"><a href="{{ route('pay.create', $order->id) }}" class="btn new">Добавить</a></th>
+        </tr>
+        @if($order->pay->isEmpty())
+        <tr>
+            <td colspan="5" class="tac">Отсутствуют</td>
+        </tr>
+        @else
+        @foreach($order->pay as $pay)
+        <tr>
+            <td class="tac">{{ $pay->amount }}</td>
+            <td>{{ $pay->comment }}</td>
+            <td class="tac">{{ $pay->created_at }}</td>
+            <td class="tac"><a href="{{ route('pay.edit', $pay->id) }}" class="edit ico"></a></td>
+            <td class="tac"><a href="" class="delete ico"></a></td>
+        </tr>
+        @endforeach
+        <tr>
+            <td colspan="5">Итого: 5300 (Погашено)</td>
+        </tr>
+        @endif
+    </table>
 
     {{--
     <div>

@@ -1,6 +1,30 @@
 @extends('design')
 
-@section('title', 'Новое наименование или услуга')
+@section('title', 'Новый товар')
 @section('content')
-
+<div class="block">
+{{--    {{ dd($categoryList) }}--}}
+    <form action="" method="post">
+        @csrf
+        <div class="field_area">
+            <label for="name">Название</label>
+            <input type="text" name="name" id="name" class="field">
+        </div>
+        <div class="field_area">
+            <label for="price">Цена</label>
+            <input type="text" name="price" id="price" class="field">
+        </div>
+        <div class="field_area">
+            <label for="category_id">Категория</label>
+            <select name="category_id" id="category_id" class="field">
+                @foreach($categoryList as $cat)
+                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="field_area">
+            <input type="submit" value="Создать товар" class="btn">
+        </div>
+    </form>
+</div>
 @endsection

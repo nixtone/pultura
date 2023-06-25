@@ -35,6 +35,7 @@ class ClientRequest extends FormRequest
         return [
             'name.required' => 'обязательно для заполнения',
             'phone.required' => 'обязательно для заполнения',
+            //'phone.unique' => 'клиент с таким номером уже существует',
         ];
     }
 }

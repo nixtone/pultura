@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_pays', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->float('pay');
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->text('comment');
+            $table->string('name')->unique();
+            $table->foreignId('parent_id')->nullable()->constrained()->on('categories')->references('id');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_pays');
+        Schema::dropIfExists('categories');
     }
 };

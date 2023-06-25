@@ -43,9 +43,14 @@
             <nav>
                 <a href="{{ route('home') }}" class="active">Заказы</a>
                 <a href="{{ route('client.list') }}">Клиенты</a>
-                <a href="{{ route('product.list') }}">Услуги и наименования</a>
-                <a href="">Сотрудники</a>
+                <a href="{{ route('catalog.category.list') }}">Каталог</a>
+                <a href="{{ route('personal.list') }}">Сотрудники</a>
+                <a href="{{ route('help') }}">Справка</a>
             </nav>
+            <div class="user_area">
+                <a href="" class="name">Хайдар</a>
+                <a href="" class="exit">Выход</a>
+            </div>
         </div>
     </header>
 
@@ -56,7 +61,7 @@
 
 </div>
 <footer>
-    <div class="container">&copy; CRM памятники <?=date('Y')?></div>
+    <div class="container">CRM <?=date('Y')?></div>
 </footer>
 
 <div class="overlay" style="display: none;">

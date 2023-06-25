@@ -100,12 +100,16 @@
                     <input type="text" name="fathername" id="fathername" class="field">
                 </div>
                 <div class="field_area">
-                    <label for="birth_date">Дата рождения (дд.мм.гггг)</label>
-                    <input type="text" name="birth_date" id="birth_date" class="field datemask">
-                </div>
-                <div class="field_area">
-                    <label for="death_date">Дата смерти (дд.мм.гггг)</label>
-                    <input type="text" name="death_date" id="death_date" class="field datemask">
+                    <table>
+                        <tr>
+                            <td><label for="birth_date">Дата рождения</label></td>
+                            <td><label for="death_date">Дата смерти</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="birth_date" id="birth_date" class="field datemask"></td>
+                            <td><input type="text" name="death_date" id="death_date" class="field datemask"></td>
+                        </tr>
+                    </table>
                 </div>
                 <!-- <div class="advice">Если фокус стоит на выпадающем списке, можно выбирать его пукты стрелками ↑↓</div> -->
                 <div class="field_area">
@@ -174,6 +178,7 @@
                     <label for="install">Установка</label>
                 </div>
             </div>
+            --}}
 
             <div class="field_group">
                 <h2>Платеж</h2>
@@ -190,7 +195,7 @@
                     </table>
                 </div>
             </div>
-            --}}
+
 
             <!-- div.field_area>label -->
 

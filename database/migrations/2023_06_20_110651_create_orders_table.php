@@ -22,7 +22,9 @@ return new class extends Migration
             $table->integer('portrait')->default(0);
             $table->string('portrait_size')->nullable();
 
-            $table->string('fullname')->nullable();
+            $table->string('lastname')->nullable();
+            $table->string('firstname')->nullable();
+            $table->string('fathername')->nullable();
             $table->date('birth_date')->nullable();
             $table->date('death_date')->nullable();
             $table->string('epitafia')->nullable();
