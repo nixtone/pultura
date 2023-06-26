@@ -234,12 +234,17 @@ table.list .tac {
 /* БЭМ */
 
 header .container {
-	background: #122b45;
-	padding: 10px 15px;
-	display: flex;
-	gap: 15px;
-	align-items: center;
-	margin-bottom: 15px;
+    background: #122b45;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+}
+header .col.c1 {
+    display: flex;
+    gap: 15px;
 }
 header nav {
 	display: flex;

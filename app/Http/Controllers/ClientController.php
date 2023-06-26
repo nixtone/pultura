@@ -36,9 +36,7 @@ class ClientController extends Controller
 
     public function update(ClientRequest $request, Client $client) {
         $data = $request->validated();
-        // dd($data);
         $client->update($data);
-
         return redirect()->route('client.item', $client->id);
     }
 

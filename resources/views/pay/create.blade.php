@@ -2,12 +2,18 @@
 
 @section('title', 'Новый платеж по заказу: '.$order)
 @section('content')
-    <div id="pay" class="list block">
-
-        <form action="">
-
-            <input type="submit" value="Добавить платеж к заказу: {{ $order }}">
-        </form>
-
-    </div>
+<div id="pay" class="list block">
+    <form action="{{ route('pay.store') }}" method="post">
+        @csrf
+        <div class="field_area">
+            <label for="amount">Сумма</label>
+            <input type="text" name="amount" id="amount" class="field">
+        </div>
+        <div class="field_area">
+            <label for="comment">Комментарий</label>
+            <textarea name="comment" id="comment" rows="3" class="field"></textarea>
+        </div>
+        <input type="submit" value="Добавить платеж" class="btn">
+    </form>
+</div>
 @endsection

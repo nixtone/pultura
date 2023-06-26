@@ -63,9 +63,9 @@ class OrderController extends Controller
         $data['status_id'] = 1;
         $data['client_id'] = $client_id;
         //
-        $data['fullname'] = $request->lastname;
-        $data['fullname'] = $request->firstname;
-        $data['fullname'] = $request->fathername;
+        $data['lastname'] = $request->lastname;
+        $data['firstname'] = $request->firstname;
+        $data['fathername'] = $request->fathername;
         if($request->birth_date) $data['birth_date'] = date("Y-m-d", strtotime($request->birth_date));
         if($request->death_date) $data['death_date'] = date("Y-m-d", strtotime($request->death_date));
         $data['epitafia'] = $request->epitafia;

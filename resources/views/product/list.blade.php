@@ -8,7 +8,7 @@
             <tr>
                 <th>Название</th>
                 <th>Цена</th>
-                <th colspan="2"><a href="{{ route('catalog.product.create') }}" class="btn new">Новый товар</a></th>
+                <th colspan="2"><a href="{{ route('catalog.product.create', $category) }}" class="btn new">Новый товар</a></th>
             </tr>
             @if($productList->isEmpty())
                 <tr>
@@ -21,7 +21,7 @@
                 <td>{{ $product->price }}</td>
                 <td class="tac"><a href="{{ route('catalog.product.edit', $product->id) }}" class="edit ico"></a></td>
                 <td class="tac">
-                    <form action="{{-- route('client.delete', $client->id) --}}" method="post">
+                    <form action="{{ route('catalog.product.delete', $product->id) }}" method="post">
                         @csrf
                         @method('delete')
                         <input type="submit" value="" class="delete ico">

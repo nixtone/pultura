@@ -8,12 +8,17 @@
             <th>Категория</th>
             <th colspan="2"><a href="{{ route('catalog.category.new') }}" class="btn new">Новая категория</a></th>
         </tr>
-        @foreach($catList as $cat)
+        @if($categoryList->isEmpty())
+            <tr>
+                <td colspan="4" style="text-align: center">Категорий нет</td>
+            </tr>
+        @else
+        @foreach($categoryList as $category)
         <tr>
-            <td><a href="{{ route('catalog.category.item', $cat->id) }}">{{ $cat->name }}</a></td>
-            <td class="tac"><a href="{{ route('catalog.category.edit', $cat->id) }}" class="edit ico"></a></td>
+            <td><a href="{{ route('catalog.category.item', $category->id) }}">{{ $category->name }}</a></td>
+            <td class="tac"><a href="{{ route('catalog.category.edit', $category->id) }}" class="edit ico"></a></td>
             <td class="tac">
-                <form action="{{-- route('client.delete', $client->id) --}}" method="post">
+                <form action="{{ route('catalog.category.delete', $category->id) }}" method="post">
                     @csrf
                     @method('delete')
                     <input type="submit" value="" class="delete ico">
@@ -21,6 +26,7 @@
             </td>
         </tr>
         @endforeach
+        @endif
     </table>
 
 @endsection

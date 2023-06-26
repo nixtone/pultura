@@ -58,14 +58,21 @@ Route::name('client.')->prefix('client')->group(function() {
 Route::name('catalog.')->prefix('catalog')->group(function() {
     // Категории
     Route::get('/', [CategoryController::class, 'list'])->name('category.list');
-    Route::get('/category/new', [CategoryController::class, 'create'])->name('category.new');
-    Route::get('/category/{category}', [CategoryController::class, 'item'])->name('category.item');
-    Route::get('category/edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
-
+    Route::name('category.')->prefix('category')->group(function() {
+        Route::get('/new', [CategoryController::class, 'create'])->name('new');
+        Route::get('/{category}', [CategoryController::class, 'item'])->name('item');
+        Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('edit');
+        Route::patch('/update/{category}', [CategoryController::class, 'update'])->name('update');
+        Route::post('/store', [CategoryController::class, 'store'])->name('store');
+        Route::delete('/delete/{category}', [CategoryController::class, 'destroy'])->name('delete');
+    });
     // Товары
     Route::name('product.')->prefix('product')->group(function() {
-        Route::get('/new', [ProductController::class, 'create'])->name('create');
+        Route::get('/new/{category}', [ProductController::class, 'create'])->name('create');
         Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('edit');
+        Route::patch('/update/{product}', [ProductController::class, 'update'])->name('update');
+        Route::post('/store', [ProductController::class, 'store'])->name('store');
+        Route::delete('/delete/{product}', [ProductController::class, 'destroy'])->name('delete');
     });
 });
 

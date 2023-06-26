@@ -3,8 +3,7 @@
 @section('title', 'Новый товар')
 @section('content')
 <div class="block">
-{{--    {{ dd($categoryList) }}--}}
-    <form action="" method="post">
+    <form action="{{ route('catalog.product.store') }}" method="post">
         @csrf
         <div class="field_area">
             <label for="name">Название</label>
@@ -18,7 +17,7 @@
             <label for="category_id">Категория</label>
             <select name="category_id" id="category_id" class="field">
                 @foreach($categoryList as $cat)
-                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                <option value="{{ $cat->id }}" @if($cat->id == $category->id) selected @endif>{{ $cat->name }}</option>
                 @endforeach
             </select>
         </div>

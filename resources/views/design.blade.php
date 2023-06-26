@@ -39,15 +39,17 @@
 
     <header>
         <div class="container">
-            <a href="{{ route('home') }}" id="logo"><img src="{{ asset('/static/images/logo.png') }}" alt="" class="bimg" style="width: 36px;"></a>
-            <nav>
-                <a href="{{ route('home') }}" class="active">Заказы</a>
-                <a href="{{ route('client.list') }}">Клиенты</a>
-                <a href="{{ route('catalog.category.list') }}">Каталог</a>
-                <a href="{{ route('personal.list') }}">Сотрудники</a>
-                <a href="{{ route('help') }}">Справка</a>
-            </nav>
-            <div class="user_area">
+            <div class="col c1">
+                <a href="{{ route('home') }}" id="logo"><img src="{{ asset('/static/images/logo.png') }}" alt="" class="bimg" style="width: 36px;"></a>
+                <nav>
+                    <a href="{{ route('home') }}" class="active1">Заказы</a>
+                    <a href="{{ route('client.list') }}">Клиенты</a>
+                    <a href="{{ route('catalog.category.list') }}">Каталог</a>
+                    <a href="{{ route('personal.list') }}">Сотрудники</a>
+                    <a href="{{ route('help') }}">Справка</a>
+                </nav>
+            </div>
+            <div class="user_area col c2">
                 <a href="" class="name">Хайдар</a>
                 <a href="" class="exit">Выход</a>
             </div>
