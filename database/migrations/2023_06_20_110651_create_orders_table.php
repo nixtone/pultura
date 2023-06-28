@@ -44,6 +44,7 @@ return new class extends Migration
 
             $table->text('comment')->nullable();
             $table->date('deadline_date')->nullable();
+            $table->float('total_amount')->default(0);
 
             $table->timestamps();
         });

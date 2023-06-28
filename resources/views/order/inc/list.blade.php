@@ -20,7 +20,13 @@
             <td class="tac">{{ $order->created_at }}</td>
             <td class="tac">{{ $order->deadline_date }}</td>
             <td class="tac"><a href="{{ route('order.edit', $order->id) }}" class="edit ico"></a></td>
-            <td class="tac"><a href="" class="delete ico"></a></td>
+            <td class="tac">
+                <form action="{{ route('order.delete', $order->id) }}" method="post">
+                    @csrf
+                    @method('delete')
+                    <input type="submit" value="" class="delete ico">
+                </form>
+            </td>
         </tr>
         @endforeach
     @endif

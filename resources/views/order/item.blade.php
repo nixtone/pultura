@@ -21,7 +21,7 @@
             <th>Эпитафия</th>
         </tr>
         <tr>
-            <td>{{ $order->fullname }}</td>
+            <td>{{ $order->lastname }} {{ $order->firstname }} {{ $order->fathername }}</td>
             <td>{{ $order->birth_date }}</td>
             <td>{{ $order->death_date }}</td>
             <td>{{ $order->epitafia }}</td>
@@ -47,11 +47,17 @@
             <td>{{ $pay->comment }}</td>
             <td class="tac">{{ $pay->created_at }}</td>
             <td class="tac"><a href="{{ route('pay.edit', $pay->id) }}" class="edit ico"></a></td>
-            <td class="tac"><a href="" class="delete ico"></a></td>
+            <td class="tac">
+                <form action="{{ route('pay.delete', $pay->id) }}" method="post">
+                    @csrf
+                    @method('delete')
+                    <input type="submit" value="" class="delete ico">
+                </form>
+            </td>
         </tr>
         @endforeach
         <tr>
-            <td colspan="5">Итого: 5300 (Погашено)</td>
+            <td colspan="5">Итого: {{ $order->total_amount }} (Погашено)</td>
         </tr>
         @endif
     </table>

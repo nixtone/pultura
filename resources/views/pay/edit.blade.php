@@ -16,7 +16,8 @@
             <input type="text" name="comment" id="pay_comment" class="field" value="{{ $pay->comment }}">
         </div>
         <p><strong>Платеж был внесен:</strong> {{ $pay->created_at }}</p>
-        <input type="submit" value="Редактировать платеж к заказу: {{ $pay->order_id }}" class="btn">
+        {{-- TODO: удобней разместить сообщение о дате и ссылку на заказ --}}
+        <input type="submit" value="Редактировать платеж" class="btn">
     </form>
 </div>
 @endsection

@@ -77,8 +77,8 @@ class OrderController extends Controller
         if($request->pay_amount) {
             Pay::create([
                 'amount' => $request->pay_amount,
-                'order_id' => $newOrder->id,
                 'comment' => $request->pay_comment,
+                'order_id' => $newOrder->id,
             ]);
         }
 
@@ -88,5 +88,17 @@ class OrderController extends Controller
 
     public function edit(Order $order) {
         return view('order.edit', compact('order'));
+    }
+
+    public function update(OrderRequest $request, Order $order) {
+        $data = $request->validated();
+        $order->update($data);
+        // TODO: полное очко с датами, в базе Ymd а нужно dmY
+        return redirect()->route('order.item', $order->id);
+    }
+
+    public function destroy(Order $order) {
+        $order->delete();
+        return redirect()->route('home');
     }
 }

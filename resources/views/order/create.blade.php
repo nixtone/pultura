@@ -113,8 +113,8 @@
                 </div>
                 <!-- <div class="advice">Если фокус стоит на выпадающем списке, можно выбирать его пукты стрелками ↑↓</div> -->
                 <div class="field_area">
-                    <label for="">Эпитафия</label>
-                    <textarea name="epitafia" id="" cols="3" class="field"></textarea>
+                    <label for="epitafia">Эпитафия</label>
+                    <textarea name="epitafia" id="epitafia" cols="3" class="field"></textarea>
                 </div>
             </div>
 

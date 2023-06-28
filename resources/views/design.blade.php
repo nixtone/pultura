@@ -45,12 +45,12 @@
                     <a href="{{ route('home') }}" class="active1">Заказы</a>
                     <a href="{{ route('client.list') }}">Клиенты</a>
                     <a href="{{ route('catalog.category.list') }}">Каталог</a>
-                    <a href="{{ route('personal.list') }}">Сотрудники</a>
+                    <a href="{{ route('user.list') }}">Сотрудники</a>
                     <a href="{{ route('help') }}">Справка</a>
                 </nav>
             </div>
             <div class="user_area col c2">
-                <a href="" class="name">Хайдар</a>
+                <a href="{{-- route('user.item', ) --}}" class="name">Хайдар</a>
                 <a href="" class="exit">Выход</a>
             </div>
         </div>
