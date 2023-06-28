@@ -140,10 +140,12 @@ form .field_area:first-child {
 	margin-bottom: 5px;
 }
 .field_area .field {
-	display: block;
-	padding: 5px 6px 6px;
-	box-sizing: border-box;
-	width: 100%;
+    display: block;
+    padding: 6px 6px 7px;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #8f8f9d;
+    border-radius: 2px;
 }
 .field_area.inline label {
 	display: inline;
@@ -231,6 +233,13 @@ table.list .tac {
     background: url(/static/images/delete.png);
 }
 
+.status.c1 { background: #ffea6a; } /*Принят*/
+.status.c2 { background: #78bdef; } /*Выполняется*/
+.status.c3 { background: #b7e6cc; } /*Готов*/
+.status.c4 { background: #da7070; } /*Отказ*/
+.status.c5 { background: #d4d4d4; } /*Остановлен*/
+
+
 /* БЭМ */
 
 header .container {
@@ -269,19 +278,24 @@ header nav a:hover, header nav a.active {
 	gap: 30px;
 }
 
-#monument_constructor {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+#constructor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-#monument_constructor .sticky {
-	position: sticky;
-	top: 15px;
+#constructor .preview {
+    width: 160px;
+    height: 320px;
+    background: url(/static/images/1.png);
+    color: #fff;
 }
-#monument_constructor .preview {
-	width: 160px;
-	height: 320px;
-	background: url(/static/images/upload/1.png);
+#constructor .item {
+    touch-action: none;
+    user-select: none;
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+    touch-action: none;
+    position: absolute;
 }
 
 #order-total {

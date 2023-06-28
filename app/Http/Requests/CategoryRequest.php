@@ -23,7 +23,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'string',
-            'parent_id' => 'integer'
+            'parent_id' => ''
         ];
     }
 }

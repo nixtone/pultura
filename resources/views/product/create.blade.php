@@ -3,7 +3,7 @@
 @section('title', 'Новый товар')
 @section('content')
 <div class="block">
-    <form action="{{ route('catalog.product.store') }}" method="post">
+    <form action="{{ route('catalog.product.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="field_area">
             <label for="name">Название</label>
@@ -20,6 +20,10 @@
                 <option value="{{ $cat->id }}" @if($cat->id == $category->id) selected @endif>{{ $cat->name }}</option>
                 @endforeach
             </select>
+        </div>
+        <div class="field_area">
+            <label for="image">Изображение товара</label>
+            <input type="file" name="image" id="image" class="field">
         </div>
         <div class="field_area">
             <input type="submit" value="Создать товар" class="btn">

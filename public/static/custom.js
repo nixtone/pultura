@@ -80,5 +80,7 @@ $(document).ready(function() {
         return km + kw + kd;
     }
 
+    // Конструктор памятника
+
 
 });

@@ -13,7 +13,7 @@
         <div class="field_area">
             <label for="parent">Родительская категория @error('parent_id') <span class="err">{{ $message }}</span> @enderror</label>
             <select name="parent_id" id="parent" class="field">
-                <option value="0" selected></option>
+                <option value="" selected></option>
                 @foreach($categoryList as $category)
                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach

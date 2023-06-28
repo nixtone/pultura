@@ -34,7 +34,7 @@
             <th>Сумма</th>
             <th>Комментрий</th>
             <th>Внесено</th>
-            <th colspan="2"><a href="{{ route('pay.create', $order->id) }}" class="btn new">Добавить</a></th>
+            @if($order->status->id != 3)<th colspan="2"><a href="{{ route('pay.create', $order->id) }}" class="btn new">Добавить</a></th>@endif
         </tr>
         @if($order->pay->isEmpty())
         <tr>
@@ -46,6 +46,7 @@
             <td class="tac">{{ $pay->amount }}</td>
             <td>{{ $pay->comment }}</td>
             <td class="tac">{{ $pay->created_at }}</td>
+            @if($order->status->id != 3)
             <td class="tac"><a href="{{ route('pay.edit', $pay->id) }}" class="edit ico"></a></td>
             <td class="tac">
                 <form action="{{ route('pay.delete', $pay->id) }}" method="post">
@@ -54,10 +55,12 @@
                     <input type="submit" value="" class="delete ico">
                 </form>
             </td>
+            @endif
         </tr>
         @endforeach
         <tr>
-            <td colspan="5">Итого: {{ $order->total_amount }} (Погашено)</td>
+            <td colspan="1">Стоимость заказа: {{ $order->total_amount }}</td>
+            <td colspan="4">Осталось доплатить: 0</td>
         </tr>
         @endif
     </table>

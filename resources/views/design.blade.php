@@ -93,8 +93,10 @@
     </div>
 </div>
 
-<script src="{{ asset('/static/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('/static/jquery.min.js') }}"></script>
 <script src="{{ asset('/static/jquery.maskedinput.min.js') }}"></script>
+<script src="{{ asset('/static/interact.min.js') }}"></script>
+<script src="{{ asset('/static/constructor.js') }}"></script>
 <script src="{{ asset('/static/custom.js') }}"></script>
 </body>
 </html>

@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Http\Requests\CategoryRequest;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
+
+    protected $upload_dir = '/public/images/';
+
     public function list() {
         $categoryList = Category::all(); // whereNull('parent_id')->get();
         return view('category.list', compact('categoryList'));
@@ -25,7 +29,9 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $data = $request->validated();
+        $data['translit'] = \App\Helpers\translit($request->name);
         $newCategory = Category::create($data);
+        Storage::makeDirectory($this->upload_dir.$data['translit']);
         return redirect()->route('catalog.category.item', $newCategory->id);
     }
 
@@ -42,6 +48,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category) {
         $category->delete();
+        Storage::deleteDirectory($this->upload_dir.$category->translit);
         return redirect()->route('catalog.category.list');
     }
 }

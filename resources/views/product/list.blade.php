@@ -6,6 +6,7 @@
 
         <table class="list">
             <tr>
+                <th>Превью</th>
                 <th>Название</th>
                 <th>Цена</th>
                 <th colspan="2"><a href="{{ route('catalog.product.create', $category) }}" class="btn new">Новый товар</a></th>
@@ -17,6 +18,7 @@
             @else
             @foreach($productList as $product)
             <tr>
+                <td><img src="" alt=""></td>
                 <td>{{ $product->name }}</td>
                 <td>{{ $product->price }}</td>
                 <td class="tac"><a href="{{ route('catalog.product.edit', $product->id) }}" class="edit ico"></a></td>
