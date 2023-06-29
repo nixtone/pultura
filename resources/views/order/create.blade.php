@@ -203,11 +203,16 @@
                 <input type="submit" value="Создать заказ" class="btn">
             </div>
         </form>
-        <div id="monument_constructor">
+        <div id="constructor">
             <h2>Эскиз памятника</h2>
             <div class="sticky">
-                <div class="preview"></div>
-                <div id="order-total">Итого: <span class="digit">107305</span> &#8381;</div>
+                <div class="preview">
+                    <div class="item c1">
+                        <img src="/static/images/upload/port.png" alt="">
+                    </div>
+                    <div class="item c2">test1</div>
+                </div>
+                <div id="order-total">Итого: <span class="digit">107305</span> ₽</div>
             </div>
         </div>
     </div>
