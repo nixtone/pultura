@@ -136,8 +136,9 @@ form .field_area:first-child {
 	margin: 10px 0;
 }
 .field_area label {
-	display: block;
-	margin-bottom: 5px;
+    display: block;
+    margin-bottom: 5px;
+    cursor: pointer;
 }
 .field_area .field {
     display: block;
@@ -150,6 +151,16 @@ form .field_area:first-child {
 .field_area.inline label {
 	display: inline;
 }
+.field_area .wrap {
+    position: relative;
+}
+.field_area .size {
+    max-width: 55px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 .field_group.user_choose .row {
 	display: none;
 }
@@ -157,10 +168,6 @@ form .field_area:first-child {
 	display: unset;
 }
 
-.pult {
-	display: flex;
-	margin: 15px 0;
-}
 
 .btn {
     padding: 7px 10px 9px;
@@ -188,6 +195,9 @@ form .field_area:first-child {
 
 table {
 	width: 100%;
+}
+td {
+    padding: 0;
 }
 table.list {
     border-bottom: 2px solid #d4d9e1;
@@ -239,6 +249,56 @@ table.list .tac {
 .status.c4 { background: #da7070; } /*Отказ*/
 .status.c5 { background: #d4d4d4; } /*Остановлен*/
 
+.tab-area .tab.page .tab-item {
+    display: none;
+}
+.tab-area .tab .tab-item.active {
+    display: block;
+}
+.tab-area .tab.label {
+    display: flex;
+    margin-bottom: 15px;
+}
+.tab-area .tab.label .tab-item {
+    padding: 5px 10px 6px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.tab-area .tab.label .tab-item.active {
+    background: #122b45;
+    color: #f9feff;
+    border-color: #122b45;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+.grid .item {
+    border: 1px solid #ccc;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .2s;
+    position: relative;
+    min-width: 200px;
+    flex-direction: column;
+}
+.grid.displayName .item {
+    padding: 15px 15px 3px;
+}
+.grid .item:hover {
+    border-color: #122b45;
+}
+.grid .item .name {
+    padding: 6px 15px;
+    background: rgba(255,255,255,.7);
+    text-align: center;
+}
 
 /* БЭМ */
 
@@ -278,10 +338,19 @@ header nav a:hover, header nav a.active {
 	gap: 30px;
 }
 
+#product .preview {
+    max-width: 40px;
+    display: block;
+}
+
 #constructor {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+#constructor .sticky {
+    position: sticky;
+    top: 15px;
 }
 #constructor .preview {
     width: 160px;
@@ -296,8 +365,12 @@ header nav a:hover, header nav a.active {
     transform: translate(0px, 0px);
     touch-action: none;
     position: absolute;
+
 }
 
+#order label.checked {
+    color: #26b24b;
+}
 #order-total {
 	background: #eee;
 	padding: 10px;

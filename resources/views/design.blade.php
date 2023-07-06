@@ -7,6 +7,7 @@
 <link rel="icon" type="image/ico" href="{{ asset('/favicon.ico') }}">
 <title>@yield('title')</title>
 <link rel="stylesheet" href="{{ asset('/static/custom.css') }}">
+<link rel="stylesheet" href="{{ asset('/static/fancy/jquery.fancybox.min.css') }}">
 <style>
 @font-face {
     font-family: 'Open Sans';
@@ -32,6 +33,60 @@
     font-style: normal;
     font-display: swap;
 }
+
+@if(Route::is('order.create'))
+@font-face {
+    font-family: "timesbi";
+    src:url("/static/fonts/timesbi.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "timesbd";
+    src:url("/static/fonts/timesbd.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "arialbd";
+    src:url("/static/fonts/arialbd.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "Academy";
+    src:url("/static/fonts/academyc.otf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "cyrillicold";
+    src: url("/static/fonts/CyrillicOldBold/CyrillicOldBold.eot");
+    src: url("/static/fonts/CyrillicOldBold/CyrillicOldBold.eot?#iefix") format("embedded-opentype"),
+    url("/static/fonts/CyrillicOldBold/CyrillicOldBold.woff") format("woff"),
+    url("/static/fonts/CyrillicOldBold/CyrillicOldBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: anastasia;
+    src: url("/static/fonts/anastasia.ttf");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: carolina;
+    src: url("/static/fonts/carolina.ttf");
+    font-style: normal;
+    font-weight: normal;
+}
+@font-face {
+    font-family: asessor;
+    src: url("/static/fonts/asessor.ttf");
+    font-style: normal;
+    font-weight: normal;
+}
+@endif
 </style>
 </head>
 <body>
@@ -71,23 +126,16 @@
         <div class="close"></div>
         <div class="inner">
 
-            <form method="post" class="callback" style="display: none;">
-                <input type="text" name="NAME" placeholder="Ваше имя">
-                <input type="text" name="PHONE" placeholder="Телефон">
-                <input type="text" name="EMAIL" placeholder="E-mail">
-                <input type="submit" value="Отправить">
-            </form>
-
-            <div class="cross" style="display: none;">
-                {{--
-                <img src="{{ asset('static/images/upload/1.png') }}" alt="" class="bimg preview" data-value="1">
-                <img src="{{ asset('static/images/upload/2.png') }}" alt="" class="bimg preview" data-value="2">
-                <img src="{{ asset('static/images/upload/3.png') }}" alt="" class="bimg preview" data-value="3">
-                <img src="{{ asset('static/images/upload/4.png') }}" alt="" class="bimg preview" data-value="4">
-                <img src="{{ asset('static/images/upload/5.png') }}" alt="" class="bimg preview" data-value="5">
-                <img src="{{ asset('static/images/upload/6.png') }}" alt="" class="bimg preview" data-value="6">
-                --}}
-            </div>
+            @if(Route::is('order.create'))
+                @include('order.inc.window', [
+                    'title' => 'Модели памятников',
+                    'field' => 'model',
+                    'parent_cat' => $categoryList->where('translit', 'modeli-pamyatnikov')->first()->id,
+                    'displayName' => 0
+                ])
+                @include('order.inc.window', ['title' => 'Материал', 'field' => 'material', 'parent_cat' => 4, 'displayName' => 1])
+                @include('order.inc.window', ['title' => 'Портрет', 'field' => 'portrait', 'parent_cat' => 7, 'displayName' => 1])
+            @endif
 
         </div>
     </div>
@@ -95,8 +143,11 @@
 
 <script src="{{ asset('/static/jquery.min.js') }}"></script>
 <script src="{{ asset('/static/jquery.maskedinput.min.js') }}"></script>
+<script src="{{ asset('/static/fancy/jquery.fancybox.min.js') }}"></script>
+@if(Route::is('order.create'))
 <script src="{{ asset('/static/interact.min.js') }}"></script>
-<script src="{{ asset('/static/constructor.js') }}"></script>
+<script src="{{ asset('/static/order.js') }}"></script>
+@endif
 <script src="{{ asset('/static/custom.js') }}"></script>
 </body>
 </html>

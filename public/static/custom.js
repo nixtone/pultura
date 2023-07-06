@@ -37,24 +37,58 @@ $(document).ready(function() {
         }
     });
 
+    // fancybox
+    $('[data-fancybox="gallery"], [data-fancybox]').fancybox();
+
     // Попап
     $(".cpp").click(function(event) {
-        event.preventDefault();
+        let ppWindowName = $(this).data('pp');
+        let $this = $(this);
+
+        // TODO: Допилить чекбоксы 1/2
+        //event.preventDefault();
+        // console.log($this.find(".ppField").attr('name'));
+        if($this.find("label").hasClass('checked')) {
+            console.log("Нужно снять отметку");
+            $this.find(".ppField").attr('checked', false);
+            $this.find("label").removeClass('checked').find(".product_name").empty();
+            //return false;
+            event.stopPropagation();
+        }
+        /*
+        if($this.find(".ppField").is(':checked')) {
+            console.log("Нужно снять отметку");
+
+            $(this).find("input[type='checkbox']").prop('checked', false);
+            $(this).find("label").removeClass('checked').find(".product_name").empty();
+            return;
+
+        }
+        */
+
+        // Открытие
         $(".overlay .inner > *").hide();
-        $(".overlay, .overlay ."+$(this).data('pp')).fadeIn(150);
-    });
-    $(".overlay").click(function(event) {
-        if(!$(".popup").is(event.target) && $(".popup").has(event.target).length === 0 || event.target.className == "close") $(".overlay").fadeOut(150);
-    });
-    $(".overlay .preview").click(function(event) {
-        $(this).addClass('active').siblings().removeClass('active');
+        $(".overlay, .overlay ." + ppWindowName).fadeIn(150);
+        // Закрытие
+        $(".overlay").click(function(event) {
+            if(!$(".popup").is(event.target) && $(".popup").has(event.target).length === 0 || event.target.className == "close") {
+                // Снимаем галку
+                $this.find(".ppField").prop('checked', false);
+                $(".overlay").fadeOut(150);
+            }
+        });
     });
 
-    //
-    $(".field_group.user_choose input[name='choose_client']").click(function(event) {
-        // console.log($(this).val());
-        // $(".field_group.user_choose .row").removeClass('active');
-        $(".field_group.user_choose .row").removeClass('active').parent().find(".row.c" + $(this).val()).addClass('active');
+    // Табы
+    $(".tab-area .tab").each(function(index, el) {
+        $(this).find('.tab-item').first().addClass('active');
+    });
+    $(".tab-area .tab.label .tab-item").click(function(event) {
+        let count = $(this).data('count');
+        let tabAreaName = $(this).closest('.tab-area').data('name');
+        $(".tab-area." + tabAreaName + " .tab").each(function(index, el) {
+            $(this).find('.tab-item.c' + count).addClass('active').siblings().removeClass('active');
+        });
     });
 
     /*
@@ -65,22 +99,5 @@ $(document).ready(function() {
         }
     });
     */
-
-    // Цена с пробелами
-    function priceFormat(number, decimals = 0, dec_point = '', thousands_sep = ' ') {  // Format a number with grouped thousands
-        var i, j, kw, kd, km;
-        if( isNaN(decimals = Math.abs(decimals)) )decimals = 2;
-        if( dec_point == undefined ) dec_point = ",";
-        if( thousands_sep == undefined ) thousands_sep = ".";
-        i = parseInt(number = (+number || 0).toFixed(decimals)) + "";
-        j = (j = i.length) > 3  ? j % 3 : 0 ;
-        km = (j ? i.substr(0, j) + thousands_sep : "");
-        kw = i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands_sep);
-        kd = (decimals ? dec_point + Math.abs(number - i).toFixed(decimals).replace(/-/, 0).slice(2) : "");
-        return km + kw + kd;
-    }
-
-    // Конструктор памятника
-
 
 });

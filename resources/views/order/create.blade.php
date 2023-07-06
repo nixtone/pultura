@@ -42,62 +42,52 @@
                     </div>
                 </div>
             </div>
-            {{--
+
             <div class="field_group">
-                <h2>Характеристики памятника</h2>
-                <div class="field_area inline">
-                    <input type="hidden" name="model">
-                    <input type="submit" value="Выбрать модель">
-                    <label for="">1</label>
+                <h2>Внешний вид памятника</h2>
+                <div class="field_area inline cpp" data-pp="model">
+                    <input type="checkbox" name="model" id="model" class="ppField">
+                    <label for="model">Модель <span class="product_name"></span></label>
                 </div>
-                <div class="field_area inline">
-                    <input type="hidden" name="material">
-                    <input type="submit" value="Выбрать материал">
-                    <label for="">Диабаз</label>
+                <div class="field_area inline cpp" data-pp="material">
+                    <input type="checkbox" name="material" id="material" class="ppField">
+                    <label for="material">Материал <span class="product_name"></span></label>
                 </div>
-                <div class="field_area inline">
-                    <input type="checkbox" name="has_portrait" id="has_portrait">
-                    <label for="has_portrait">Наличие потрета</label>
-                    <input type="file" name="" id="" class="field" multiple accept="image/jpeg, image/png, image/webp, image/gif">
+                <div class="field_area inline cpp" data-pp="portrait">
+                    <input type="checkbox" name="portrait" id="portrait" class="ppField">
+                    <label for="portrait">Портрет <span class="product_name"></span></label>
                 </div>
                 <div class="field_area">
-                    <label for="">Размеры стеллы:</label>
-                    <select name="monument_size" class="field">
-                        <option value="1">80 x 40 x 5</option>
-                        <option value="2">100 x 50 x 5</option>
-                        <option value="3">120 x 60 x 5</option>
-                        <option value="4">80 x 40 x 8</option>
-                        <option value="5">100 x 50 x 8</option>
-                        <option value="5">120 x 60 x 8</option>
-                        <option value="7">140 x 70 x 8</option>
-                        <option value="8">80 x 40 x 10</option>
-                        <option value="9">100 x 50 x 10</option>
-                        <option value="10">120 x 60 x 10</option>
-                        <option value="11">140 x 70 x 10</option>
-                        <option value="12">160 x 80 x 10</option>
-                        <option value="13">100 x 50 x 12</option>
-                        <option value="14">120 x 60 x 12</option>
-                        <option value="15">140 x 70 x 12</option>
-                        <option value="16">160 x 80 x 12</option>
+                    <label for="">Размер стеллы</label>
+                    <select name="" id="" class="field">
+                        <option value=""></option>
                     </select>
                 </div>
             </div>
-            --}}
 
             <div class="field_group">
                 <h2>Текст для памятника</h2>
                 <!-- <div class="advice">Что бы не кликать каждый раз на следующее поле, можно нажимать "tab"</div> -->
                 <div class="field_area">
                     <label for="lastname">Фамилия</label>
-                    <input type="text" name="lastname" id="lastname" class="field">
+                    <div class="wrap">
+                        <input type="text" name="lastname" id="lastname" class="field text" data-font="main">
+                        <input type="number" name="" class="field size" value="20">
+                    </div>
                 </div>
                 <div class="field_area">
                     <label for="firstname">Имя</label>
-                    <input type="text" name="firstname" id="firstname" class="field">
+                    <div class="wrap">
+                        <input type="text" name="firstname" id="firstname" class="field text" data-font="main">
+                        <input type="number" name="" class="field size" value="14">
+                    </div>
                 </div>
                 <div class="field_area">
                     <label for="fathername">Отчество</label>
-                    <input type="text" name="fathername" id="fathername" class="field">
+                    <div class="wrap">
+                        <input type="text" name="fathername" id="fathername" class="field text" data-font="main">
+                        <input type="number" name="" class="field size" value="14">
+                    </div>
                 </div>
                 <div class="field_area">
                     <table>
@@ -106,21 +96,35 @@
                             <td><label for="death_date">Дата смерти</label></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="birth_date" id="birth_date" class="field datemask"></td>
-                            <td><input type="text" name="death_date" id="death_date" class="field datemask"></td>
+                            <td class="wrap">
+                                <input type="text" name="birth_date" id="birth_date" class="field text datemask" data-font="main">
+                                <input type="number" name="" class="field size" value="14">
+                            </td>
+                            <td class="wrap">
+                                <input type="text" name="death_date" id="death_date" class="field text datemask" data-font="main">
+                                <input type="number" name="" class="field size" value="14">
+                            </td>
                         </tr>
                     </table>
                 </div>
+
+                @include('order.inc.font', ['title' => 'Основной шрифт', 'group' => 'main'])
+
                 <!-- <div class="advice">Если фокус стоит на выпадающем списке, можно выбирать его пукты стрелками ↑↓</div> -->
                 <div class="field_area">
                     <label for="epitafia">Эпитафия</label>
-                    <textarea name="epitafia" id="epitafia" cols="3" class="field"></textarea>
+                    <div class="wrap">
+                        <textarea name="epitafia" id="epitafia" cols="3" class="field text"></textarea>
+                        <input type="number" name="" class="field size" value="18">
+                    </div>
                 </div>
+
+                @include('order.inc.font', ['title' => 'Шрифт эпитафии', 'group' => 'epitafia'])
+
             </div>
 
-            {{--
             <div class="field_group">
-                <h2>Украшения</h2>
+                <h2>Гравировка</h2>
                 <div class="field_area inline">
                     <input type="checkbox" name="cross" id="cross">
                     <label for="cross" class="cpp" data-pp="cross">Крест (3)</label>
@@ -146,39 +150,30 @@
                     <label for="bird">Птицы</label>
                 </div>
             </div>
+
             <div class="field_group">
                 <h2>Дополнения</h2>
                 <div class="field_area inline">
                     <input type="checkbox" name="tombstone" id="tombstone">
-                    <label for="tombstone">Надгробие</label>
-                </div>
-                <div class="field_area inline">
-                    <input type="checkbox" name="vasa" id="vasa">
-                    <label for="vasa">Ваза</label>
-                </div>
-                <div class="field_area">
-                    <label for="ograda">Ограда</label>
-                    <select name="ograda" id="ograda" class="field">
-                        <option value="">220 x 150</option>
-                    </select>
+                    <label for="tombstone">Цветник / надгробие</label>
                 </div>
             </div>
+
             <div class="field_group">
                 <h2>Услуги</h2>
                 <div class="field_area">
-                    <label for="delivery_km">Доставка (км)</label>
-                    <input type="text" name="delivery_km" id="delivery_km" class="field">
-                </div>
-                <div class="field_area">
-                    <label for="delivery_addr">Адрес доставки<br> (населенный пункт или кладбище)</label>
-                    <input type="text" name="delivery_addr" id="delivery_addr" class="field">
-                </div>
-                <div class="field_area inline">
-                    <input type="checkbox" name="install" id="install">
-                    <label for="install">Установка</label>
+                    <table>
+                        <tr>
+                            <td><label for="delivery_addr">Адрес доставки</label></td>
+                            <td><label for="delivery_km">Км</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="delivery_addr" id="delivery_addr" class="field"></td>
+                            <td><input type="text" name="delivery_km" id="delivery_km" class="field"></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            --}}
 
             <div class="field_group">
                 <h2>Платеж</h2>
@@ -196,28 +191,33 @@
                 </div>
             </div>
 
-
-            <!-- div.field_area>label -->
+            {{-- --}}
 
             <div class="field_area">
                 <input type="submit" value="Создать заказ" class="btn">
             </div>
         </form>
+
         <div id="constructor">
             <h2>Эскиз памятника</h2>
             <div class="sticky">
                 <div class="preview">
-                    <div class="item c1">
+                    <div class="item portrait">
                         <img src="/static/images/upload/port.png" alt="">
                     </div>
-                    <div class="item c2">test1</div>
+                    <div class="item lastname font_main"></div>
+                    <div class="item firstname font_main"></div>
+                    <div class="item fathername font_main"></div>
+                    <div class="item birth_date font_main"></div>
+                    <div class="item death_date font_main"></div>
+                    <div class="item epitafia font_epitafia"></div>
                 </div>
                 <div id="order-total">Итого: <span class="digit">107305</span> ₽</div>
             </div>
         </div>
-    </div>
 
-</div>
+    </div><!-- .inner -->
+</div><!-- #order -->
 
 
 

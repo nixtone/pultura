@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Client;
 use App\Models\Pay;
+use App\Models\Category;
+use App\Models\Product;
 use App\Http\Requests\OrderRequest;
 
 class OrderController extends Controller
@@ -23,15 +25,13 @@ class OrderController extends Controller
             3 => 'Готов'
         ]);
     }
+    foreach($orderList as $index => $order) {
+            $orderList[$index]->status = $this->status[$order->status];
+        }
     */
 
     public function list() {
         $orderList = Order::all()->reverse();
-        /*
-        foreach($orderList as $index => $order) {
-            $orderList[$index]->status = $this->status[$order->status];
-        }
-        */
         return view('order.list', compact('orderList'));
     }
 
@@ -41,7 +41,9 @@ class OrderController extends Controller
 
     public function create() {
         $clientList = Client::all()->reverse();
-        return view('order.create', compact('clientList'));
+        $categoryList = Category::all();
+        $productList = Product::all();
+        return view('order.create', compact('clientList', 'categoryList', 'productList'));
     }
 
     public function store(OrderRequest $request)
