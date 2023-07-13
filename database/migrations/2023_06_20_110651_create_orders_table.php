@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->foreignId('status_id')->constrained()->default(1);
 
-            $table->integer('stella_form')->default(0);
-            $table->string('stella_size')->nullable();
+            $table->integer('model')->default(0);
+            $table->string('model_size')->nullable();
             $table->integer('material')->default(0);
             $table->integer('portrait')->default(0);
             $table->string('portrait_size')->nullable();
@@ -37,7 +37,13 @@ return new class extends Migration
             $table->integer('candle')->default(0);
             $table->integer('angel')->default(0);
             $table->integer('bird')->default(0);
+
             $table->integer('tombstone')->default(0);
+            // fence ограда
+            // vase ваза
+
+            // facing (product_id) облицовка
+            // facing m2
 
             $table->integer('delivery_km')->default(0);
             $table->text('delivery_point')->nullable();
@@ -45,6 +51,8 @@ return new class extends Migration
             $table->text('comment')->nullable();
             $table->date('deadline_date')->nullable();
             $table->float('total_amount')->default(0);
+
+            // Конструктор. Техданные конструктора
 
             $table->timestamps();
         });

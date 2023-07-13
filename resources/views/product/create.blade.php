@@ -11,7 +11,7 @@
         </div>
         <div class="field_area">
             <label for="price">Цена</label>
-            <input type="text" name="price" id="price" class="field">
+            <input type="text" name="price" id="price" class="field" value="0">
         </div>
         <div class="field_area">
             <label for="category_id">Категория</label>
@@ -23,7 +23,7 @@
         </div>
         <div class="field_area">
             <label for="image">Изображение товара</label>
-            <input type="file" name="image" id="image" class="field">
+            <input type="file" name="image[]" id="image" class="field" multiple accept="image/*">
         </div>
         <div class="field_area">
             <input type="submit" value="Создать товар" class="btn">

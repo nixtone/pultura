@@ -28,10 +28,7 @@ class CategoryController extends Controller
     }
     public function store(CategoryRequest $request)
     {
-        $data = $request->validated();
-        $data['translit'] = \App\Helpers\translit($request->name);
-        $newCategory = Category::create($data);
-        Storage::makeDirectory($this->upload_dir.$data['translit']);
+        $newCategory = Category::create($request->validated());
         return redirect()->route('catalog.category.item', $newCategory->id);
     }
 

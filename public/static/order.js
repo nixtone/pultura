@@ -5,6 +5,11 @@ $(document).ready(function() {
         $(this).prop('checked', false);
     });
 
+    // Собираем вид памятника
+    //console.log($(".window.material .tab.page .tab-item .item img").attr('src'));
+    //console.log($(".window.material .tab.page .tab-item .item img").attr('src'));
+
+
     // Выбор клиента
     $(".field_group.user_choose input[name='choose_client']").click(function(event) {
         $(".field_group.user_choose .row").removeClass('active').parent().find(".row.c" + $(this).val()).addClass('active');
@@ -17,11 +22,61 @@ $(document).ready(function() {
         let id = $(this).data('id');
         let price = $(this).data('price');
         let name = $(this).data('name');
+        let catID = $(this).data('cat');
         let catName = $(this).closest(".tab-area").find(".tab.label .tab-item.active").text();
-        // Отражаем выбор в эскизе
+        // Отражаем выбор в поле
         $("label[for='"+field+"']").addClass('checked').find(".product_name").text(': '+catName+' "'+name+'"');
         $("#"+field).prop('checked', true);
         $(".overlay").fadeOut(150);
+        // Заполняем поле
+        $("#"+field).val(id);
+        // Дополнительные действия
+        switch(field) {
+            case 'model': {
+                // Отображение select выбора размера модели
+                $(".field_area.model-size_area .field.model-size")
+                    .removeAttr('name')
+                    .hide()
+                    .closest(".field_area")
+                    .find(".field.model-size.c"+catID)
+                    .attr('name', 'model_size')
+                    .show();
+                $(".field_area.model-size_area").show();
+                // Отображаем выбор в эскизе
+                $("#constructor .negative").css('background-image', 'url('+imagePath+'/'+$(this).data('negative')+')');
+                // Назначаем размеры памятника в эскизе
+                $("#constructor .monument.part").css({
+                    width: 160+'px',
+                    height: 320+'px'
+                });
+                $("#constructor .postament.part").css({
+                    width: 300+'px',
+                    height: 60+'px'
+                });
+                /*
+                let monumentWidth = 280;
+                let monumentHeight = 560;
+                let postamentWidth = 300;
+                let postamentHeight = 60;
+
+                $("#constructor .monument.part").css({
+                    width: monumentWidth+'px',
+                    height: monumentHeight+'px'
+                });
+                $("#constructor .postament.part").css({
+                    width: postamentWidth+'px',
+                    height: postamentHeight+'px'
+                });
+                */
+            } break;
+            case 'material': {
+                $("#constructor .part").css('background-image', 'url('+$(this).find(".preview").attr('src')+')');
+            } break;
+            case 'portrait': {
+                $("#constructor .item.portrait .preview").attr('src', imagePath+'/'+$(this).data('negative'));
+            } break;
+            //
+        }
     });
 
     /*
@@ -51,6 +106,15 @@ $(document).ready(function() {
         $("#constructor .item.font_"+fontGroup).css('font-family', fontFamily);
     });
 
+    // Размер шрифта
+    $(".field.size").change(function(event) {
+        // Сбор данных
+        let fieldName = $(this).closest(".wrap").find(".field.text").attr('name');
+        let fontSize = $(this).val();
+        // Меняем размер шрифта
+        $("#constructor .item."+fieldName).css('font-size', fontSize+'px');
+    });
+
 
     // Конструктор
 
@@ -73,7 +137,9 @@ $(document).ready(function() {
             // call this function on every dragend event
             end (event) {
                 var textEl = event.target.querySelector('p')
-                textEl && (textEl.textContent = 'moved a distance of ' + (Math.sqrt(Math.pow(event.pageX - event.x0, 2) + Math.pow(event.pageY - event.y0, 2) | 0)).toFixed(2) + 'px')
+                textEl && (textEl.textContent = 'moved a distance of ' +
+                    (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
+                        Math.pow(event.pageY - event.y0, 2) | 0)).toFixed(2) + 'px')
             }
         }
     })

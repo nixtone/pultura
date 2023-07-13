@@ -40,40 +40,35 @@ $(document).ready(function() {
     // fancybox
     $('[data-fancybox="gallery"], [data-fancybox]').fancybox();
 
+    // Отмена выбора на чекбоксе
+    function uncheck($this, ppWindowName) {
+        if($this.prop('checked') == false) {
+            $("label[for='"+ppWindowName+"']").removeClass('checked').closest(".field_area").find(".product_name").empty();
+            switch(ppWindowName) {
+                case 'model': {
+                    $(".field_area.model-size_area").hide().find(".field.model-size").removeAttr('name');
+                }
+            }
+            // TODO: не останавливает открытие popup
+            return false;
+        }
+    }
+
     // Попап
     $(".cpp").click(function(event) {
+        // Сбор данных
         let ppWindowName = $(this).data('pp');
         let $this = $(this);
-
-        // TODO: Допилить чекбоксы 1/2
-        //event.preventDefault();
-        // console.log($this.find(".ppField").attr('name'));
-        if($this.find("label").hasClass('checked')) {
-            console.log("Нужно снять отметку");
-            $this.find(".ppField").attr('checked', false);
-            $this.find("label").removeClass('checked').find(".product_name").empty();
-            //return false;
-            event.stopPropagation();
-        }
-        /*
-        if($this.find(".ppField").is(':checked')) {
-            console.log("Нужно снять отметку");
-
-            $(this).find("input[type='checkbox']").prop('checked', false);
-            $(this).find("label").removeClass('checked').find(".product_name").empty();
-            return;
-
-        }
-        */
-
+        // Снятие чекбокса
+        uncheck($this, ppWindowName);
         // Открытие
         $(".overlay .inner > *").hide();
         $(".overlay, .overlay ." + ppWindowName).fadeIn(150);
         // Закрытие
         $(".overlay").click(function(event) {
+            // $this.prop('checked', false);
+            uncheck($this, ppWindowName);
             if(!$(".popup").is(event.target) && $(".popup").has(event.target).length === 0 || event.target.className == "close") {
-                // Снимаем галку
-                $this.find(".ppField").prop('checked', false);
                 $(".overlay").fadeOut(150);
             }
         });

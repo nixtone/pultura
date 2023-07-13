@@ -101,6 +101,7 @@ Route::middleware('auth')->group(function() {
         // Товары
         Route::name('product.')->prefix('product')->group(function() {
             Route::get('/new/{category}', [ProductController::class, 'create'])->name('create');
+            Route::get('/{product}', [ProductController::class, 'item'])->name('item');
             Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('edit');
             Route::patch('/update/{product}', [ProductController::class, 'update'])->name('update');
             Route::post('/store', [ProductController::class, 'store'])->name('store');

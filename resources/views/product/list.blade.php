@@ -3,6 +3,7 @@
 @section('title', 'Товары')
 @section('content')
 <div id="product" class="list block">
+
     <table class="list">
         <tr>
             <th>Превью</th>
@@ -11,18 +12,22 @@
             <th colspan="2"><a href="{{ route('catalog.product.create', $category) }}" class="btn new">Новый товар</a></th>
         </tr>
         @if($productList->isEmpty())
-            <tr>
-                <td colspan="4" style="text-align: center">Товаров нет</td>
-            </tr>
+        <tr>
+            <td colspan="4" style="text-align: center">Товаров нет</td>
+        </tr>
         @else
         @foreach($productList as $product)
         <tr>
-            <td>
-                <a href="{{ asset('/storage/images/'.$product->category->translit.'/'.$product->id.'.'.$product->image) }}" data-fancybox="gallery">
-                    <img src="{{ asset('/storage/images/'.$product->category->translit.'/'.$product->id.'.'.$product->image) }}" alt="" class="preview">
-                </a>
+            <td class="preview_area">
+                {{--
+                @foreach($product->image as $image)
+                    <a href="{{ asset('/storage/images/products/'.$image) }}" data-fancybox="gallery">
+                        <img src="{{ asset('/storage/images/products/'.$image) }}" alt="" class="preview bimg">
+                    </a>
+                @endforeach
+                --}}
             </td>
-            <td>{{ $product->name }}</td>
+            <td><a href="{{ route('catalog.product.item', $product->id) }}">{{ $product->name }}</a></td>
             <td class="tac">{{ $product->price }}</td>
             <td class="tac"><a href="{{ route('catalog.product.edit', $product->id) }}" class="edit ico"></a></td>
             <td class="tac">

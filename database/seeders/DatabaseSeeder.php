@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // Временно
+        // Тестовый пользователь
         \App\Models\User::factory()->create([
             'name' => 'test1',
             'phone' => '+7 (900) 123-45-67',
@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
             'password' => 'test1'
         ]);
 
-        // Постоянно
         // Статусы
         $statusList = [
             1 => 'Принят',
@@ -38,47 +37,95 @@ class DatabaseSeeder extends Seeder
 
         // Категории
         $categoryList = [
-            ['name' => 'Модели памятников'],
+
+            ['name' => 'Модели памятников', 'parent_id' => null],
             ['name' => 'Вертикальные', 'parent_id' => 1],
             ['name' => 'Горизонтальные', 'parent_id' => 1],
-            ['name' => 'Материал'],
+
+            ['name' => 'Материал', 'parent_id' => null],
+            ['name' => 'Гранит', 'parent_id' => 4],
+            ['name' => 'Мрамор', 'parent_id' => 4],
+
+            ['name' => 'Портрет', 'parent_id' => null],
+            ['name' => 'Гравировка', 'parent_id' => 7],
+            ['name' => 'Фотокерамика', 'parent_id' => 7],
+
+            ['name' => 'Дополнительная гравировка', 'parent_id' => null],
+            ['name' => 'Кресты', 'parent_id' => 10],
+            ['name' => 'Цветы', 'parent_id' => 10],
+            ['name' => 'Ветви', 'parent_id' => 10],
+            ['name' => 'Свечи', 'parent_id' => 10],
+            ['name' => 'Ангелы', 'parent_id' => 10],
+            ['name' => 'Птицы', 'parent_id' => 10],
+
+            ['name' => 'Цветник / надгробие', 'parent_id' => null],
+
+            ['name' => 'Ограды', 'parent_id' => null],
+
+            ['name' => 'Вазы', 'parent_id' => null],
+            ['name' => 'Литьевые и мрамор', 'parent_id' => 19],
+            ['name' => 'Гранитные', 'parent_id' => 19],
+            ['name' => 'Лампады', 'parent_id' => 19],
+
+            ['name' => 'Облицовка', 'parent_id' => null], // ID:23
+
         ];
         foreach($categoryList as $category) {
-            $translit = \App\Helpers\translit($category['name']);
             \App\Models\Category::factory()->create([
                 'name' => $category['name'],
-                'translit' => $translit,
-                //'parent_id' => (int)$category['parent_id'],
+                'parent_id' => $category['parent_id'],
             ]);
-            Storage::makeDirectory("/public/images/".$translit);
         }
-        /*
-        Модели 1
-        - Вертикальные 2
-        - Горизонтальные 3
 
-        Материал 4
-        - Гранит 5
-        - Мрамор 6
+        // Товары
+        $productList = [
+            [''],
+        ];
 
-        Портрет 7
-        - Гравировка 8
-        - Фотокерамика 9
+        // Размеры стеллы
+        $sizeList = [
+            ['width' => 80, 'height' => 40, 'thick' => 5, 'category_id' => 2],
+            ['width' => 100, 'height' => 50, 'thick' => 5, 'category_id' => 2],
+            ['width' => 120, 'height' => 60, 'thick' => 5, 'category_id' => 2],
+            ['width' => 80, 'height' => 40, 'thick' => 8, 'category_id' => 2],
+            ['width' => 100, 'height' => 50, 'thick' => 8, 'category_id' => 2],
+            ['width' => 120, 'height' => 60, 'thick' => 8, 'category_id' => 2],
+            ['width' => 140, 'height' => 70, 'thick' => 8, 'category_id' => 2],
+            ['width' => 80, 'height' => 40, 'thick' => 10, 'category_id' => 2],
+            ['width' => 100, 'height' => 40, 'thick' => 10, 'category_id' => 2],
+            ['width' => 120, 'height' => 40, 'thick' => 10, 'category_id' => 2],
+            ['width' => 140, 'height' => 40, 'thick' => 10, 'category_id' => 2],
+            ['width' => 160, 'height' => 40, 'thick' => 10, 'category_id' => 2],
+            ['width' => 100, 'height' => 50, 'thick' => 12, 'category_id' => 2],
+            ['width' => 120, 'height' => 60, 'thick' => 12, 'category_id' => 2],
+            ['width' => 140, 'height' => 70, 'thick' => 12, 'category_id' => 2],
+            ['width' => 160, 'height' => 80, 'thick' => 12, 'category_id' => 2],
 
-        Размер стеллы 10
-        - Вертикальные 11
-        - Горизонтальные 12
-
-        Гравировка 13
-        - Кресты 14
-        - Цветы 15
-        - Ветви 16
-        - Свечи 17
-        - Ангелы 18
-        - Птицы 19
-
-        Надгробие 20
-        */
+            ['width' => 60, 'height' => 80, 'thick' => 5, 'category_id' => 3],
+            ['width' => 70, 'height' => 100, 'thick' => 5, 'category_id' => 3],
+            ['width' => 80, 'height' => 120, 'thick' => 5, 'category_id' => 3],
+            ['width' => 60, 'height' => 80, 'thick' => 8, 'category_id' => 3],
+            ['width' => 70, 'height' => 100, 'thick' => 8, 'category_id' => 3],
+            ['width' => 80, 'height' => 120, 'thick' => 8, 'category_id' => 3],
+            ['width' => 100, 'height' => 140, 'thick' => 8, 'category_id' => 3],
+            ['width' => 60, 'height' => 80, 'thick' => 10, 'category_id' => 3],
+            ['width' => 70, 'height' => 100, 'thick' => 10, 'category_id' => 3],
+            ['width' => 80, 'height' => 120, 'thick' => 10, 'category_id' => 3],
+            ['width' => 100, 'height' => 140, 'thick' => 10, 'category_id' => 3],
+            ['width' => 120, 'height' => 160, 'thick' => 10, 'category_id' => 3],
+            ['width' => 70, 'height' => 100, 'thick' => 12, 'category_id' => 3],
+            ['width' => 80, 'height' => 120, 'thick' => 12, 'category_id' => 3],
+            ['width' => 100, 'height' => 140, 'thick' => 12, 'category_id' => 3],
+            ['width' => 120, 'height' => 160, 'thick' => 12, 'category_id' => 3],
+        ];
+        foreach($sizeList as $size) {
+            \App\Models\Size::factory()->create([
+                'width' => $size['width'],
+                'height' => $size['height'],
+                'thick' => $size['thick'],
+                'category_id' => $size['category_id'],
+            ]);
+        }
 
     }
 }

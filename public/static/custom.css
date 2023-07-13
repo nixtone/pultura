@@ -97,18 +97,6 @@ a:hover {
 .overlay .popup .close::after {
     transform: rotate(-45deg);
 }
-.overlay .cross {
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	gap: 15px;
-}
-.overlay .cross .preview {
-	border: 2px solid transparent;
-	padding: 2px;
-}
-.overlay .cross .preview.active {
-	border-color: red;
-}
 
 .field_group {
 	padding: 10px;
@@ -222,6 +210,10 @@ table.list td, table.list th {
 table.list .tac {
     text-align: center;
 }
+table.list .preview_area {
+    display: flex;
+    gap: 5px;
+}
 
 .ico {
     display: inline-block;
@@ -271,6 +263,11 @@ table.list .tac {
     border-color: #122b45;
 }
 
+.window h2 {
+    border-bottom: 2px solid;
+    padding-bottom: 5px;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -285,8 +282,9 @@ table.list .tac {
     cursor: pointer;
     transition: .2s;
     position: relative;
-    min-width: 200px;
+    min-width: 100px;
     flex-direction: column;
+    box-sizing: border-box;
 }
 .grid.displayName .item {
     padding: 15px 15px 3px;
@@ -298,6 +296,9 @@ table.list .tac {
     padding: 6px 15px;
     background: rgba(255,255,255,.7);
     text-align: center;
+}
+.grid .preview {
+    max-width: 150px;
 }
 
 /* БЭМ */
@@ -338,25 +339,34 @@ header nav a:hover, header nav a.active {
 	gap: 30px;
 }
 
-#product .preview {
+#product .monument {
     max-width: 40px;
     display: block;
+}
+#product .preview {
+    max-width: 100px;
 }
 
 #constructor {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: #ccc;
+    padding-top: 15px;
 }
 #constructor .sticky {
     position: sticky;
     top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
 }
-#constructor .preview {
-    width: 160px;
-    height: 320px;
-    background: url(/static/images/upload/1.png);
+#constructor .monument {
     color: #fff;
+}
+#constructor .part {
+    background: #000;
 }
 #constructor .item {
     touch-action: none;
@@ -367,15 +377,21 @@ header nav a:hover, header nav a.active {
     position: absolute;
 
 }
+#constructor .negative {
+    width: 100%;
+    height: 100%;
+    background-position: 0% 0%;
+    background-size: 100% 100%;
+}
 
 #order label.checked {
     color: #26b24b;
 }
 #order-total {
-	background: #eee;
-	padding: 10px;
-	text-align: center;
-	margin-top: 20px;
+    background: #eee;
+    padding: 10px;
+    text-align: center;
+    margin-top: 15px;
 }
 #order-total .digit {
 	font-size: 1.2em;

@@ -9,6 +9,7 @@ use App\Models\Client;
 use App\Models\Pay;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Size;
 use App\Http\Requests\OrderRequest;
 
 class OrderController extends Controller
@@ -43,7 +44,8 @@ class OrderController extends Controller
         $clientList = Client::all()->reverse();
         $categoryList = Category::all();
         $productList = Product::all();
-        return view('order.create', compact('clientList', 'categoryList', 'productList'));
+        $sizeList = Size::all();
+        return view('order.create', compact('clientList', 'categoryList', 'productList', 'sizeList'));
     }
 
     public function store(OrderRequest $request)
@@ -65,14 +67,23 @@ class OrderController extends Controller
         $data['status_id'] = 1;
         $data['client_id'] = $client_id;
         //
+        $data['model'] = $request->model;
+        $data['material'] = $request->material;
+        $data['portrait'] = $request->portrait;
+        //
         $data['lastname'] = $request->lastname;
         $data['firstname'] = $request->firstname;
         $data['fathername'] = $request->fathername;
         if($request->birth_date) $data['birth_date'] = date("Y-m-d", strtotime($request->birth_date));
         if($request->death_date) $data['death_date'] = date("Y-m-d", strtotime($request->death_date));
         $data['epitafia'] = $request->epitafia;
+        //
+        $data['cross'] = $request->cross;
+        $data['delivery_addr'] = $request->delivery_addr;
+        $data['delivery_km'] = $request->delivery_km;
 
         // Создаем заказ
+        //dd($data);
         $newOrder = Order::create($data);
 
         // Прием оплаты

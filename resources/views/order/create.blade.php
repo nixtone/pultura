@@ -45,23 +45,29 @@
 
             <div class="field_group">
                 <h2>Внешний вид памятника</h2>
-                <div class="field_area inline cpp" data-pp="model">
-                    <input type="checkbox" name="model" id="model" class="ppField">
+                <div class="field_area inline">
+                    <input type="checkbox" name="model" id="model" class="ppField cpp" data-pp="model">
                     <label for="model">Модель <span class="product_name"></span></label>
                 </div>
-                <div class="field_area inline cpp" data-pp="material">
-                    <input type="checkbox" name="material" id="material" class="ppField">
+                <div class="field_area model-size_area" style="display: none;">
+                    <label for="">Размер стеллы</label>
+                    @foreach($categoryList->where('parent_id', 1) as $modelCat)
+                        <select class="field model-size c{{ $modelCat->id }}" data-cat="{{ $modelCat->id }}" style="display: none;">
+                            @foreach($sizeList as $size)
+                                @if($size->category_id == $modelCat->id)
+                                <option value="{{ $size->id }}" data-w="{{ $size->width }}">{{ $size->width }} x {{ $size->height }} x {{ $size->thick }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    @endforeach
+                </div>
+                <div class="field_area inline">
+                    <input type="checkbox" name="material" id="material" class="ppField cpp" data-pp="material">
                     <label for="material">Материал <span class="product_name"></span></label>
                 </div>
-                <div class="field_area inline cpp" data-pp="portrait">
-                    <input type="checkbox" name="portrait" id="portrait" class="ppField">
+                <div class="field_area inline">
+                    <input type="checkbox" name="portrait" id="portrait" class="ppField cpp" data-pp="portrait">
                     <label for="portrait">Портрет <span class="product_name"></span></label>
-                </div>
-                <div class="field_area">
-                    <label for="">Размер стеллы</label>
-                    <select name="" id="" class="field">
-                        <option value=""></option>
-                    </select>
                 </div>
             </div>
 
@@ -114,7 +120,7 @@
                 <div class="field_area">
                     <label for="epitafia">Эпитафия</label>
                     <div class="wrap">
-                        <textarea name="epitafia" id="epitafia" cols="3" class="field text"></textarea>
+                        <textarea name="epitafia" id="epitafia" cols="3" class="field text" data-font="epitafia"></textarea>
                         <input type="number" name="" class="field size" value="18">
                     </div>
                 </div>
@@ -126,36 +132,59 @@
             <div class="field_group">
                 <h2>Гравировка</h2>
                 <div class="field_area inline">
-                    <input type="checkbox" name="cross" id="cross">
-                    <label for="cross" class="cpp" data-pp="cross">Крест (3)</label>
+                    <input type="checkbox" name="cross" id="cross" class="ppField cpp" data-pp="cross">
+                    <label for="cross">Крест <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="flower" id="flower">
-                    <label for="flower">Цветы</label>
+                    <input type="checkbox" name="flower" id="flower" class="ppField cpp" data-pp="flower">
+                    <label for="flower">Цветы <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="branch" id="branch">
-                    <label for="branch">Ветвь (2)</label>
+                    <input type="checkbox" name="branch" id="branch" class="ppField cpp" data-pp="branch">
+                    <label for="branch">Ветвь <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="candle" id="candle">
-                    <label for="candle">Свечи</label>
+                    <input type="checkbox" name="candle" id="candle" class="ppField cpp" data-pp="candle">
+                    <label for="candle">Свечи <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="angel" id="angel">
-                    <label for="angel">Ангелы</label>
+                    <input type="checkbox" name="angel" id="angel" class="ppField cpp" data-pp="angel">
+                    <label for="angel">Ангелы <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="bird" id="bird">
-                    <label for="bird">Птицы</label>
+                    <input type="checkbox" name="bird" id="bird" class="ppField cpp" data-pp="bird">
+                    <label for="bird">Птицы <span class="product_name"></span></label>
                 </div>
             </div>
 
             <div class="field_group">
                 <h2>Дополнения</h2>
                 <div class="field_area inline">
-                    <input type="checkbox" name="tombstone" id="tombstone">
-                    <label for="tombstone">Цветник / надгробие</label>
+                    <input type="checkbox" name="tombstone" id="tombstone" class="ppField cpp" data-pp="tombstone">
+                    <label for="tombstone">Цветник / надгробие <span class="product_name"></span></label>
+                </div>
+                <div class="field_area inline">
+                    <input type="checkbox" name="fence" id="fence" class="ppField cpp" data-pp="fence">
+                    <label for="fence">Ограда <span class="product_name"></span></label>
+                </div>
+                <div class="field_area inline">
+                    <input type="checkbox" name="vase" id="vase" class="ppField cpp" data-pp="vase">
+                    <label for="vasee">Вазы <span class="product_name"></span></label>
+                </div>
+            </div>
+
+            <div class="field_group">
+                <h2>Облицовка (м<sup>2</sup>)</h2>
+                <div class="field_area">
+                    <select name="" id="" class="field">
+                        @foreach($productList->where('category_id', 23) as $product)
+                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="field_area">
+                    <label for="">Площадь (м<sup>2</sup>)</label>
+                    <input type="text" name="" id="" class="field">
                 </div>
             </div>
 
@@ -191,27 +220,36 @@
                 </div>
             </div>
 
+            <div class="field_group">
+                <h2>Комментарий</h2>
+                <div class="field_area">
+                    <textarea name="" id="" rows="5" class="field"></textarea>
+                </div>
+            </div>
+
             {{-- --}}
 
             <div class="field_area">
                 <input type="submit" value="Создать заказ" class="btn">
             </div>
         </form>
-
         <div id="constructor">
             <h2>Эскиз памятника</h2>
             <div class="sticky">
-                <div class="preview">
-                    <div class="item portrait">
-                        <img src="/static/images/upload/port.png" alt="">
+                <div class="monument part" style="width: 160px; height: 320px;">
+                    <div class="negative">
+                        <div class="item portrait">
+                            <img src="" alt="" class="preview">
+                        </div>
+                        <div class="item lastname font_main"></div>
+                        <div class="item firstname font_main"></div>
+                        <div class="item fathername font_main"></div>
+                        <div class="item birth_date font_main"></div>
+                        <div class="item death_date font_main"></div>
+                        <div class="item epitafia font_epitafia"></div>
                     </div>
-                    <div class="item lastname font_main"></div>
-                    <div class="item firstname font_main"></div>
-                    <div class="item fathername font_main"></div>
-                    <div class="item birth_date font_main"></div>
-                    <div class="item death_date font_main"></div>
-                    <div class="item epitafia font_epitafia"></div>
                 </div>
+                <div class="postament part" style="width: 180px; height: 60px;"></div>
                 <div id="order-total">Итого: <span class="digit">107305</span> ₽</div>
             </div>
         </div>
