@@ -22,8 +22,8 @@
             </select>
         </div>
         <div class="field_area">
-            <label for="image">Изображение товара</label>
-            <input type="file" name="image[]" id="image" class="field" multiple accept="image/*">
+            <label for="files">Изображение товара</label>
+            <input type="file" name="files[]" id="files" class="field" multiple accept="image/*">
         </div>
         <div class="field_area">
             <input type="submit" value="Создать товар" class="btn">

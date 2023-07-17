@@ -1,12 +1,12 @@
 @extends('design')
 
-@section('title', $product->name)
+@section('title', "Товар: ".$product->name)
 @section('content')
 <div id="product" class="item block">
     <div class="preview_area">
-        @foreach($product->image as $image)
-            <a href="{{ asset('/storage/images/products/'.$image) }}" data-fancybox="gallery">
-                <img src="{{ asset('/storage/images/products/'.$image) }}" alt="" class="preview bimg">
+        @foreach($product->files as $file)
+            <a href="{{ asset($file) }}" data-fancybox="gallery" class="preview_wrap">
+                <img src="{{ asset($file) }}" alt="" class="preview bimg">
             </a>
         @endforeach
     </div>

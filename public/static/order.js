@@ -1,9 +1,11 @@
 $(document).ready(function() {
 
     // Снимаем чебоксы
+    /*
     $("input[type='checkbox']").each(function(index, el) {
         $(this).prop('checked', false);
     });
+    */
 
     // Собираем вид памятника
     //console.log($(".window.material .tab.page .tab-item .item img").attr('src'));
@@ -33,7 +35,9 @@ $(document).ready(function() {
         // Дополнительные действия
         switch(field) {
             case 'model': {
-                // Отображение select выбора размера модели
+                // Отображаем выбор в эскизе
+                $("#constructor .negative").css('background-image', 'url('+imagePath+'/'+$(this).data('negative')+')');
+                // Отображение выбора размера модели
                 $(".field_area.model-size_area .field.model-size")
                     .removeAttr('name')
                     .hide()
@@ -42,30 +46,55 @@ $(document).ready(function() {
                     .attr('name', 'model_size')
                     .show();
                 $(".field_area.model-size_area").show();
-                // Отображаем выбор в эскизе
-                $("#constructor .negative").css('background-image', 'url('+imagePath+'/'+$(this).data('negative')+')');
-                // Назначаем размеры памятника в эскизе
-                $("#constructor .monument.part").css({
-                    width: 160+'px',
-                    height: 320+'px'
-                });
-                $("#constructor .postament.part").css({
-                    width: 300+'px',
-                    height: 60+'px'
+                // Изменение размера памятника в эскизе
+                $(".field_area.model-size_area .field.model-size.c"+catID).change(function(event) {
+                    let selectedOption = $(this).find("option:selected");
+                    let W = selectedOption.data('w');
+                    let H = selectedOption.data('h');
+                    let Wm, Hm, Wp;
+                    switch(catID) {
+                        case 2: {
+                            Wm = W * 2;
+                            Hm = H * 8;
+                            Wp = W * 2 + 20;
+                        } break;
+                        case 3: {
+                            Wm = 1;
+                            Hm = 1;
+                            Wp = 1;
+                        } break;
+                    }
+                    $("#constructor .monument.part").css({
+                        width: Wm + 'px',
+                        height: Hm + 'px'
+                    });
+                    $("#constructor .postament.part").css({
+                        width: Wp + 'px',
+                    });
                 });
                 /*
-                let monumentWidth = 280;
-                let monumentHeight = 560;
-                let postamentWidth = 300;
-                let postamentHeight = 60;
-
+                let selectedOption = $(".field_area.model-size_area .field.model-size.c"+catID+" option:first");
+                let W = selectedOption.data('w');
+                let H = selectedOption.data('h');
+                let Wm, Hm, Wp;
+                switch(catID) {
+                    case 2: {
+                        Wm = W * 2;
+                        Hm = H * 8;
+                        Wp = W * 2 + 20;
+                    } break;
+                    case 3: {
+                        Wm = 1;
+                        Hm = 1;
+                        Wp = 1;
+                    } break;
+                }
                 $("#constructor .monument.part").css({
-                    width: monumentWidth+'px',
-                    height: monumentHeight+'px'
+                    width: Wm + 'px',
+                    height: Hm + 'px'
                 });
                 $("#constructor .postament.part").css({
-                    width: postamentWidth+'px',
-                    height: postamentHeight+'px'
+                    width: Wp + 'px',
                 });
                 */
             } break;
@@ -73,7 +102,7 @@ $(document).ready(function() {
                 $("#constructor .part").css('background-image', 'url('+$(this).find(".preview").attr('src')+')');
             } break;
             case 'portrait': {
-                $("#constructor .item.portrait .preview").attr('src', imagePath+'/'+$(this).data('negative'));
+                $("#constructor .item.portrait .preview").attr('src', '/'+$(this).data('negative'));
             } break;
             //
         }

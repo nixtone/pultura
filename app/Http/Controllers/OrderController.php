@@ -10,26 +10,14 @@ use App\Models\Pay;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Size;
+use App\Models\Status;
 use App\Http\Requests\OrderRequest;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
 
-    /*
-    public $status;
-
-    public function __construct()
-    {
-        $this->status = collect([
-            1 => 'Принят',
-            2 => 'Выполняется',
-            3 => 'Готов'
-        ]);
-    }
-    foreach($orderList as $index => $order) {
-            $orderList[$index]->status = $this->status[$order->status];
-        }
-    */
+    protected $filePath = "/public/order/";
 
     public function list() {
         $orderList = Order::all()->reverse();
@@ -37,7 +25,12 @@ class OrderController extends Controller
     }
 
     public function item(Order $order) {
-        return view('order.item', compact('order'));
+        $order->model = Product::find($order->model);
+        $order->material = Product::find($order->material);
+        $order->portrait = Product::find($order->portrait);
+        $statusList = Status::all();
+        $categoryList = Category::all();
+        return view('order.item', compact('order', 'categoryList', 'statusList'));
     }
 
     public function create() {
@@ -64,12 +57,16 @@ class OrderController extends Controller
         $data = $request->validated();
 
         // Формируем данные заказа
-        $data['status_id'] = 1;
         $data['client_id'] = $client_id;
+        $data['status_id'] = 1;
         //
         $data['model'] = $request->model;
+        $data['model_size'] = $request->model_size;
         $data['material'] = $request->material;
         $data['portrait'] = $request->portrait;
+
+
+
         //
         $data['lastname'] = $request->lastname;
         $data['firstname'] = $request->firstname;
@@ -78,25 +75,40 @@ class OrderController extends Controller
         if($request->death_date) $data['death_date'] = date("Y-m-d", strtotime($request->death_date));
         $data['epitafia'] = $request->epitafia;
         //
+        /*
         $data['cross'] = $request->cross;
+        */
         $data['delivery_addr'] = $request->delivery_addr;
         $data['delivery_km'] = $request->delivery_km;
 
+        $data['comment'] = $request->comment;
+
         // Создаем заказ
         //dd($data);
-        $newOrder = Order::create($data);
+        $newItem = Order::create($data);
+
+        // Файлы от клиента
+        if($request->hasFile('files')) {
+            $newDir = $this->filePath.$newItem->id;
+            $dir = Storage::makeDirectory($newDir);
+            foreach($request->file('files') as $index => $file) {
+                $filename = $file->getClientOriginalName();
+                $file->storeAs($newDir, $filename);
+                $arFiles[] = $filename;
+            }
+        }
 
         // Прием оплаты
         if($request->pay_amount) {
             Pay::create([
                 'amount' => $request->pay_amount,
                 'comment' => $request->pay_comment,
-                'order_id' => $newOrder->id,
+                'order_id' => $newItem->id,
             ]);
         }
 
         // На страницу заказа
-        return redirect()->route('order.item', $newOrder->id);
+        return redirect()->route('order.item', $newItem->id);
     }
 
     public function edit(Order $order) {

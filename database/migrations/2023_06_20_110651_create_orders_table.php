@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->foreignId('status_id')->constrained()->default(1);
 
-            $table->integer('model')->default(0);
+            $table->integer('model')->nullable();
             $table->string('model_size')->nullable();
-            $table->integer('material')->default(0);
-            $table->integer('portrait')->default(0);
+            $table->integer('material')->nullable();
+            $table->integer('portrait')->nullable();
             $table->string('portrait_size')->nullable();
 
             $table->string('lastname')->nullable();
@@ -45,15 +45,15 @@ return new class extends Migration
             // facing (product_id) облицовка
             // facing m2
 
-            $table->integer('delivery_km')->default(0);
-            $table->text('delivery_point')->nullable();
+            $table->integer('delivery_km')->nullable();
+            $table->text('delivery_addr')->nullable();
 
             $table->text('comment')->nullable();
             $table->date('deadline_date')->nullable();
             $table->float('total_amount')->default(0);
 
             // Конструктор. Техданные конструктора
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

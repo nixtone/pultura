@@ -1,6 +1,3 @@
-@php
-$imagePath = asset('/storage/images/products');
-@endphp
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -162,9 +159,6 @@ $imagePath = asset('/storage/images/products');
 <script src="{{ asset('/static/interact.min.js') }}"></script>
 <script src="{{ asset('/static/order.js') }}"></script>
 @endif
-<script>
-let imagePath = "{{ $imagePath }}";
-</script>
 <script src="{{ asset('/static/custom.js') }}"></script>
 </body>
 </html>

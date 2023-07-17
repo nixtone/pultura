@@ -38,7 +38,7 @@ h1 {
 	padding: 0 0 10px;
 	border-bottom: 3px solid #191b1f;
 }
-h2 {
+h2, h3 {
 	margin: 0 0 15px;
 }
 
@@ -48,6 +48,15 @@ a {
 }
 a:hover {
 	text-decoration: underline;
+}
+
+.textblock {
+    font-size: 1.1em;
+    line-height: 23px;
+}
+.textblock h2 {
+    border-bottom: 2px solid #191b1f;
+    padding-bottom: 10px;
 }
 
 .err {
@@ -210,10 +219,6 @@ table.list td, table.list th {
 table.list .tac {
     text-align: center;
 }
-table.list .preview_area {
-    display: flex;
-    gap: 5px;
-}
 
 .ico {
     display: inline-block;
@@ -343,9 +348,20 @@ header nav a:hover, header nav a.active {
     max-width: 40px;
     display: block;
 }
-#product .preview {
-    max-width: 100px;
+#product.list .preview {
+    max-width: 20px;
 }
+#product .preview_area {
+    display: flex;
+    gap: 5px;
+}
+#product.item .preview_wrap {
+    max-width: 100px;
+    display: block;
+    border: 1px solid;
+    padding: 5px;
+}
+
 
 #constructor {
     display: flex;

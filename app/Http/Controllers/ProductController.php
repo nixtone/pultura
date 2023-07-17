@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    protected $filePath = '/public/images/products';
+    protected $filePath = "/public/product/";
 
     public function list() {
         $productList = Product::all();
@@ -31,19 +31,17 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->validated();
-        $newProduct = Product::create($data);
-        if($request->hasFile('image')) {
-            $iter = 1;
-            foreach($request->file('image') as $index => $file) {
-                $ext = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
-                $productImage[$index] = $newProduct->id.($iter > 1 ? '_'.$iter:'').'.'.$ext;
-                $file->storeAs($this->filePath, $productImage[$index]);
-                $iter++;
+        $newItem = Product::create($data);
+        if($request->hasFile('files')) {
+            $newDir = $this->filePath.$newItem->id;
+            $dir = Storage::makeDirectory($newDir);
+            foreach($request->file('files') as $index => $file) {
+                $filename = $file->getClientOriginalName();
+                $file->storeAs($newDir, $filename);
+                $arFiles[] = $filename;
             }
-            $product = Product::find($newProduct->id);
-            $product->update(['image' => serialize($productImage)]);
         }
-        return redirect()->route('catalog.category.item', $newProduct->category_id);
+        return redirect()->route('catalog.category.item', $newItem->category_id);
     }
 
     public function edit(Product $product) {

@@ -9,9 +9,54 @@
         <input type="submit" value="Печать" onClick="window.print()" class="btn">
     </div> -->
 
-    <h2>Клиент: {{ $order->client->name }}</h2>
+    <div class="status">
+        <form method="post">
+            @csrf
+            <div class="field_area">
+                <h2><label for="status_selected">Статус</label></h2>
+                <select name="status_id" id="status_selected" class="field">
+                    @foreach($statusList as $status)
+                    <option value="{{ $status->id }}" @if($status->id == $order->status->id) selected @endif>{{ $status->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <h2>Клиент: <a href="{{ route('client.item', $order->client->id) }}">{{ $order->client->name }}</a></h2>
     @include('client.inc.item', ['client' => $order->client])
 
+    @if(
+        collect($order->model)->isNotEmpty() AND
+        collect($order->material)->isNotEmpty() AND
+        collect($order->portrait)->isNotEmpty()
+    )
+    <h2>Внешний вид памятника</h2>
+    <table class="list">
+        <tr>
+            <th>Модель</th>
+            <th>Материал</th>
+            <th>Портрет</th>
+        </tr>
+        <tr>
+            <td class="tac">@if(isset($order->model->category_id)) {{ $categoryList->find($order->model->category_id)->name }} "{{ $order->model->name }}" @endif</td>
+            <td class="tac">@if(isset($order->material->category_id)) {{ $categoryList->find($order->material->category_id)->name }} "{{ $order->material->name }}" @endif</td>
+            <td class="tac">@if(isset($order->portrait->category_id)) {{ $categoryList->find($order->portrait->category_id)->name }} "{{ $order->portrait->name }}" @endif</td>
+        </tr>
+        <tr>
+            <td colspan="3">Эскиз</td>
+        </tr>
+    </table>
+    @endif
+
+    @if(
+        collect($order->lastname)->isNotEmpty() AND
+        collect($order->firstname)->isNotEmpty() AND
+        collect($order->fathername)->isNotEmpty() AND
+        collect($order->birth_date)->isNotEmpty() AND
+        collect($order->death_date)->isNotEmpty() AND
+        collect($order->epitafia)->isNotEmpty()
+    )
     <h2>Текст для памятника</h2>
     <table class="list">
         <tr>
@@ -27,6 +72,19 @@
             <td>{{ $order->epitafia }}</td>
         </tr>
     </table>
+    @endif
+
+    @if(collect($order->delivery_addr)->isNotEmpty() AND collect($order->delivery_km)->isNotEmpty())
+    <h2>Услуги</h2>
+    <table class="list">
+        <tr>
+            <th>Доставка</th>
+        </tr>
+        <tr>
+            <td><strong>Адрес:</strong> {{ $order->delivery_addr }} <strong>Км:</strong> {{ $order->delivery_km }}</td>
+        </tr>
+    </table>
+    @endif
 
     <h2>Внесенные платежи</h2>
     <table class="list">
@@ -64,6 +122,39 @@
         </tr>
         @endif
     </table>
+
+
+    <table class="list">
+        @if(collect($order->comment)->isNotEmpty())
+            <tr>
+                <th>Комментарий</th>
+            </tr>
+            <tr>
+                <td>{{ $order->comment }}</td>
+            </tr>
+        @endif
+        @if(!is_null($order->deadline_date))
+            <tr>
+                <th>Исполнить заказ до: {{ $order->deadline_date }}</th>
+            </tr>
+        @endif
+
+
+        <tr>
+            <th>Файлы от клиента</th>
+        </tr>
+        @foreach($order->files as $file)
+        <tr>
+            <td colspan="3">
+                <a href="{{ asset('/storage/order/'.$order->id.'/'.$file) }}">{{ basename($file) }}</a>
+            </td>
+        </tr>
+        @endforeach
+
+            {{-- --}}
+    </table>
+
+
 
     {{--
     <div>
@@ -158,6 +249,9 @@
         </tr>
     </table>
     --}}
+
+
+
 </div>
 
 @endsection

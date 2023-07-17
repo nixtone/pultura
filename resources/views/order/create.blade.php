@@ -4,7 +4,7 @@
 @section('content')
 <div id="order" class="new block">
     <div class="inner">
-        <form action="{{ route('order.store') }}" method="post">
+        <form action="{{ route('order.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="field_group user_choose">
                 <h2>Клиент</h2>
@@ -46,27 +46,27 @@
             <div class="field_group">
                 <h2>Внешний вид памятника</h2>
                 <div class="field_area inline">
-                    <input type="checkbox" name="model" id="model" class="ppField cpp" data-pp="model">
+                    <input type="checkbox" name="model" id="model" class="ppField cpp" data-pp="model" value="0">
                     <label for="model">Модель <span class="product_name"></span></label>
                 </div>
                 <div class="field_area model-size_area" style="display: none;">
                     <label for="">Размер стеллы</label>
                     @foreach($categoryList->where('parent_id', 1) as $modelCat)
-                        <select class="field model-size c{{ $modelCat->id }}" data-cat="{{ $modelCat->id }}" style="display: none;">
+                        <select name="model_size" class="field model-size c{{ $modelCat->id }}" data-cat="{{ $modelCat->id }}" style="display: none;">
                             @foreach($sizeList as $size)
                                 @if($size->category_id == $modelCat->id)
-                                <option value="{{ $size->id }}" data-w="{{ $size->width }}">{{ $size->width }} x {{ $size->height }} x {{ $size->thick }}</option>
+                                <option value="{{ $size->id }}" data-w="{{ $size->width }}" data-h="{{ $size->height }}">{{ $size->width }} x {{ $size->height }} x {{ $size->thick }}</option>
                                 @endif
                             @endforeach
                         </select>
                     @endforeach
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="material" id="material" class="ppField cpp" data-pp="material">
+                    <input type="checkbox" name="material" id="material" class="ppField cpp" data-pp="material" value="0">
                     <label for="material">Материал <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="portrait" id="portrait" class="ppField cpp" data-pp="portrait">
+                    <input type="checkbox" name="portrait" id="portrait" class="ppField cpp" data-pp="portrait" value="0">
                     <label for="portrait">Портрет <span class="product_name"></span></label>
                 </div>
             </div>
@@ -132,31 +132,31 @@
             <div class="field_group">
                 <h2>Гравировка</h2>
                 <div class="field_area inline">
-                    <input type="checkbox" name="cross" id="cross" class="ppField cpp" data-pp="cross">
+                    <input type="checkbox" name="cross" id="cross" class="ppField cpp" data-pp="cross" value="0">
                     <label for="cross">Крест <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="flower" id="flower" class="ppField cpp" data-pp="flower">
+                    <input type="checkbox" name="flower" id="flower" class="ppField cpp" data-pp="flower" value="0">
                     <label for="flower">Цветы <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="branch" id="branch" class="ppField cpp" data-pp="branch">
+                    <input type="checkbox" name="branch" id="branch" class="ppField cpp" data-pp="branch" value="0">
                     <label for="branch">Ветвь <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="candle" id="candle" class="ppField cpp" data-pp="candle">
+                    <input type="checkbox" name="candle" id="candle" class="ppField cpp" data-pp="candle" value="0">
                     <label for="candle">Свечи <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="angel" id="angel" class="ppField cpp" data-pp="angel">
+                    <input type="checkbox" name="angel" id="angel" class="ppField cpp" data-pp="angel" value="0">
                     <label for="angel">Ангелы <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="bird" id="bird" class="ppField cpp" data-pp="bird">
+                    <input type="checkbox" name="bird" id="bird" class="ppField cpp" data-pp="bird" value="0">
                     <label for="bird">Птицы <span class="product_name"></span></label>
                 </div>
             </div>
-
+{{--
             <div class="field_group">
                 <h2>Дополнения</h2>
                 <div class="field_area inline">
@@ -187,7 +187,7 @@
                     <input type="text" name="" id="" class="field">
                 </div>
             </div>
-
+            --}}
             <div class="field_group">
                 <h2>Услуги</h2>
                 <div class="field_area">
@@ -202,6 +202,7 @@
                         </tr>
                     </table>
                 </div>
+                установка демонтаж
             </div>
 
             <div class="field_group">
@@ -221,9 +222,18 @@
             </div>
 
             <div class="field_group">
-                <h2>Комментарий</h2>
+                <h2>Остальное</h2>
                 <div class="field_area">
-                    <textarea name="" id="" rows="5" class="field"></textarea>
+                    <label for="deadline_date">Исполнить заказ до:</label>
+                    <input type="text" name="deadline_date" id="deadline_date" class="field text datemask">
+                </div>
+                <div class="field_area">
+                    <label for="files">Файлы от клиента (фото усопшего, документы...)</label>
+                    <input type="file" name="files[]" id="files" class="field" multiple>
+                </div>
+                <div class="field_area">
+                    <label for="comment">Комментарий</label>
+                    <textarea name="comment" id="comment" rows="5" class="field"></textarea>
                 </div>
             </div>
 
