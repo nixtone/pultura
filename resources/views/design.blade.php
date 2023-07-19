@@ -136,16 +136,16 @@
                 @include('order.inc.window', ['title' => 'Материал', 'field' => 'material', 'parent_cat' => 4, 'displayName' => 1])
                 @include('order.inc.window', ['title' => 'Портрет', 'field' => 'portrait', 'parent_cat' => 7, 'displayName' => 1])
 
-                @include('order.inc.window', ['title' => 'Кресты', 'field' => 'cross', 'parent_cat' => 11, 'displayName' => 0])
-                @include('order.inc.window', ['title' => 'Цветы', 'field' => 'flower', 'parent_cat' => 12, 'displayName' => 0])
-                @include('order.inc.window', ['title' => 'Ветви', 'field' => 'branch', 'parent_cat' => 13, 'displayName' => 0])
-                @include('order.inc.window', ['title' => 'Свечи', 'field' => 'candle', 'parent_cat' => 14, 'displayName' => 0])
-                @include('order.inc.window', ['title' => 'Ангелы', 'field' => 'angel', 'parent_cat' => 15, 'displayName' => 0])
-                @include('order.inc.window', ['title' => 'Птицы', 'field' => 'bird', 'parent_cat' => 16, 'displayName' => 0])
+                @include('order.inc.window', ['title' => 'Кресты', 'field' => 'cross', 'parent_cat' => 11, 'displayName' => 1])
+                @include('order.inc.window', ['title' => 'Цветы', 'field' => 'flower', 'parent_cat' => 12, 'displayName' => 1])
+                @include('order.inc.window', ['title' => 'Ветви', 'field' => 'branch', 'parent_cat' => 13, 'displayName' => 1])
+                @include('order.inc.window', ['title' => 'Свечи', 'field' => 'candle', 'parent_cat' => 14, 'displayName' => 1])
+                @include('order.inc.window', ['title' => 'Ангелы', 'field' => 'angel', 'parent_cat' => 15, 'displayName' => 1])
+                @include('order.inc.window', ['title' => 'Птицы', 'field' => 'bird', 'parent_cat' => 16, 'displayName' => 1])
 
-                @include('order.inc.window', ['title' => 'Цветник / надгробие', 'field' => 'tombstone', 'parent_cat' => 17, 'displayName' => 0])
-                @include('order.inc.window', ['title' => 'Ограда', 'field' => 'fence', 'parent_cat' => 18, 'displayName' => 0])
-                @include('order.inc.window', ['title' => 'Вазы', 'field' => 'vase', 'parent_cat' => 19, 'displayName' => 0])
+                @include('order.inc.window', ['title' => 'Цветник / надгробие', 'field' => 'tombstone', 'parent_cat' => 17, 'displayName' => 1])
+                @include('order.inc.window', ['title' => 'Ограда', 'field' => 'fence', 'parent_cat' => 18, 'displayName' => 1])
+                @include('order.inc.window', ['title' => 'Вазы', 'field' => 'vase', 'parent_cat' => 19, 'displayName' => 1])
             @endif
 
         </div>

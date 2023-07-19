@@ -75,4 +75,5 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('catalog.category.item', $product->category_id);
     }
+
 }

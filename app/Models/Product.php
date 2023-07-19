@@ -17,7 +17,7 @@ class Product extends Model
 
     public function getFilesAttribute($value) {
         foreach(Storage::disk('local')->files("/public/product/{$this->id}") as $file) {
-            $result[pathinfo($file, PATHINFO_FILENAME)] = str_replace("public", "storage", $file);
+            $result[] = str_replace("public", "storage", $file);
         }
         return $result ?? [];
     }

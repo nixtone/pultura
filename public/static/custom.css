@@ -50,6 +50,13 @@ a:hover {
 	text-decoration: underline;
 }
 
+.preload {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .textblock {
     font-size: 1.1em;
     line-height: 23px;
@@ -76,11 +83,13 @@ a:hover {
     z-index: 10;
 }
 .overlay .popup {
-	background: #fff;
-	padding: 15px;
-	position: relative;
-	max-width: 920px;
-	box-sizing: border-box;
+    background: #fff;
+    padding: 15px;
+    position: relative;
+    max-width: 920px;
+    max-height: 900px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 .overlay .popup .close {
     position: absolute;
@@ -105,6 +114,9 @@ a:hover {
 }
 .overlay .popup .close::after {
     transform: rotate(-45deg);
+}
+.blockScroll {
+    overflow: hidden;
 }
 
 .field_group {
@@ -275,8 +287,11 @@ table.list .tac {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 15px;
+    overflow-y: scroll;
+    padding: 5px 15px 5px 0;
+    box-sizing: border-box;
 }
 .grid .item {
     border: 1px solid #ccc;

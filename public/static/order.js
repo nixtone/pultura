@@ -30,13 +30,14 @@ $(document).ready(function() {
         $("label[for='"+field+"']").addClass('checked').find(".product_name").text(': '+catName+' "'+name+'"');
         $("#"+field).prop('checked', true);
         $(".overlay").fadeOut(150);
+        $("body").removeClass('blockScroll');
         // Заполняем поле
         $("#"+field).val(id);
         // Дополнительные действия
         switch(field) {
             case 'model': {
                 // Отображаем выбор в эскизе
-                $("#constructor .negative").css('background-image', 'url('+imagePath+'/'+$(this).data('negative')+')');
+                $("#constructor .negative").css('background-image', 'url('+'/'+$(this).data('negative')+')');
                 // Отображение выбора размера модели
                 $(".field_area.model-size_area .field.model-size")
                     .removeAttr('name')
@@ -107,6 +108,44 @@ $(document).ready(function() {
             //
         }
     });
+
+    // Запрос цены
+    /*
+    $("#order_create").submit(function(event) {
+        event.preventDefault();
+        $.post('/order/price', $(this).serialize(), function(data) {
+            $("#order-total .digit").text(data);
+        });
+    });
+    */
+    function getPriceRequest() {
+        $.ajax({
+            url: '/order/price',
+            type: 'POST',
+            dataType: 'json',
+            data: $("#order_create").serialize(),
+            beforeSend: function() {
+                $(".preload").show();
+            }
+        })
+        .always(function(data) {
+            $(".preload").hide();
+            console.log(data);
+            $("#order-total .digit").text(data);
+        });
+    }
+    $(".field_area .field.text").keyup(function(event) {
+        getPriceRequest();
+    });
+    $(".grid .item").click(function(event) {
+        getPriceRequest();
+    });
+    $("select").change(function(event) {
+        getPriceRequest();
+    });
+    /**/
+
+
 
     /*
     TODO: Допилить чекбоксы 2/2

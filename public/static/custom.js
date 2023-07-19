@@ -59,6 +59,11 @@ $(document).ready(function() {
         // Сбор данных
         let ppWindowName = $(this).data('pp');
         let $this = $(this);
+        let maxHeight = $("body").height() > 900 ? 900 : $("body").height();
+
+        $("body").addClass('blockScroll');
+        $(".popup, .grid").css('max-height', maxHeight);
+        //$(".tab-area .tab.page .tab-item .grid").height($(".tab-area .tab.page .tab-item").height());
         // Снятие чекбокса
         uncheck($this, ppWindowName);
         // Открытие
@@ -66,10 +71,11 @@ $(document).ready(function() {
         $(".overlay, .overlay ." + ppWindowName).fadeIn(150);
         // Закрытие
         $(".overlay").click(function(event) {
-            // $this.prop('checked', false);
-            uncheck($this, ppWindowName);
             if(!$(".popup").is(event.target) && $(".popup").has(event.target).length === 0 || event.target.className == "close") {
                 $(".overlay").fadeOut(150);
+                //
+                $("body").removeClass('blockScroll');
+                uncheck($this, ppWindowName);
             }
         });
     });

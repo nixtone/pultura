@@ -8,8 +8,12 @@
             data-id="{{ $product->id }}"
             data-name="{{ $product->name }}"
             data-cat="{{ $category->id }}"
-            @isset($product->files['negative']) data-negative="{{ $product->files['negative'] }}" @endisset >
-            <img src="{{ asset($product->files['preview']) }}" alt="" class="preview">
+            @if(!empty($product->files[0])) data-negative="{{ $product->files[0] }}" @endif >
+            @if(!empty($product->files[1]))
+                <img src="{{ asset($product->files[1]) }}" alt="" class="preview">
+            @elseif(!empty($product->files[0]))
+                <img src="{{ asset($product->files[0]) }}" alt="" class="preview">
+            @endif
             @if($displayName)<div class="name">{{ $product->name }}</div>@endif
         </div>
         @endif

@@ -4,7 +4,7 @@
 @section('content')
 <div id="order" class="new block">
     <div class="inner">
-        <form action="{{ route('order.store') }}" method="post" enctype="multipart/form-data">
+        <form id="order_create" action="{{ route('order.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="field_group user_choose">
                 <h2>Клиент</h2>
@@ -156,7 +156,7 @@
                     <label for="bird">Птицы <span class="product_name"></span></label>
                 </div>
             </div>
-{{--
+
             <div class="field_group">
                 <h2>Дополнения</h2>
                 <div class="field_area inline">
@@ -187,7 +187,7 @@
                     <input type="text" name="" id="" class="field">
                 </div>
             </div>
-            --}}
+            {{----}}
             <div class="field_group">
                 <h2>Услуги</h2>
                 <div class="field_area">
@@ -232,7 +232,7 @@
                     <input type="file" name="files[]" id="files" class="field" multiple>
                 </div>
                 <div class="field_area">
-                    <label for="comment">Комментарий</label>
+                    <label for="comment">Комментарий к заказу</label>
                     <textarea name="comment" id="comment" rows="5" class="field"></textarea>
                 </div>
             </div>
@@ -246,6 +246,9 @@
         <div id="constructor">
             <h2>Эскиз памятника</h2>
             <div class="sticky">
+                <div class="preload" style="display: none">
+                    <img src="{{ asset('/static/images/preload.gif') }}" alt="" class="pic">
+                </div>
                 <div class="monument part" style="width: 160px; height: 320px;">
                     <div class="negative">
                         <div class="item portrait">

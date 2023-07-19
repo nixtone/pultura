@@ -139,7 +139,7 @@
             </tr>
         @endif
 
-
+        @if(!empty($order->files))
         <tr>
             <th>Файлы от клиента</th>
         </tr>
@@ -150,7 +150,7 @@
             </td>
         </tr>
         @endforeach
-
+        @endif
             {{-- --}}
     </table>
 

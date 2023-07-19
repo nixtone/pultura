@@ -23,7 +23,7 @@
             </select>
         </div>
         <div class="field_area">
-            <input type="submit" value="Создать товар" class="btn">
+            <input type="submit" value="Редактировать товар" class="btn">
         </div>
     </form>
 </div>

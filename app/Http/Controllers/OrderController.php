@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+use http\Client\Response;
 use Illuminate\Http\Request;
 
 use App\Models\Order;
@@ -125,5 +127,32 @@ class OrderController extends Controller
     public function destroy(Order $order) {
         $order->delete();
         return redirect()->route('home');
+    }
+
+    public function pdf(Order $order) {
+
+        //return view("order.pdf");
+
+        // Сбор данных
+        $order->model = Product::find($order->model);
+        $order->material = Product::find($order->material);
+        $order->portrait = Product::find($order->portrait);
+        $statusList = Status::all();
+        $categoryList = Category::all();
+
+        // Формируем PDF
+        $pdf = Pdf::loadView('order.pdf', compact('order'));
+        $pdf->setOption([
+            'defaultPaperSize' => "a4",
+            'defaultFont' => 'dejavu serif',
+            // "default_font" => "dejavu serif",
+            // 'dpi' => 150,
+        ]);
+        return $pdf->stream();
+        // return $pdf->download('invoice.pdf');
+    }
+
+    public function price(OrderRequest $request) {
+        return json_encode($_POST);
     }
 }
