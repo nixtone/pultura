@@ -286,18 +286,18 @@ class DatabaseSeeder extends Seeder
             // Материал
 
             // Гранит
-            ['name' => 'Габбро', 'price' => 0, 'category_id' => 5, 'sort' => 0],
-            ['name' => 'Габбро Диабаз', 'price' => 0, 'category_id' => 5, 'sort' => 0],
-            ['name' => 'Volga Blue', 'price' => 0, 'category_id' => 5, 'sort' => 0],
-            ['name' => 'Дымовский', 'price' => 0, 'category_id' => 5, 'sort' => 0],
-            ['name' => 'Лезники', 'price' => 0, 'category_id' => 5, 'sort' => 0],
-            ['name' => 'Imperial Red', 'price' => 0, 'category_id' => 5, 'sort' => 0],
-            ['name' => 'Мансуровский', 'price' => 0, 'category_id' => 5, 'sort' => 0],
-            ['name' => 'Масловский', 'price' => 0, 'category_id' => 5, 'sort' => 0],
-            ['name' => 'Гранатовый амфиболит', 'price' => 0, 'category_id' => 5, 'sort' => 0],
+            ['name' => 'Габбро', 'price' => 600000, 'category_id' => 5, 'sort' => 0],
+            ['name' => 'Габбро Диабаз', 'price' => 600000, 'category_id' => 5, 'sort' => 0],
+            ['name' => 'Volga Blue', 'price' => 600000, 'category_id' => 5, 'sort' => 0],
+            ['name' => 'Дымовский', 'price' => 600000, 'category_id' => 5, 'sort' => 0],
+            ['name' => 'Лезники', 'price' => 600000, 'category_id' => 5, 'sort' => 0],
+            ['name' => 'Imperial Red', 'price' => 600000, 'category_id' => 5, 'sort' => 0],
+            ['name' => 'Мансуровский', 'price' => 600000, 'category_id' => 5, 'sort' => 0],
+            ['name' => 'Масловский', 'price' => 600000, 'category_id' => 5, 'sort' => 0],
+            ['name' => 'Гранатовый амфиболит', 'price' => 600000, 'category_id' => 5, 'sort' => 0],
 
             // Мрамор
-            ['name' => 'Полевской', 'price' => 0, 'category_id' => 6, 'sort' => 0],
+            ['name' => 'Полевской', 'price' => 400000, 'category_id' => 6, 'sort' => 0],
 
             // Портреты
 

@@ -105,7 +105,24 @@ $(document).ready(function() {
             case 'portrait': {
                 $("#constructor .item.portrait .preview").attr('src', '/'+$(this).data('negative'));
             } break;
-            //
+            case 'cross': {
+                $("#constructor .item.cross .preview").attr('src', '/'+$(this).data('negative'));
+            } break;
+            case 'flower': {
+                $("#constructor .item.flower .preview").attr('src', '/'+$(this).data('negative'));
+            } break;
+            case 'branch': {
+                $("#constructor .item.branch .preview").attr('src', '/'+$(this).data('negative'));
+            } break;
+            case 'candle': {
+                $("#constructor .item.candle .preview").attr('src', '/'+$(this).data('negative'));
+            } break;
+            case 'angel': {
+                $("#constructor .item.angel .preview").attr('src', '/'+$(this).data('negative'));
+            } break;
+            case 'bird': {
+                $("#constructor .item.bird .preview").attr('src', '/'+$(this).data('negative'));
+            } break;
         }
     });
 
@@ -132,6 +149,7 @@ $(document).ready(function() {
             $(".preload").hide();
             console.log(data);
             $("#order-total .digit").text(data);
+            $("#total_amount").val(data);
         });
     }
     $(".field_area .field.text").keyup(function(event) {
@@ -143,7 +161,7 @@ $(document).ready(function() {
     $("select").change(function(event) {
         getPriceRequest();
     });
-    /**/
+
 
 
 

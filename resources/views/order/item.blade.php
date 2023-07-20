@@ -154,7 +154,7 @@
             {{-- --}}
     </table>
 
-
+    <a href="{{ route('order.pdf', $order->id) }}" class="btn">Страница на печать</a>
 
     {{--
     <div>

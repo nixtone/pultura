@@ -153,6 +153,51 @@ class OrderController extends Controller
     }
 
     public function price(OrderRequest $request) {
+        $total = 0;
+        // Сбор данных
+        $productList = Product::all();
+        // Стоимость памятника
+        if(!empty($_POST['model_size']) AND !empty($_POST['material'])) {
+            $size = Size::find((int)$_POST['model_size']);
+            $obyem = ($size['width'] * $size['height'] * $size['thick']) / 1000000;
+            $materialPrice = $productList[(int)$_POST['material']]->price;
+            /*
+            Найти объем (желательно сложить со стеллой) --- 80 x 40 x 5 = 16000
+            Разделить на миллион --- 16000/1000000 = 0,016
+            Умножить на стоимость материала за куб --- 0.016 x 600000 = 9600
+            Надбавка за цвет 20% --- 9600 + 1920 = 11520
+            */
+            $total += $obyem * $materialPrice;
+        }
+        // ФИО
+        if(!empty($_POST['lastname']) AND !empty($_POST['firstname']) AND !empty($_POST['fathername'])) {
+            $total += 2500;
+        }
+        // Эпитафия
+        if(!empty($_POST['epitafia'])) {
+            $total += mb_strlen($_POST['epitafia']) * $productList->where('id', 274)->first()->price;
+        }
+        // Облицовка
+        if(!empty($_POST['face']) AND !empty($_POST['face_km'])) {
+            $total += $productList->where('id', (int)$_POST['face'])->first()->price * (int)$_POST['face_km'];
+        }
+        // Доставка
+        if(!empty($_POST['delivery_km'])) {
+            $do10km = $productList->where('id', 269)->first()->price;
+            $zakm = $productList->where('id', 270)->first()->price;
+
+            $total += $do10km;
+
+            if($_POST['delivery_km'] > 10) {
+                $total += ($_POST['delivery_km'] - 10) * $zakm;
+            }
+        }
+
+
+
+
+        //return json_encode($face); // ->price
+        return json_encode($total);
         return json_encode($_POST);
     }
 }

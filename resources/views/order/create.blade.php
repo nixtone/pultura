@@ -176,15 +176,16 @@
             <div class="field_group">
                 <h2>Облицовка (м<sup>2</sup>)</h2>
                 <div class="field_area">
-                    <select name="" id="" class="field">
-                        @foreach($productList->where('category_id', 23) as $product)
-                        <option value="{{ $product->id }}">{{ $product->name }}</option>
-                        @endforeach
-                    </select>
+                    <label for="face_km">Площадь (м<sup>2</sup>)</label>
+                    <input type="text" name="face_km" id="face_km" class="field">
                 </div>
                 <div class="field_area">
-                    <label for="">Площадь (м<sup>2</sup>)</label>
-                    <input type="text" name="" id="" class="field">
+                    <select name="face" id="" class="field">
+                        <option value="0" selected></option>
+                        @foreach($productList->where('category_id', 23) as $product)
+                        <option value="{{ $product->id }}">{{ $product->name }} / {{ $product->price }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             {{----}}
@@ -198,11 +199,18 @@
                         </tr>
                         <tr>
                             <td><input type="text" name="delivery_addr" id="delivery_addr" class="field"></td>
-                            <td><input type="text" name="delivery_km" id="delivery_km" class="field"></td>
+                            <td><input type="text" name="delivery_km" id="delivery_km" class="field text"></td>
                         </tr>
                     </table>
                 </div>
-                установка демонтаж
+                <div class="field_area inline">
+                    <input type="checkbox" name="install" id="install">
+                    <label for="install">Установка</label>
+                </div>
+                <div class="field_area inline">
+                    <input type="checkbox" name="deinstall" id="deinstall">
+                    <label for="deinstall">Демонтаж</label>
+                </div>
             </div>
 
             <div class="field_group">
@@ -240,6 +248,7 @@
             {{-- --}}
 
             <div class="field_area">
+                <input type="hidden" name="total_amount" value="0" id="total_amount">
                 <input type="submit" value="Создать заказ" class="btn">
             </div>
         </form>
@@ -251,15 +260,37 @@
                 </div>
                 <div class="monument part" style="width: 160px; height: 320px;">
                     <div class="negative">
+
                         <div class="item portrait">
                             <img src="" alt="" class="preview">
                         </div>
+
                         <div class="item lastname font_main"></div>
                         <div class="item firstname font_main"></div>
                         <div class="item fathername font_main"></div>
                         <div class="item birth_date font_main"></div>
                         <div class="item death_date font_main"></div>
                         <div class="item epitafia font_epitafia"></div>
+
+                        <div class="item cross">
+                            <img src="" alt="" class="preview" style="max-width: 50px;">
+                        </div>
+                        <div class="item flower">
+                            <img src="" alt="" class="preview" style="max-width: 130px;">
+                        </div>
+                        <div class="item branch">
+                            <img src="" alt="" class="preview" style="max-width: 130px;">
+                        </div>
+                        <div class="item candle">
+                            <img src="" alt="" class="preview" style="max-width: 50px;">
+                        </div>
+                        <div class="item angel">
+                            <img src="" alt="" class="preview" style="max-width: 130px;">
+                        </div>
+                        <div class="item bird">
+                            <img src="" alt="" class="preview" style="max-width: 130px;">
+                        </div>
+
                     </div>
                 </div>
                 <div class="postament part" style="width: 180px; height: 60px;"></div>

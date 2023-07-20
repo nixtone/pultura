@@ -27,3 +27,14 @@ Laravel v10.13.5
 - Авторизация / Регистрация
 - Резервное копирование БД, ежесуточно
 - Поиск и фильтр заказов
+
+
+### Развертывание проекта
+
+1. composer install  
+2. Сгенерировать файл .env  
+3. php artisan key:generate  
+4. php artisan db:seed  
+5. php artisan storage:link  
+6. Разместить в корне .htaccess  
+7. Копировать каталог картинок "product" в "/storage/app/public/"  
