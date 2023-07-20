@@ -23,7 +23,8 @@ class PayRequest extends FormRequest
     {
         return [
             'amount' => '',
-            'comment' => ''
+            'comment' => '',
+            'order_id' => '',
         ];
     }
 }

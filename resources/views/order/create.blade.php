@@ -294,7 +294,7 @@
                     </div>
                 </div>
                 <div class="postament part" style="width: 180px; height: 60px;"></div>
-                <div id="order-total">Итого: <span class="digit">107305</span> ₽</div>
+                <div id="order-total">Итого: <span class="digit">0</span> ₽</div>
             </div>
         </div>
 

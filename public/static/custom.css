@@ -231,6 +231,9 @@ table.list td, table.list th {
 table.list .tac {
     text-align: center;
 }
+table.list .tar {
+    text-align: right;
+}
 
 .ico {
     display: inline-block;
@@ -428,6 +431,15 @@ header nav a:hover, header nav a.active {
 	font-size: 1.2em;
 	font-weight: bold;
 	color: #0d70d9;
+}
+#order .total_amount {
+    font-size: 1.2em;
+}
+#order .pay_complete {
+    color: #26b24b;
+}
+#order .pay_status .item.remain {
+    color: #da7070;
 }
 
 footer .container {

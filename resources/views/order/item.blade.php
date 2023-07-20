@@ -116,11 +116,22 @@
             @endif
         </tr>
         @endforeach
-        <tr>
-            <td colspan="1">Стоимость заказа: {{ $order->total_amount }}</td>
-            <td colspan="4">Осталось доплатить: 0</td>
-        </tr>
+
         @endif
+        <tr class="pay_status">
+            <td class="tac"><span class="item paid">Внесено: <strong class="digit">{{ $order->paid }}</strong></span></td>
+            <td colspan="4">
+                @if(!$order->remain)
+                    <span class="pay_complete">Оплачено</span>
+                @else
+                    <span class="item remain">Осталось: <strong class="digit">{{ $order->remain }}</strong></span>
+                @endif
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" class="tar total_amount"><span class="item amount">Стоимость заказа: <strong class="digit">{{ $order->total_amount }}</strong></span></td>
+        </tr>
     </table>
 
 

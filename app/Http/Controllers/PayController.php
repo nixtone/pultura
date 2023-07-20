@@ -16,8 +16,9 @@ class PayController extends Controller
     {
         // TODO: создание новой оплаты SQLSTATE[HY000]: General error: 1364 Field 'order_id' doesn't have a default value
         $data = $request->validated();
+
         $newPay = Pay::create($data);
-        return redirect()->route('order.item', $newPay->id);
+        return redirect()->route('order.item', $data['order_id']);
     }
 
     public function edit(Pay $pay) {

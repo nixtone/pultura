@@ -27,11 +27,17 @@ class OrderController extends Controller
     }
 
     public function item(Order $order) {
+        // Сбор данных
         $order->model = Product::find($order->model);
         $order->material = Product::find($order->material);
         $order->portrait = Product::find($order->portrait);
         $statusList = Status::all();
         $categoryList = Category::all();
+        // Калькуляция оплаты
+        $order->paid = 0;
+        foreach($order->pay as $pay) $order->paid += $pay->amount;
+        $order->remain = $order->total_amount - $order->paid;
+        // Шаблон страницы
         return view('order.item', compact('order', 'categoryList', 'statusList'));
     }
 
@@ -85,8 +91,11 @@ class OrderController extends Controller
 
         $data['comment'] = $request->comment;
 
+        $data['total_amount'] = $request->total_amount;
+
         // Создаем заказ
-        //dd($data);
+
+
         $newItem = Order::create($data);
 
         // Файлы от клиента
