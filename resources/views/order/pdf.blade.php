@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<title>Document</title>
+<title>Заказ {{ $order->id }}</title>
 <style>
      @page {
             margin: 20px 25px !important;

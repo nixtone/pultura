@@ -13,25 +13,26 @@
                 <td colspan="4" style="text-align: center">Категорий нет</td>
             </tr>
         @else
-        @foreach($categoryList as $category)
-        <tr>
-            <td><a href="{{ route('catalog.category.item', $category->id) }}">{{ $category->name }}</a></td>
-            <td class="tac"><a href="{{ route('catalog.category.edit', $category->id) }}" class="edit ico"></a></td>
-            <td class="tac">
-                <form action="{{ route('catalog.category.delete', $category->id) }}" method="post">
-                    @csrf
-                    @method('delete')
-                    <input type="submit" value="" class="delete ico">
-                </form>
-            </td>
-        </tr>
-        @endforeach
+
+            @foreach($categoryList as $category)
+                @if(!$category->parent_id)
+                    @include('category.inc.item', ['child' => false])
+                    @foreach($categoryList as $category2)
+                        @if($category->id == $category2->parent_id)
+                            @include('category.inc.item', ['category' => $category2, 'child' => true])
+                        @endif
+                    @endforeach
+                @endif
+                {{--
+                @if($category->children)
+                    @include('category.inc.item', ['child' => true])
+                @else
+                    @include('category.inc.item', ['child' => true])
+                @endif
+                --}}
+            @endforeach
+
         @endif
     </table>
 
 @endsection
-
-
-
-
-

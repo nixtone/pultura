@@ -22,6 +22,9 @@ Laravel v10.13.5
 - Преобразование даты с русскими месяцами
 - Размеры горизонтальных памятников
 - Расчет цены
+- Разделить клиентов (дилеры)
+- поля для ввода: Установка, Демонтаж
+- Подсвечивать заказ за 10 дней перед дедлайном
 
 Приоритет 2:
 - Авторизация / Регистрация
@@ -34,7 +37,9 @@ Laravel v10.13.5
 1. composer install  
 2. Сгенерировать файл .env  
 3. php artisan key:generate  
-4. php artisan db:seed  
-5. php artisan storage:link  
-6. Разместить в корне .htaccess  
-7. Копировать каталог картинок "product" в "/storage/app/public/"  
+4. Создать БД  
+5. php artisan migrate  
+6. php artisan db:seed  
+7. php artisan storage:link  
+8. Разместить в корне .htaccess  
+9. Копировать каталог картинок "product" в "/storage/app/public/"  

@@ -61,12 +61,13 @@ Route::middleware('auth')->group(function() {
         Route::get('/new', [OrderController::class, 'create'])->name('create');
         Route::get('/edit/{order}', [OrderController::class, 'edit'])->name('edit');
         Route::get('/{order}', [OrderController::class, 'item'])->name('item');
-        Route::get('/{order}/pdf', [OrderController::class, 'pdf'])->name('pdf');
+        Route::get('/{order}/pdfstream', [OrderController::class, 'pdfStream'])->name('pdfstream');
+        Route::get('/{order}/pdfdownload', [OrderController::class, 'pdfDownload'])->name('pdfdownload');
+        Route::get('/{order}/contract', [OrderController::class, 'contract'])->name('contract');
         Route::post('/store', [OrderController::class, 'store'])->name('store');
         Route::patch('/update/{order}', [OrderController::class, 'update'])->name('update');
         Route::delete('/delete/{order}', [OrderController::class, 'destroy'])->name('delete');
         Route::post('/price', [OrderController::class, 'price'])->name('price');
-
     });
 
     // Платежи

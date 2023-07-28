@@ -40,6 +40,20 @@ $(document).ready(function() {
     // fancybox
     $('[data-fancybox="gallery"], [data-fancybox]').fancybox();
 
+    // Смена статуса
+    $("#status_selected").change(function(event) {
+        let $this = $(this);
+        $.ajax({
+            url: '/order/update/1',
+            type: 'POST',
+            dataType: 'json',
+            data: $this.serialize(),
+        })
+        .always(function(data) {
+            console.log(data);
+        });
+    });
+
     // Отмена выбора на чекбоксе
     function uncheck($this, ppWindowName) {
         if($this.prop('checked') == false) {

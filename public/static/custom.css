@@ -149,7 +149,7 @@ form .field_area:first-child {
     margin-bottom: 5px;
     cursor: pointer;
 }
-.field_area .field {
+.field {
     display: block;
     padding: 6px 6px 7px;
     box-sizing: border-box;
@@ -192,6 +192,11 @@ form .field_area:first-child {
 .btn:hover {
 	background: #b8dfcd;
 	text-decoration: none;
+}
+.btn.s1 {
+    display: inline-block;
+    background: #78bdef;
+    color: #f9feff;
 }
 
 .advice {
@@ -409,7 +414,11 @@ header nav a:hover, header nav a.active {
     transform: translate(0px, 0px);
     touch-action: none;
     position: absolute;
+    border: 1px solid transparent;
 
+}
+#constructor .item.hover {
+    border-color: #f9feff;
 }
 #constructor .negative {
     width: 100%;

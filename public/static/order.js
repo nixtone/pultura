@@ -1,17 +1,5 @@
 $(document).ready(function() {
 
-    // Снимаем чебоксы
-    /*
-    $("input[type='checkbox']").each(function(index, el) {
-        $(this).prop('checked', false);
-    });
-    */
-
-    // Собираем вид памятника
-    //console.log($(".window.material .tab.page .tab-item .item img").attr('src'));
-    //console.log($(".window.material .tab.page .tab-item .item img").attr('src'));
-
-
     // Выбор клиента
     $(".field_group.user_choose input[name='choose_client']").click(function(event) {
         $(".field_group.user_choose .row").removeClass('active').parent().find(".row.c" + $(this).val()).addClass('active');
@@ -74,6 +62,7 @@ $(document).ready(function() {
                     });
                 });
                 /*
+                TODO: Горизонтальные размеры
                 let selectedOption = $(".field_area.model-size_area .field.model-size.c"+catID+" option:first");
                 let W = selectedOption.data('w');
                 let H = selectedOption.data('h');
@@ -127,14 +116,6 @@ $(document).ready(function() {
     });
 
     // Запрос цены
-    /*
-    $("#order_create").submit(function(event) {
-        event.preventDefault();
-        $.post('/order/price', $(this).serialize(), function(data) {
-            $("#order-total .digit").text(data);
-        });
-    });
-    */
     function getPriceRequest() {
         $.ajax({
             url: '/order/price',
@@ -146,8 +127,8 @@ $(document).ready(function() {
             }
         })
         .always(function(data) {
-            $(".preload").hide();
             console.log(data);
+            $(".preload").hide();
             $("#order-total .digit").text(data);
             $("#total_amount").val(data);
         });
@@ -162,15 +143,10 @@ $(document).ready(function() {
         getPriceRequest();
     });
 
-
-
-
-    /*
-    TODO: Допилить чекбоксы 2/2
-    $("#order.new .ppField").click(function(event) {
-        $(this).closest(".cpp").trigger('click');
+    // Синхронизация с "Итого" при корректировке цены
+    $("#total_amount").keyup(function(event) {
+        $("#order-total .digit").text($(this).val());
     });
-    */
 
     // Текст для памятника
     $(".field.text").keyup(function(event) {
@@ -204,8 +180,52 @@ $(document).ready(function() {
 
     // Конструктор
 
+    // Наведение на элемент
+    $("#constructor .item").hover(function() {
+        $(this).addClass('hover');
+    }, function() {
+        $(this).removeClass('hover');
+    });
+
     // target elements with the "draggable" class
-    interact('#constructor .item').draggable({
+    interact('#constructor .item').resizable({
+        // resize from all edges and corners
+        edges: { left: true, right: true, bottom: true, top: true },
+
+        listeners: {
+            move (event) {
+                var target = event.target
+                var x = (parseFloat(target.getAttribute('data-x')) || 0)
+                var y = (parseFloat(target.getAttribute('data-y')) || 0)
+
+                // update the element's style
+                target.style.width = event.rect.width + 'px'
+                target.style.height = event.rect.height + 'px'
+
+                // translate when resizing from top or left edges
+                x += event.deltaRect.left
+                y += event.deltaRect.top
+
+                target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+
+                target.setAttribute('data-x', x)
+                target.setAttribute('data-y', y)
+                //target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
+            }
+        },
+        modifiers: [
+            // keep the edges inside the parent
+            interact.modifiers.restrictEdges({
+                outer: 'parent'
+            }),
+
+            // minimum size
+            interact.modifiers.restrictSize({
+                min: { width: 10, height: 10 }
+            })
+        ],
+        inertia: true
+    }).draggable({
         // enable inertial throwing
         inertia: true,
         // keep the element within the area of it's parent

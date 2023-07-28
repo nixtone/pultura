@@ -19,19 +19,11 @@
         @foreach($productList as $product)
         <tr>
             <td class="preview_area">
-
                 @foreach($product->files as $file)
                     <a href="{{ asset($file) }}" data-fancybox="gallery">
                         <img src="{{ asset($file) }}" alt="" class="preview bimg">
                     </a>
                 @endforeach
-                {{--
-                @foreach($product->image as $image)
-                    <a href="{{ asset('/storage/images/products/'.$image) }}" data-fancybox="gallery">
-                        <img src="{{ asset('/storage/images/products/'.$image) }}" alt="" class="preview bimg">
-                    </a>
-                @endforeach
-                --}}
             </td>
             <td><a href="{{ route('catalog.product.item', $product->id) }}">{{ $product->name }}</a></td>
             <td class="tac">{{ $product->price }}</td>

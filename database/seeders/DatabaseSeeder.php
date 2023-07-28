@@ -69,9 +69,14 @@ class DatabaseSeeder extends Seeder
 
             ['name' => 'Облицовка', 'parent_id' => null], // ID:23
 
-            ['name' => 'Услуги', 'parent_id' => null], // ID:24
+            ['name' => 'Услуги', 'parent_id' => null],
 
-            ['name' => 'Стекло', 'parent_id' => 4] // ID:25
+            ['name' => 'Стекло', 'parent_id' => 4],
+
+            ['name' => 'Иконы', 'parent_id' => 10],
+            ['name' => 'Полумесяц', 'parent_id' => 10],
+
+            ['name' => 'Текст для памятника', 'parent_id' => null],
 
         ];
         foreach($categoryList as $category) {
@@ -302,9 +307,9 @@ class DatabaseSeeder extends Seeder
             // Портреты
 
             // Гравировка
-            ['name' => 'Бюст', 'price' => 0, 'category_id' => 8, 'sort' => 0],
-            ['name' => 'По пояс', 'price' => 0, 'category_id' => 8, 'sort' => 0],
-            ['name' => 'Во весь рост', 'price' => 0, 'category_id' => 8, 'sort' => 0],
+            ['name' => 'Бюст', 'price' => 4500, 'category_id' => 8, 'sort' => 0],
+            ['name' => 'По пояс', 'price' => 6000, 'category_id' => 8, 'sort' => 0],
+            ['name' => 'Во весь рост', 'price' => 8000, 'category_id' => 8, 'sort' => 0],
 
             // Фотокерамика
             ['name' => 'Прямой 13x18 ч/б', 'price' => 0, 'category_id' => 9, 'sort' => 0],
@@ -325,55 +330,55 @@ class DatabaseSeeder extends Seeder
             // Дополнительная гравировка
 
             // Кресты
-            ['name' => 'Крест №1', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №2', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №3', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №4', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №5', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №6', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №7', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №8', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №9', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №10', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №11', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №12', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №13', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №14', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №15', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №16', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №17', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №18', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №19', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №20', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №21', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №22', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №23', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №24', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №25', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №26', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №27', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №28', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №29', 'price' => 0, 'category_id' => 11, 'sort' => 0],
-            ['name' => 'Крест №30', 'price' => 0, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №1', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №2', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №3', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №4', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №5', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №6', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №7', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №8', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №9', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №10', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №11', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №12', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №13', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №14', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №15', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №16', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №17', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №18', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №19', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №20', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №21', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №22', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №23', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №24', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №25', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №26', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №27', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №28', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №29', 'price' => 300, 'category_id' => 11, 'sort' => 0],
+            ['name' => 'Крест №30', 'price' => 300, 'category_id' => 11, 'sort' => 0],
 
             // Цветы
-            ['name' => 'Цветы №1', 'price' => 0, 'category_id' => 12, 'sort' => 0],
-            ['name' => 'Цветы №2', 'price' => 0, 'category_id' => 12, 'sort' => 0],
-            ['name' => 'Цветы №3', 'price' => 0, 'category_id' => 12, 'sort' => 0],
-            ['name' => 'Цветы №4', 'price' => 0, 'category_id' => 12, 'sort' => 0],
-            ['name' => 'Цветы №5', 'price' => 0, 'category_id' => 12, 'sort' => 0],
-            ['name' => 'Цветы №6', 'price' => 0, 'category_id' => 12, 'sort' => 0],
-            ['name' => 'Цветы №7', 'price' => 0, 'category_id' => 12, 'sort' => 0],
-            ['name' => 'Цветы №8', 'price' => 0, 'category_id' => 12, 'sort' => 0],
-            ['name' => 'Цветы №9', 'price' => 0, 'category_id' => 12, 'sort' => 0],
+            ['name' => 'Цветы №1', 'price' => 500, 'category_id' => 12, 'sort' => 0],
+            ['name' => 'Цветы №2', 'price' => 500, 'category_id' => 12, 'sort' => 0],
+            ['name' => 'Цветы №3', 'price' => 500, 'category_id' => 12, 'sort' => 0],
+            ['name' => 'Цветы №4', 'price' => 500, 'category_id' => 12, 'sort' => 0],
+            ['name' => 'Цветы №5', 'price' => 500, 'category_id' => 12, 'sort' => 0],
+            ['name' => 'Цветы №6', 'price' => 500, 'category_id' => 12, 'sort' => 0],
+            ['name' => 'Цветы №7', 'price' => 500, 'category_id' => 12, 'sort' => 0],
+            ['name' => 'Цветы №8', 'price' => 500, 'category_id' => 12, 'sort' => 0],
+            ['name' => 'Цветы №9', 'price' => 500, 'category_id' => 12, 'sort' => 0],
 
             // Ветви
-            ['name' => 'Ветка №1', 'price' => 0, 'category_id' => 13, 'sort' => 0],
-            ['name' => 'Ветка №2', 'price' => 0, 'category_id' => 13, 'sort' => 0],
-            ['name' => 'Ветка №3', 'price' => 0, 'category_id' => 13, 'sort' => 0],
-            ['name' => 'Ветка №4', 'price' => 0, 'category_id' => 13, 'sort' => 0],
-            ['name' => 'Ветка №5', 'price' => 0, 'category_id' => 13, 'sort' => 0],
-            ['name' => 'Ветка №6', 'price' => 0, 'category_id' => 13, 'sort' => 0],
+            ['name' => 'Ветка №1', 'price' => 500, 'category_id' => 13, 'sort' => 0],
+            ['name' => 'Ветка №2', 'price' => 500, 'category_id' => 13, 'sort' => 0],
+            ['name' => 'Ветка №3', 'price' => 500, 'category_id' => 13, 'sort' => 0],
+            ['name' => 'Ветка №4', 'price' => 500, 'category_id' => 13, 'sort' => 0],
+            ['name' => 'Ветка №5', 'price' => 500, 'category_id' => 13, 'sort' => 0],
+            ['name' => 'Ветка №6', 'price' => 500, 'category_id' => 13, 'sort' => 0],
 
             // Свечи
             ['name' => 'Свеча №1', 'price' => 0, 'category_id' => 14, 'sort' => 0],
@@ -429,6 +434,7 @@ class DatabaseSeeder extends Seeder
             ['name' => '№12 - 100x5x8', 'price' => 0, 'category_id' => 17, 'sort' => 0],
             ['name' => '№12 - 120x5x8', 'price' => 0, 'category_id' => 17, 'sort' => 0],
 
+            // Ограды 16000
 
             // Полумесяц
 
@@ -447,11 +453,14 @@ class DatabaseSeeder extends Seeder
             // Услуги
             ['name' => 'Доставка до 10км', 'price' => 1000, 'category_id' => 24, 'sort' => 0],
             ['name' => 'Доставка за км', 'price' => 30, 'category_id' => 24, 'sort' => 0],
-            ['name' => 'Установка до 1м', 'price' => 5500, 'category_id' => 24, 'sort' => 0],
-            ['name' => 'Установка 1.2 - 1.3м', 'price' => 6500, 'category_id' => 24, 'sort' => 0],
-            ['name' => 'Установка 1.5м', 'price' => 8000, 'category_id' => 24, 'sort' => 0],
-            ['name' => 'Эпитафия', 'price' => 45, 'category_id' => 24, 'sort' => 0],
 
+            // Текст для памятника
+            ['name' => 'Фамилия', 'price' => 500, 'category_id' => 28, 'sort' => 0],
+            ['name' => 'Имя', 'price' => 500, 'category_id' => 28, 'sort' => 0],
+            ['name' => 'Отчество', 'price' => 500, 'category_id' => 28, 'sort' => 0],
+            ['name' => 'Дата рождения', 'price' => 500, 'category_id' => 28, 'sort' => 0],
+            ['name' => 'Дата смерти', 'price' => 500, 'category_id' => 28, 'sort' => 0],
+            ['name' => 'Эпитафия', 'price' => 45, 'category_id' => 28, 'sort' => 0],
 
 
         ];

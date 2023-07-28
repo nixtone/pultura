@@ -132,12 +132,20 @@
             <div class="field_group">
                 <h2>Гравировка</h2>
                 <div class="field_area inline">
+                    <input type="checkbox" name="crescent" id="crescent" class="ppField cpp" data-pp="crescent" value="0">
+                    <label for="crescent">Полумесяц <span class="product_name"></span></label>
+                </div>
+                <div class="field_area inline">
                     <input type="checkbox" name="cross" id="cross" class="ppField cpp" data-pp="cross" value="0">
                     <label for="cross">Крест <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
                     <input type="checkbox" name="flower" id="flower" class="ppField cpp" data-pp="flower" value="0">
                     <label for="flower">Цветы <span class="product_name"></span></label>
+                </div>
+                <div class="field_area inline">
+                    <input type="checkbox" name="icon" id="icon" class="ppField cpp" data-pp="icon" value="0">
+                    <label for="icon">Иконы <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
                     <input type="checkbox" name="branch" id="branch" class="ppField cpp" data-pp="branch" value="0">
@@ -174,13 +182,13 @@
             </div>
 
             <div class="field_group">
-                <h2>Облицовка (м<sup>2</sup>)</h2>
+                <h2>Облицовка</h2>
                 <div class="field_area">
-                    <label for="face_km">Площадь (м<sup>2</sup>)</label>
-                    <input type="text" name="face_km" id="face_km" class="field">
+                    <label for="face_m2">Площадь (м<sup>2</sup>)</label>
+                    <input type="text" name="face_m2" id="face_m2" class="field">
                 </div>
                 <div class="field_area">
-                    <select name="face" id="" class="field">
+                    <select name="facing" id="" class="field">
                         <option value="0" selected></option>
                         @foreach($productList->where('category_id', 23) as $product)
                         <option value="{{ $product->id }}">{{ $product->name }} / {{ $product->price }}</option>
@@ -203,13 +211,16 @@
                         </tr>
                     </table>
                 </div>
-                <div class="field_area inline">
-                    <input type="checkbox" name="install" id="install">
-                    <label for="install">Установка</label>
+                <div class="field_area">
+{{--                    <input type="checkbox" name="install" id="install">--}}
+
+                    <label for="install">Установка (стоимость)</label>
+                    <input type="text" name="install" id="install" class="field">
                 </div>
-                <div class="field_area inline">
-                    <input type="checkbox" name="deinstall" id="deinstall">
-                    <label for="deinstall">Демонтаж</label>
+                <div class="field_area">
+{{--                    <input type="checkbox" name="deinstall" id="deinstall">--}}
+                    <label for="deinstall">Демонтаж (стоимость)</label>
+                    <input type="text" name="deinstall" id="deinstall" class="field">
                 </div>
             </div>
 
@@ -240,6 +251,10 @@
                     <input type="file" name="files[]" id="files" class="field" multiple>
                 </div>
                 <div class="field_area">
+                    <label for="total_amount">Корректировка цены</label>
+                    <input type="text" name="total_amount" value="0" id="total_amount" class="field">
+                </div>
+                <div class="field_area">
                     <label for="comment">Комментарий к заказу</label>
                     <textarea name="comment" id="comment" rows="5" class="field"></textarea>
                 </div>
@@ -248,7 +263,6 @@
             {{-- --}}
 
             <div class="field_area">
-                <input type="hidden" name="total_amount" value="0" id="total_amount">
                 <input type="submit" value="Создать заказ" class="btn">
             </div>
         </form>
@@ -262,7 +276,7 @@
                     <div class="negative">
 
                         <div class="item portrait">
-                            <img src="" alt="" class="preview">
+                            <img src="" alt="" class="preview bimg">
                         </div>
 
                         <div class="item lastname font_main"></div>
@@ -273,22 +287,22 @@
                         <div class="item epitafia font_epitafia"></div>
 
                         <div class="item cross">
-                            <img src="" alt="" class="preview" style="max-width: 50px;">
+                            <img src="" alt="" class="preview bimg" style="max-width: 50px;">
                         </div>
                         <div class="item flower">
-                            <img src="" alt="" class="preview" style="max-width: 130px;">
+                            <img src="" alt="" class="preview bimg" style="max-width: 130px;">
                         </div>
                         <div class="item branch">
-                            <img src="" alt="" class="preview" style="max-width: 130px;">
+                            <img src="" alt="" class="preview bimg" style="max-width: 130px;">
                         </div>
                         <div class="item candle">
-                            <img src="" alt="" class="preview" style="max-width: 50px;">
+                            <img src="" alt="" class="preview bimg" style="max-width: 50px;">
                         </div>
                         <div class="item angel">
-                            <img src="" alt="" class="preview" style="max-width: 130px;">
+                            <img src="" alt="" class="preview bimg" style="max-width: 130px;">
                         </div>
                         <div class="item bird">
-                            <img src="" alt="" class="preview" style="max-width: 130px;">
+                            <img src="" alt="" class="preview bimg" style="max-width: 130px;">
                         </div>
 
                     </div>

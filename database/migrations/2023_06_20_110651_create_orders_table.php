@@ -16,12 +16,13 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->foreignId('status_id')->constrained()->default(1);
 
+            // Внешний вид памятника
             $table->integer('model')->nullable();
             $table->string('model_size')->nullable();
             $table->integer('material')->nullable();
             $table->integer('portrait')->nullable();
-            $table->string('portrait_size')->nullable();
 
+            // Текст для памятника
             $table->string('lastname')->nullable();
             $table->string('firstname')->nullable();
             $table->string('fathername')->nullable();
@@ -29,30 +30,37 @@ return new class extends Migration
             $table->date('death_date')->nullable();
             $table->string('epitafia')->nullable();
 
-            $table->integer('crescent')->default(0);
-            $table->integer('cross')->default(0);
-            $table->integer('flower')->default(0);
-            $table->integer('icon')->default(0);
-            $table->integer('branch')->default(0);
-            $table->integer('candle')->default(0);
-            $table->integer('angel')->default(0);
-            $table->integer('bird')->default(0);
+            // Гравировка
+            $table->integer('crescent')->default(0); // Полумесяц
+            $table->integer('cross')->default(0); // Крест
+            $table->integer('flower')->default(0); // Цветы
+            $table->integer('icon')->default(0); // Иконы
+            $table->integer('branch')->default(0); // Ветвь
+            $table->integer('candle')->default(0); // Свеча
+            $table->integer('angel')->default(0); // Ангел
+            $table->integer('bird')->default(0); // Птицы
 
-            $table->integer('tombstone')->default(0);
-            // fence ограда
-            // vase ваза
+            // Дополненения
+            $table->integer('tombstone')->default(0); // Цветник / надгробие
+            $table->integer('fence')->nullable(); // Ограда
+            $table->integer('vase')->nullable(); // Ваза
 
-            // facing (product_id) облицовка
-            // facing m2
+            // Облицовка
+            $table->integer('face_m2')->nullable();
+            $table->integer('facing')->nullable();
 
-            $table->integer('delivery_km')->nullable();
-            $table->text('delivery_addr')->nullable();
+            // Услуги
+            $table->integer('delivery_km')->nullable(); // Адрес доставки
+            $table->text('delivery_addr')->nullable(); // Киллометраж доставки
+            $table->float('install')->nullable(); // Установка
+            $table->float('deinstall')->nullable(); // Демонтаж
 
-            $table->text('comment')->nullable();
+            // Остальное
             $table->date('deadline_date')->nullable();
-            $table->float('total_amount')->default(0);
+            $table->float('total_amount')->default(0); // Итоговая цена
+            $table->text('comment')->nullable();
 
-            // Конструктор. Техданные конструктора
+            //
             $table->softDeletes();
             $table->timestamps();
         });

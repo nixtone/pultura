@@ -136,8 +136,10 @@
                 @include('order.inc.window', ['title' => 'Материал', 'field' => 'material', 'parent_cat' => 4, 'displayName' => 1])
                 @include('order.inc.window', ['title' => 'Портрет', 'field' => 'portrait', 'parent_cat' => 7, 'displayName' => 1])
 
+                @include('order.inc.window', ['title' => 'Полумесяц', 'field' => 'crescent', 'parent_cat' => 27, 'displayName' => 1])
                 @include('order.inc.window', ['title' => 'Кресты', 'field' => 'cross', 'parent_cat' => 11, 'displayName' => 1])
                 @include('order.inc.window', ['title' => 'Цветы', 'field' => 'flower', 'parent_cat' => 12, 'displayName' => 1])
+                @include('order.inc.window', ['title' => 'Иконы', 'field' => 'icon', 'parent_cat' => 26, 'displayName' => 1])
                 @include('order.inc.window', ['title' => 'Ветви', 'field' => 'branch', 'parent_cat' => 13, 'displayName' => 1])
                 @include('order.inc.window', ['title' => 'Свечи', 'field' => 'candle', 'parent_cat' => 14, 'displayName' => 1])
                 @include('order.inc.window', ['title' => 'Ангелы', 'field' => 'angel', 'parent_cat' => 15, 'displayName' => 1])

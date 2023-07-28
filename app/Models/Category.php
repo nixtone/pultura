@@ -14,7 +14,16 @@ class Category extends Model
 
     protected $guarded = false;
 
-    public function Product() {
+    public function Product()
+    {
         return $this->hasMany(Product::class);
     }
+
+    /*
+    public function children()
+    {
+        return $this->hasMany($this, 'parent_id', 'id');
+    }
+    */
+
 }
