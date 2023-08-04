@@ -105,8 +105,7 @@
                 </nav>
             </div>
             <div class="user_area col c2">
-                <a href="{{-- route('user.item', ) --}}" class="name">Хайдар</a>
-                <a href="" class="exit">Выход</a>
+                <a href="{{ route('user.item', Auth::user()->id) }}" class="name">{{ Auth::user()->name }}</a>
             </div>
         </div>
     </header>
@@ -158,6 +157,25 @@
 <script src="{{ asset('/static/jquery.maskedinput.min.js') }}"></script>
 <script src="{{ asset('/static/fancy/jquery.fancybox.min.js') }}"></script>
 @if(Route::is('order.create'))
+<script src="{{ asset('/static/html2canvas.min.js') }}"></script>
+<script src="{{ asset('/static/FileSaver.js') }}"></script>
+<script>
+function convert() {
+    html2canvas(document.querySelector("#constructor .monument.part")).then(canvas => {
+        // Сохраняем содержимое холста как файл и скачиваем
+        /*
+        canvas.toBlob(function(blob) {
+            saveAs(blob, "hangge.png");
+        });
+        */
+        //console.log(canvas.toDataURL('image/png'));
+        //$("#comment").html(canvas.toDataURL('image/png'));
+
+        $("#eskiz_image").val(canvas.toDataURL('image/png'));
+        $("#send_order").attr('disabled', false);
+    });
+}
+</script>
 <script src="{{ asset('/static/interact.min.js') }}"></script>
 <script src="{{ asset('/static/order.js') }}"></script>
 @endif

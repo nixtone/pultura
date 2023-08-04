@@ -15,6 +15,7 @@ use App\Models\Size;
 use App\Models\Status;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -27,6 +28,7 @@ class OrderController extends Controller
     }
 
     public function item(Order $order) {
+
         // Сбор данных
         $productList = Product::all();
         $order->model = Product::find($order->model);
@@ -34,10 +36,11 @@ class OrderController extends Controller
         $order->portrait = Product::find($order->portrait);
         $statusList = Status::all();
         $categoryList = Category::all();
+
         // Калькуляция оплаты
         $order->paid = 0;
         foreach($order->pay as $pay) $order->paid += $pay->amount;
-        $order->remain = $order->total_amount - $order->paid;
+        $order->remain = $order->price_list['total'] - $order->paid;
         // Шаблон страницы
         return view('order.item', compact('order', 'productList', 'categoryList', 'statusList'));
     }
@@ -47,12 +50,12 @@ class OrderController extends Controller
         $categoryList = Category::all();
         $productList = Product::all();
         $sizeList = Size::all();
-        return view('order.create', compact('clientList', 'categoryList', 'productList', 'sizeList'));
+        $clientID = request()->get('client');
+        return view('order.create', compact('clientList', 'categoryList', 'productList', 'sizeList', 'clientID'));
     }
 
     public function store(OrderRequest $request)
     {
-        // dd($request);
 
         # Стандартная валидация
         $data = $request->validated();
@@ -71,19 +74,22 @@ class OrderController extends Controller
         }
         $data['client_id'] = $client_id;
 
+        # Аутентифицированный пользователь
+        $data['user_id'] = Auth::user()->id;
+
         // Внешний вид памятника
-        $data['model'] = $request->model;
-        $data['model_size'] = $request->model_size;
-        $data['material'] = $request->material;
-        $data['portrait'] = $request->portrait;
+        $data['model'] = $request->model ?? 0;
+        $data['model_size'] = $request->model_size ?? '';
+        $data['material'] = $request->material ?? 0;
+        $data['portrait'] = $request->portrait ?? 0;
 
         // Текст для памятника
-        $data['lastname'] = $request->lastname;
-        $data['firstname'] = $request->firstname;
-        $data['fathername'] = $request->fathername;
+        $data['lastname'] = $request->lastname ?? '';
+        $data['firstname'] = $request->firstname ?? '';
+        $data['fathername'] = $request->fathername ?? '';
         if($request->birth_date) $data['birth_date'] = date("Y-m-d", strtotime($request->birth_date));
         if($request->death_date) $data['death_date'] = date("Y-m-d", strtotime($request->death_date));
-        $data['epitafia'] = $request->epitafia;
+        $data['epitafia'] = $request->epitafia ?? '';
 
         // Гравировка
         $data['crescent'] = $request->crescent ?? 0;
@@ -106,29 +112,49 @@ class OrderController extends Controller
 
         // Услуги
         $data['delivery_km'] = $request->delivery_km ?? 0;
-        $data['delivery_addr'] = $request->delivery_addr;
-        $data['install'] = $request->install;
-        $data['deinstall'] = $request->deinstall;
+        $data['delivery_addr'] = $request->delivery_addr ?? '';
+        $data['install'] = $request->install ?? 0;
+        $data['deinstall'] = $request->deinstall ?? 0;
 
         // Остальное
-        $data['deadline_date'] = $request->deadline_date;
-        $data['total_amount'] = $request->total_amount;
-        $data['comment'] = $request->comment;
-
+        if($request->deadline_date) $data['deadline_date'] = date("Y-m-d", strtotime($request->deadline_date));
+        $data['comment'] = $request->comment ?? '';
+        $data['price_list'] = $request->price_list ?? ''; // Смета
 
         # Создаем заказ
         $newItem = Order::create($data);
 
-        # Файлы от клиента
+        # Файлы
+        $newDir = $this->filePath.$newItem->id;
+        Storage::makeDirectory($newDir);
+
+
+        // от клиента
         if($request->hasFile('files')) {
-            $newDir = $this->filePath.$newItem->id;
-            $dir = Storage::makeDirectory($newDir);
+            $dir = Storage::makeDirectory($newDir."/files");
             foreach($request->file('files') as $index => $file) {
                 $filename = $file->getClientOriginalName();
-                $file->storeAs($newDir, $filename);
+                $file->storeAs($newDir."/files", $filename);
                 $arFiles[] = $filename;
             }
         }
+        // эскиз
+        //dd($request->eskiz_image);
+        /*
+        file_put_contents(
+            $_SERVER['DOCUMENT_ROOT']."/storage/app".$this->filePath.$newItem->id."/eskiz.png",
+            base64_decode(str_replace("data:image/png;base64,", "", file_get_contents($request->eskiz_image)))
+        );
+        */
+        // storage\app\public\order\4
+        //$file->storeAs($newDir, base64_decode(str_replace("data:image/png;base64,", "", file_get_contents($request->eskiz_image))));
+
+        // disk('public')->
+        Storage::put(
+            $newDir.'/eskiz.png',
+            base64_decode(str_replace("data:image/png;base64,", "", $request->eskiz_image))
+        );
+
 
         # Прием оплаты
         if($request->pay_amount) {
@@ -209,91 +235,109 @@ class OrderController extends Controller
         return $pdf->stream();
     }
 
-    public function price(OrderRequest $request) {
+    public function price() {
 
         // Сбор данных
+        $data = $_POST;
         $productList = Product::all();
-        $total = 0;
+        $price = [
+            'total' => 0,
+            'stella' => 0,
+            'epitafia' => 0,
+            'facing' => 0,
+            'delivery_km' => 0,
+            'install' => 0,
+            'deinstall' => 0,
+        ];
 
         /* ------------------------ */
 
 
-        # Внешний вид памятника
-
         // Модель, материал
-        if(!empty($_POST['model_size']) AND !empty($_POST['material'])) {
-            $size = Size::find((int)$_POST['model_size']);
+        if(!empty($data['model_size']) AND !empty($data['material'])) {
+            $size = Size::find((int)$data['model_size']);
             $obyem = ($size['width'] * $size['height'] * $size['thick']) / 1000000;
-            $materialPrice = $productList[(int)$_POST['material']]->price;
-            $total += $obyem * $materialPrice;
-            /*
-            Найти объем (желательно сложить со стеллой) --- 80 x 40 x 5 = 16000
-            Разделить на миллион --- 16000/1000000 = 0,016
-            Умножить на стоимость материала за куб --- 0.016 x 600000 = 9600
-            Надбавка за цвет 20% --- 9600 + 1920 = 11520
-            */
+            $materialPrice = $productList[(int)$data['material']]->price;
+            $total = $obyem * $materialPrice;
+            $price['stella'] = $total;
+            $price['total'] = $total;
         }
-        // Портрет
-        if(!empty($_POST['portrait'])) $total += $productList->where('id', $_POST['portrait'])->first()->price;
 
-
-        # Текст для памятника
-
-        // ФИО
-        if(!empty($_POST['lastname'])) $total += $productList->where('id', 271)->first()->price;
-        if(!empty($_POST['firstname'])) $total += $productList->where('id', 272)->first()->price;
-        if(!empty($_POST['fathername'])) $total += $productList->where('id', 273)->first()->price;
-        if(!empty($_POST['birth_date'])) $total += $productList->where('id', 274)->first()->price;
-        if(!empty($_POST['death_date'])) $total += $productList->where('id', 275)->first()->price;
         // Эпитафия
-        if(!empty($_POST['epitafia'])) {
-            $total += mb_strlen(str_replace(" ", "", $_POST['epitafia'])) * $productList->where('id', 276)->first()->price;
+        if(!empty($data['epitafia'])) {
+            $total = mb_strlen(str_replace(" ", "", $data['epitafia'])) * $productList->where('id', 276)->first()->price;
+            $price['epitafia'] = $total;
+            $price['total'] += $total;
         }
-
-
-        # Гравировка
-        if(!empty($_POST['crescent'])) $total += $productList->where('id', $_POST['crescent'])->first()->price;
-        if(!empty($_POST['cross'])) $total += $productList->where('id', $_POST['cross'])->first()->price;
-        if(!empty($_POST['flower'])) $total += $productList->where('id', $_POST['flower'])->first()->price;
-        if(!empty($_POST['icon'])) $total += $productList->where('id', $_POST['icon'])->first()->price;
-        if(!empty($_POST['branch'])) $total += $productList->where('id', $_POST['branch'])->first()->price;
-        if(!empty($_POST['candle'])) $total += $productList->where('id', $_POST['candle'])->first()->price;
-        if(!empty($_POST['angel'])) $total += $productList->where('id', $_POST['angel'])->first()->price;
-        if(!empty($_POST['bird'])) $total += $productList->where('id', $_POST['bird'])->first()->price;
-
-
-        # Дополнения
-        if(!empty($_POST['tombstone'])) $total += $productList->where('id', $_POST['tombstone'])->first()->price;
-        if(!empty($_POST['fence'])) $total += $productList->where('id', $_POST['fence'])->first()->price;
-        if(!empty($_POST['vase'])) $total += $productList->where('id', $_POST['vase'])->first()->price;
-
 
         # Облицовка
-        if(!empty($_POST['facing']) AND !empty($_POST['face_m2'])) {
-            $total += $productList->where('id', (int)$_POST['facing'])->first()->price * (int)$_POST['face_m2'];
+        if(!empty($data['facing']) AND !empty($data['face_m2'])) {
+            $total = $productList->where('id', (int)$data['facing'])->first()->price * (int)$data['face_m2'];
+            $price['facing'] = $total;
+            $price['total'] += $total;
         }
-
 
         # Услуги
 
         // Доставка
-        if(!empty($_POST['delivery_km'])) {
-            $do10km = $productList->where('id', 269)->first()->price;
-            $zakm = $productList->where('id', 270)->first()->price;
+        if(!empty($data['delivery_km'])) {
+            $do10km = $productList->find(269)->price;
+            $zakm = $productList->find(270)->price;
 
-            $total += $do10km;
+            $total = $do10km;
 
-            if($_POST['delivery_km'] > 10) {
-                $total += ($_POST['delivery_km'] - 10) * $zakm;
+            if($data['delivery_km'] > 10) {
+                $total += ($data['delivery_km'] - 10) * $zakm;
             }
+            $price['delivery_km'] = $total;
+            $price['total'] += $total;
         }
         // Установка
-        if(!empty($_POST['install'])) $total += $_POST['install'];
+        if(!empty($data['install'])) {
+            $price['install'] = $data['install'];
+            $price['total'] += $data['install'];
+        }
         // Демонтаж
-        if(!empty($_POST['deinstall'])) $total += $_POST['deinstall'];
+        if(!empty($data['deinstall'])) {
+            $price['deinstall'] = $data['deinstall'];
+            $price['total'] += $data['deinstall'];
+        }
 
+        $arFields = [
+            // Текст для памятника
+            ['name' => 'portrait', 'where' => $data['portrait'] ?? null],
+            ['name' => 'lastname', 'where' => 271],
+            ['name' => 'firstname', 'where' => 272],
+            ['name' => 'fathername', 'where' => 273],
+            ['name' => 'birth_date', 'where' => 274],
+            ['name' => 'death_date', 'where' => 275],
+            //Гравировка
+            ['name' => 'crescent', 'where' => $data['crescent'] ?? null],
+            ['name' => 'cross', 'where' => $data['cross'] ?? null],
+            ['name' => 'flower', 'where' => $data['flower'] ?? null],
+            ['name' => 'icon', 'where' => $data['icon'] ?? null],
+            ['name' => 'branch', 'where' => $data['branch'] ?? null],
+            ['name' => 'candle', 'where' => $data['candle'] ?? null],
+            ['name' => 'angel', 'where' => $data['angel'] ?? null],
+            ['name' => 'bird', 'where' => $data['bird'] ?? null],
+            // Дополнения
+            ['name' => 'tombstone', 'where' => $data['tombstone'] ?? null],
+            ['name' => 'fence', 'where' => $data['fence'] ?? null],
+            ['name' => 'vase', 'where' => $data['vase'] ?? null],
+        ];
+        foreach($arFields as $field) {
+            if(!empty($data[$field['name']])) {
+                $total = $productList->where('id', $field['where'])->first()->price ?? 0;
+                $price[$field['name']] = $total;
+                $price['total'] += $total;
+            }
+        }
+
+        // Смета
+        $price['serialize'] = serialize($price);
 
         // Результат
-        return json_encode($total);
+        return json_encode($price);
     }
 }
+

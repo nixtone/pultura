@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Support\Facades\Hash;
+use App\Models\UserGroup;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -42,5 +45,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    
+
+    public function setPasswordAttribute($password) {
+        // Применение мутатора к паролю
+        $this->attributes['password'] = Hash::make($password);
+    }
+
+    /*
+    public function getUserGroupAttribute($user_group) {
+        return UserGroup::find($user_group)->name;
+    }
+    */
+
 }

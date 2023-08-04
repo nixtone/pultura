@@ -199,6 +199,11 @@ form .field_area:first-child {
     color: #f9feff;
 }
 
+.btn[type="submit"][disabled] {
+    opacity: 0.5;
+    cursor: default;
+}
+
 .advice {
 	background: #dbf1e5;
 	padding: 10px 10px 11px;
@@ -321,9 +326,13 @@ table.list .tar {
     border-color: #122b45;
 }
 .grid .item .name {
-    padding: 6px 15px;
+    padding: 6px 0;
     background: rgba(255,255,255,.7);
     text-align: center;
+}
+.grid .item .price {
+    display: block;
+    color: #878787;
 }
 .grid .preview {
     max-width: 150px;
@@ -333,16 +342,16 @@ table.list .tar {
 
 header .container {
     background: #122b45;
-    padding: 10px 15px;
     margin-bottom: 15px;
     display: flex;
     gap: 15px;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
 }
 header .col.c1 {
     display: flex;
     gap: 15px;
+    padding: 10px 15px;
 }
 header nav {
 	display: flex;
@@ -359,6 +368,22 @@ header nav a:hover, header nav a.active {
 	color: #122b45;
 	background: #f9feff;
 	text-decoration: none;
+}
+header .col.c2 {
+    background: #f9feff;
+    color: #122b45;
+    padding: 10px 15px;
+    display: flex;
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+    border-color: #122b45;
+}
+header .user_area .name {
+    display: block;
+    font-size: 1.1em;
+    color: #122b45;
+    text-align: right;
+    margin: auto;
 }
 
 #order.new .inner {

@@ -9,10 +9,12 @@
             <div class="field_group user_choose">
                 <h2>Клиент</h2>
 
-{{--
+                {{--
                 @error('status_id') <span class="err">{{ $message }}</span> @enderror
                 <input type="hidden" name="status_id" value="1">
---}}
+                --}}
+
+                {{--
                 <div class="field_area inline">
                     <input type="radio" name="choose_client" id="choose_client1" value="1" checked>
                     <label for="choose_client1">Новый</label>
@@ -31,16 +33,16 @@
                     <input type="radio" name="choose_client" id="choose_client2" value="2">
                     <label for="choose_client2">Зарегестированный</label>
                 </div>
-                <div class="row c2">
+                --}}
+{{--                <div class="row c2">--}}
                     <div class="field_area">
                         <select name="client_id" class="field">
-                            <option value="0"></option>
                             @foreach($clientList as $client)
-                            <option value="{{ $client->id }}">{{ $client->name }} / {{ $client->phone }}</option>
+                            <option value="{{ $client->id }}" @if($clientID == $client->id) selected @endif>{{ $client->name }} / {{ $client->phone }}</option>
                             @endforeach
                         </select>
                     </div>
-                </div>
+{{--                </div>--}}
             </div>
 
             <div class="field_group">
@@ -53,6 +55,7 @@
                     <label for="">Размер стеллы</label>
                     @foreach($categoryList->where('parent_id', 1) as $modelCat)
                         <select name="model_size" class="field model-size c{{ $modelCat->id }}" data-cat="{{ $modelCat->id }}" style="display: none;">
+                            <option value="" selected></option>
                             @foreach($sizeList as $size)
                                 @if($size->category_id == $modelCat->id)
                                 <option value="{{ $size->id }}" data-w="{{ $size->width }}" data-h="{{ $size->height }}">{{ $size->width }} x {{ $size->height }} x {{ $size->thick }}</option>
@@ -252,7 +255,7 @@
                 </div>
                 <div class="field_area">
                     <label for="total_amount">Корректировка цены</label>
-                    <input type="text" name="total_amount" value="0" id="total_amount" class="field">
+                    <input type="text" value="0" id="total_amount" class="field">
                 </div>
                 <div class="field_area">
                     <label for="comment">Комментарий к заказу</label>
@@ -263,7 +266,10 @@
             {{-- --}}
 
             <div class="field_area">
-                <input type="submit" value="Создать заказ" class="btn">
+                <input type="hidden" id="price_list" name="price_list">
+                <input type="hidden" id="eskiz_image" name="eskiz_image">
+                <button type = "button" name = "button" onclick = "convert()" class="btn s1">Сохранить эскиз</button>
+                <input type="submit" id="send_order" value="Создать заказ" class="btn s1" disabled>
             </div>
         </form>
         <div id="constructor">
@@ -304,7 +310,6 @@
                         <div class="item bird">
                             <img src="" alt="" class="preview bimg" style="max-width: 130px;">
                         </div>
-
                     </div>
                 </div>
                 <div class="postament part" style="width: 180px; height: 60px;"></div>

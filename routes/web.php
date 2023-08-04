@@ -21,37 +21,27 @@ use App\Http\Controllers\UserController;
 */
 
 
-
-
-/*
-Route::middleware('auth')->group(function() {
-
+// Вход
+Route::name('user.')->group(function() {
+    Route::get('/login', [UserController::class, 'auth'])->name('auth');
+    Route::post('/login', [UserController::class, 'login'])->name('login');
 });
-
-// Сотрудники
-Route::view('/auth', 'user.auth');
-
-Route::name('user.')->prefix('personal')->group(function() {
-    Route::get('/', [UserController::class, 'list'])->name('list');
-    Route::get('/{user}', [UserController::class, 'item'])->name('item');
-    Route::get('/edit/{user}', [UserController::class, 'edit'])->name('edit');
-    Route::get('/reg', [UserController::class, 'save'])->name('reg');
-});
-*/
-
-
-/*
-// Проверка аутентификации
-Route::get('/login', function() {
-    if(Auth::check())  return redirect(route('home'));
-    return view('user.login');
-})->name('login');
-// Запрос на аутентификацию
-Route::post('/login', [UserController::class, 'login']);
 
 // Внутри сайта
 Route::middleware('auth')->group(function() {
-*/
+
+    // Сотрудники
+    Route::name('user.')->prefix('personal')->group(function() {
+        Route::get('/', [UserController::class, 'list'])->name('list');
+        Route::get('/reg', [UserController::class, 'reg'])->name('reg');
+        Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+        Route::get('/edit/{user}', [UserController::class, 'edit'])->name('edit');
+        Route::get('/{user}', [UserController::class, 'item'])->name('item');
+        Route::patch('/update/{user}', [UserController::class, 'update'])->name('update');
+        Route::post('/save', [UserController::class, 'save'])->name('save');
+        Route::delete('/delete/{user}', [UserController::class, 'destroy'])->name('delete');
+    });
+
     // Отдельные разделы
     Route::get('/', [OrderController::class, 'list'])->name('home');
     Route::view('/help', 'help')->name('help');
@@ -113,15 +103,5 @@ Route::middleware('auth')->group(function() {
         });
     });
 
-    // Сотрудники
-    Route::name('user.')->prefix('personal')->group(function() {
-        Route::get('/', [UserController::class, 'list'])->name('list');
-        Route::get('/reg', [UserController::class, 'reg'])->name('reg');
-        Route::get('/edit/{user}', [UserController::class, 'edit'])->name('edit');
-        Route::get('/{user}', [UserController::class, 'item'])->name('item');
-        Route::patch('/update/{user}', [UserController::class, 'update'])->name('update');
-        Route::post('/save', [UserController::class, 'save'])->name('save');
-        Route::delete('/delete/{user}', [UserController::class, 'destroy'])->name('delete');
-    });
 
-//});
+});

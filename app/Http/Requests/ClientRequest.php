@@ -26,7 +26,8 @@ class ClientRequest extends FormRequest
             'phone' => 'required|string',
             'email' => '',
             'addr' => '',
-            'comment' => ''
+            'comment' => '',
+            'client_category' => '',
         ];
     }
 

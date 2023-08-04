@@ -25,7 +25,18 @@ class UserRequest extends FormRequest
             'name' => 'required',
             'phone' => 'required',
             'email' => '',
+            'password' => '',
+            'user_group' => '',
             'comment' => '',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'обязательно для заполнения',
+            'phone.required' => 'обязательно для заполнения',
+
         ];
     }
 }

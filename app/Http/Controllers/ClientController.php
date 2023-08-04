@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Client;
 use App\Http\Requests\ClientRequest;
+use App\Models\ClientCategory;
 
 class ClientController extends Controller
 {
@@ -18,9 +19,9 @@ class ClientController extends Controller
         return view('client.item', compact('client'));
     }
 
-    public function create()
-    {
-        return view('client.create');
+    public function create() {
+        $clientCategories = ClientCategory::all();
+        return view('client.create', compact('clientCategories'));
     }
 
     public function store(ClientRequest $request)

@@ -15,12 +15,23 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // Тестовый пользователь
+        // Группа доступа пользователя
+        $userGroup = [
+            1 => 'Администратор',
+            2 => 'Модератор',
+            3 => 'Пользователь',
+        ];
+        foreach($userGroup as $group) {
+            \App\Models\UserGroup::factory()->create(['name' => $group]);
+        }
+
+        // Первый пользователь
         \App\Models\User::factory()->create([
-            'name' => 'test1',
-            'phone' => '+7 (900) 123-45-67',
-            'email' => 'test1@test.com',
-            'password' => 'test1'
+            'name' => 'Haidar',
+            'phone' => '+7 (000) 123-45-67',
+            'email' => 'haidar@haidar.ru',
+            'password' => 'haidar1',
+            'user_group' => 1,
         ]);
 
         // Статусы
@@ -34,6 +45,9 @@ class DatabaseSeeder extends Seeder
         foreach($statusList as $status) {
             \App\Models\Status::factory()->create(['name' => $status]);
         }
+
+        // Категории клиентов
+        \App\Models\ClientCategory::factory()->create(['name' => 'Дилеры']);
 
         // Категории
         $categoryList = [

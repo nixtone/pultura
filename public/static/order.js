@@ -1,9 +1,11 @@
 $(document).ready(function() {
 
     // Выбор клиента
+    /*
     $(".field_group.user_choose input[name='choose_client']").click(function(event) {
         $(".field_group.user_choose .row").removeClass('active').parent().find(".row.c" + $(this).val()).addClass('active');
     });
+    */
 
     // Выбор наименований
     $(".window .item").click(function(event) {
@@ -129,8 +131,9 @@ $(document).ready(function() {
         .always(function(data) {
             console.log(data);
             $(".preload").hide();
-            $("#order-total .digit").text(data);
-            $("#total_amount").val(data);
+            $("#order-total .digit").text(data.total);
+            $("#total_amount").val(data.total);
+            $("#price_list").val(data.serialize);
         });
     }
     $(".field_area .field.text").keyup(function(event) {
@@ -147,6 +150,8 @@ $(document).ready(function() {
     $("#total_amount").keyup(function(event) {
         $("#order-total .digit").text($(this).val());
     });
+
+
 
     // Текст для памятника
     $(".field.text").keyup(function(event) {

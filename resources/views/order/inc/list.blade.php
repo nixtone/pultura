@@ -5,7 +5,7 @@
         <th>Клиент</th>
         <th>Принят</th>
         <th>Исполнить до</th>
-        <th colspan="2"><a href="{{ route('order.create') }}" class="btn new">Новый заказ</a></th>
+        <th colspan="2"><a href="{{ route('order.create') }}@if(isset($client))?client={{ $client->id }}@endif" class="btn new">Новый заказ</a></th>
     </tr>
     @if($orderList->isEmpty())
     <tr>

@@ -27,6 +27,15 @@
                 <textarea name="comment" id="client_comment" class="field" rows="3">{{ old('comment') }}</textarea>
             </div>
             <div class="field_area">
+                <label for="">Категория</label>
+                <select name="client_category" id="client_category" class="field">
+                    <option value=""></option>
+                    @foreach($clientCategories as $clientCat)
+                    <option value="{{ $clientCat->id }}">{{ $clientCat->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="field_area">
                 <input type="submit" value="Создать клиента" class="btn">
             </div>
         </form>

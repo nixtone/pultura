@@ -6,38 +6,44 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
+use App\Models\UserGroup;
 
 class UserController extends Controller
 {
-    public function login(Request $request) {
-        User::create($request->only(['name', 'password']));
-        dd($request);
-        $loginFields = $request->only(['name', 'password']);
-        Auth::attempt($loginFields);
 
-        /*
-        $formFields = $request->only(['email', 'password']); // only() заберает только указанные поля
+    public function auth() {
+        return view('user.login');
+    }
+
+    public function login(Request $request) {
+
+        if(Auth::check()) {
+            return redirect()->intended(route('home'));
+        }
+
+        $formFields = $request->only(['name', 'password']); // only() заберает только указанные поля
 
         if(Auth::attempt($formFields)) {
             // редирект-helper сначала кидает на стр откуда пришли, если нет то на 'user.private'
-            return redirect()->intended(route('user.private'));
+            return redirect()->intended(route('home'));
         }
 
         return redirect(route('user.login'))->withErrors([
             'formError' => 'Не удалось аутентифицироваться'
         ]);
-        */
+
     }
 
     public function save(UserRequest $request) {
         //dd($request);
-        //$data = $request->validate();
-        $data = [
+        $data = $request->validated();
+        /*$data = [
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
             'password' => $request->password,
-        ];
+        ];*/
+        dd($data);
         $user = User::create($data);
         return redirect()->route('user.list');
     }
@@ -52,12 +58,13 @@ class UserController extends Controller
     }
 
     public function reg() {
-        return view('user.reg');
+        $userGroupList = UserGroup::all()->reverse();
+        return view('user.reg', compact('userGroupList'));
     }
 
     public function edit(User $user) {
-
-        return view('user.edit', compact('user'));
+        $userGroupList = UserGroup::all()->reverse();
+        return view('user.edit', compact('user', 'userGroupList'));
     }
 
     public function update(UserRequest $request, User $user) {
@@ -70,6 +77,11 @@ class UserController extends Controller
     public function destroy(User $user) {
         $user->delete();
         return redirect()->route('user.list');
+    }
+
+    public function logout() {
+        Auth::logout();
+        return redirect()->route('user.auth');
     }
 
     /*

@@ -25,7 +25,7 @@
                 </form>
             </td>
             <td class="tac">{{ $order->deadline_date }}</td>
-            <td><strong>Имя: </strong><a href="{{ route('client.item', $order->client->id) }}">{{ $order->client->name }}</a> <strong>Телефон: </strong> {{ $order->client->phone }}</td>
+            <td><strong>Имя: </strong><a href="{{ route('client.item', $order->client->id) }}">{{ $order->client->name }}</a><br> <strong>Телефон: </strong> {{ $order->client->phone }}</td>
             <td class="tac">
                 <a href="{{ route('order.pdfstream', $order->id) }}" class="btn s1">На печать</a>
                 <a href="{{ route('order.pdfdownload', $order->id) }}" class="btn s1">Скачать PDF</a>
@@ -57,7 +57,11 @@
         <tr>
             <td><strong>Модель:</strong></td>
             <td colspan="2"> @if(isset($order->model->category_id)) {{ $categoryList->find($order->model->category_id)->name }} "{{ $order->model->name }}" @endif</td>
-            <td rowspan="7" class="tac"><img src="{{ asset('/static/images/upload/eskiz_test.jpg') }}" alt=""></td>
+            <td rowspan="7" class="tac"><img src="{{ asset($order->eskiz) }}" alt=""></td>
+        </tr>
+        <tr>
+            <td><strong>Размер</strong></td>
+            <td colspan="2">{{ $order->model_size }}</td>
         </tr>
         <tr>
             <td><strong>Материал:</strong></td>
@@ -94,66 +98,90 @@
             <th>Количество</th>
             <th>Стоимость</th>
         </tr>
+        @if(!empty($order->model->name))
         <tr>
-            <td>Стелла</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td>Стелла (модель: {{ $categoryList->find($order->model->category_id)->name }} "{{ $order->model->name }}", размер: {{ $order->model_size }}, материал: {{ $order->material->name }})</td>
+            <td class="tac">{{ $order->price_list['stella'] }}</td>
+            <td class="tac">1</td>
+            <td class="tac">{{ $order->price_list['stella'] }}</td>
         </tr>
+        @endif
+        @if(!empty($order->price_list['tombstone']))
         <tr>
-            <td>Цветник / надгробие</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td>Цветник / надгробие (модель: "{{ $productList->find($order->tombstone)->name }}")</td>
+            <td class="tac">{{ $order->price_list['tombstone'] }}</td>
+            <td class="tac">1</td>
+            <td class="tac">{{ $order->price_list['tombstone'] }}</td>
         </tr>
+        @endif
+        @if(!empty($order->price_list['fence']))
         <tr>
-            <td>Ограда</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td>Ограда (модель: "{{ $productList->find($order->fence)->name }}")</td>
+            <td class="tac">{{ $order->price_list['fence'] }}</td>
+            <td class="tac">1</td>
+            <td class="tac">{{ $order->price_list['fence'] }}</td>
         </tr>
+        @endif
+        @if(!empty($order->price_list['vase']))
         <tr>
-            <td>Вазы</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td>Ваза (модель: "{{ $productList->find($order->vase)->name }}")</td>
+            <td class="tac">{{ $order->price_list['vase'] }}</td>
+            <td class="tac">1</td>
+            <td class="tac">{{ $order->price_list['vase'] }}</td>
         </tr>
+        @endif
+        @if(!empty($order->price_list['facing']))
         <tr>
-            <td>Облицовка (тротуарная)</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td>Облицовка ({{ $productList->find($order->facing)->name }})</td>
+            <td class="tac">{{ $order->price_list['facing'] / $order->face_m2 }}</td>
+            <td class="tac">{{ $order->face_m2 }}</td>
+            <td class="tac">{{ $order->price_list['facing'] }}</td>
         </tr>
+        @endif
         <tr>
             <th>Гравировка</th>
             <th>Цена</th>
             <th>Количество</th>
             <th>Стоимость</th>
         </tr>
+        @if(!empty($order->portrait))
         <tr>
-            <td>Портрет</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td>Портрет ({{ $categoryList->find($order->portrait->category_id)->name }} "{{ $order->portrait->name }}")</td>
+            <td class="tac">{{ $order->price_list['portrait'] }}</td>
+            <td class="tac">1</td>
+            <td class="tac">{{ $order->price_list['portrait'] }}</td>
         </tr>
+        @endif
+        @if(
+            !empty($order->price_list['lastname']) OR
+            !empty($order->price_list['firstname']) OR
+            !empty($order->price_list['fathername']) OR
+            !empty($order->price_list['birth_date']) OR
+            !empty($order->price_list['death_date'])
+        )
         <tr>
-            <td>ФИО</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td>ФИО и ДАТЫ</td>
+            <td class="tac">{{ $order->price_list['lastname'] }}</td>
+            <td class="tac">{{-- TODO: Количество --}}</td>
+            <td class="tac">
+                {{--
+                $order->price_list['lastname'] +
+                $order->price_list['firstname'] +
+                $order->price_list['fathername'] +
+                $order->price_list['birth_date'] +
+                $order->price_list['death_date']
+                --}}
+            </td>
         </tr>
-        <tr>
-            <td>Даты</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-        </tr>
+        @endif
+        @if(!empty($order->price_list['epitafia']))
         <tr>
             <td>Эпитафия</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td class="tac">{{ $productList->where('id', 276)->first()->price }}</td>
+            <td class="tac">{{ mb_strlen(str_replace(" ", "", $order['epitafia'])) }}</td>
+            <td class="tac">{{ mb_strlen(str_replace(" ", "", $order['epitafia'])) * $productList->where('id', 276)->first()->price }}</td>
         </tr>
+        @endif
         @if($order->crescent)
         <tr>
             <td>Полумесяц, "{{ $productList->where('id', $order->crescent)->first()->name }}"</td>
@@ -186,57 +214,78 @@
                 <td class="tac">{{ $productList->where('id', $order->icon)->first()->price * 1 }}</td>
             </tr>
         @endif
-        {{-- TODO: Продолжить вывод сметы --}}
+        @if($order->branch)
         <tr>
-            <td>Ветвь</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td>Ветвь, "{{ $productList->where('id', $order->branch)->first()->name }}"</td>
+            <td class="tac">{{ $productList->where('id', $order->branch)->first()->price }}</td>
+            <td class="tac">1</td>
+            <td class="tac">{{ $productList->where('id', $order->branch)->first()->price * 1 }}</td>
         </tr>
+        @endif
+        @if($order->candle)
         <tr>
-            <td>Свечи</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td>Свечи, "{{ $productList->where('id', $order->candle)->first()->name }}"</td>
+            <td class="tac">{{ $productList->where('id', $order->candle)->first()->price }}</td>
+            <td class="tac">1</td>
+            <td class="tac">{{ $productList->where('id', $order->candle)->first()->price * 1 }}</td>
         </tr>
+        @endif
+        @if($order->angel)
         <tr>
-            <td>Ангелы</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td>Ангелы, "{{ $productList->where('id', $order->angel)->first()->name }}"</td>
+            <td class="tac">{{ $productList->where('id', $order->angel)->first()->price }}</td>
+            <td class="tac">1</td>
+            <td class="tac">{{ $productList->where('id', $order->angel)->first()->price * 1 }}</td>
         </tr>
+        @endif
+        @if($order->bird)
         <tr>
-            <td>Птицы</td>
-            <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td>Птицы, "{{ $productList->where('id', $order->bird)->first()->name }}"</td>
+            <td class="tac">{{ $productList->where('id', $order->bird)->first()->price }}</td>
+            <td class="tac">1</td>
+            <td class="tac">{{ $productList->where('id', $order->bird)->first()->price * 1 }}</td>
         </tr>
+        @endif
+
         <tr>
             <th>Услуги</th>
             <th>Цена</th>
             <th>Количество</th>
             <th>Стоимость</th>
         </tr>
+        @if($order->install)
         <tr>
             <td>Установка</td>
             <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td class="tac">1</td>
+            <td class="tac">{{ $order->install * 1 }}</td>
         </tr>
+        @endif
+        @if($order->deinstall)
         <tr>
             <td>Демонтаж</td>
             <td class="tac"></td>
-            <td class="tac"></td>
-            <td class="tac"></td>
+            <td class="tac">1</td>
+            <td class="tac">{{ $order->deinstall * 1 }}</td>
         </tr>
+        @endif
+        @if($order->delivery_km)
         <tr>
             <td>Доставка</td>
-            <td class="tac">11</td>
-            <td class="tac">11</td>
-            <td class="tac">1030</td>
+            <td class="tac"></td>
+            <td class="tac">{{ $order->delivery_km }} км</td>
+            <td class="tac">{{ $order->price_list['delivery_km'] }}</td>
         </tr>
+        @endif
     </table>
 
+    {{--
+    <pre>
+    @php
+    print_r($order->price_list);
+    @endphp
+    </pre>
+    --}}
 
     <h2>Платежи</h2>
     <table class="list">
@@ -283,185 +332,9 @@
             </td>
         </tr>
         <tr>
-            <td colspan="5" class="tar total_amount"><span class="item amount">Стоимость заказа: <strong class="digit">{{ $order->total_amount }}</strong></span></td>
+            <td colspan="5" class="tar total_amount"><span class="item amount">Стоимость заказа: <strong class="digit">{{ $order->price_list['total'] }}</strong></span></td>
         </tr>
     </table>
-
-
-    
-
-    {{--
-    <pre>
-    Модель стеллы
-    Размер стеллы
-    Материал
-    Портрет
-
-    ФИО
-    Даты
-    Эпитафия
-
-    Полумесяц
-    Крест
-    Цветы
-    Иконы
-    Ветвь
-    Свечи
-    Ангелы
-    Птицы
-
-    Цветник / надгробие
-    Ограда
-    Вазы
-
-    Облицовка: 5м2, тротуарная
-    Установка
-    Демонтаж
-    Доставка: 11км2
-    </pre>
-    --}}
-        {{--
-        @if(collect($order->delivery_addr)->isNotEmpty() AND collect($order->delivery_km)->isNotEmpty())
-        <h2>Услуги</h2>
-        <table class="list">
-            <tr>
-                <th>Доставка</th>
-            </tr>
-            <tr>
-                <td><strong>Адрес:</strong> {{ $order->delivery_addr }} <strong>Км:</strong> {{ $order->delivery_km }}</td>
-            </tr>
-        </table>
-        @endif
-        --}}
-
-    {{--
-     <table class="list">
-         @if(collect($order->comment)->isNotEmpty())
-             <tr>
-                 <th>Комментарий</th>
-             </tr>
-             <tr>
-                 <td>{{ $order->comment }}</td>
-             </tr>
-         @endif
-         @if(!is_null($order->deadline_date))
-             <tr>
-                 <th>Исполнить заказ до: {{ $order->deadline_date }}</th>
-             </tr>
-         @endif
-
-         @if(!empty($order->files))
-         <tr>
-             <th>Файлы от клиента</th>
-         </tr>
-         @foreach($order->files as $file)
-         <tr>
-             <td colspan="3">
-                 <a href="{{ asset('/storage/order/'.$order->id.'/'.$file) }}">{{ basename($file) }}</a>
-             </td>
-         </tr>
-         @endforeach
-         @endif
-
-     </table>
-  --}}
-
-
-    {{--
-    <div>
-        <p>Имя клиента: <a href="/client-item">Стрельбицкая Жанна Олеговна</a></p>
-        <p>Монтажные работы (чьи, где): кл. Песчаная Глинка</p>
-        <p>Материал изделия: Гранит Цвет: Габбро Происхождение: Карелия</p>
-    </div>
-
-    <table class="list">
-        <tr>
-            <th>Принят</th>
-            <th>Исполнить до</th>
-            <th>Статус</th>
-        </tr>
-        <tr>
-            <td>03 май 2023 в 13:48</td>
-            <td>15 июнь 2023</td>
-            <td>Выполняется</td>
-        </tr>
-    </table>
-
-    <table class="list">
-        <tr>
-            <th>Наименования</th>
-            <th>Цена</th>
-            <th>Количество</th>
-            <th>Стоимость</th>
-        </tr>
-        <tr>
-            <td>Стелла (размеры: 100х50х5) + подставка (размеры: 60х20х15)</td>
-            <td>150</td>
-            <td>2</td>
-            <td>300</td>
-        </tr>
-        <tr>
-            <th>Услуги</th>
-            <th>Цена</th>
-            <th>Количество</th>
-            <th>Стоимость</th>
-        </tr>
-        <tr>
-            <td>Демонтаж</td>
-            <td>110</td>
-            <td>3</td>
-            <td>330</td>
-        </tr>
-        <tr>
-            <td colspan="4">Итого: 630</td>
-        </tr>
-    </table>
-
-    <h2>Данные для памятника</h2>
-
-    <table class="list">
-        <tr>
-            <td>Фамилия:</td>
-            <td colspan="3">Стрельбицкая</td>
-            <td rowspan="5" style="text-align: center;">
-                <img src="/static/images/upload/order/1.png" alt="">
-            </td>
-        </tr>
-        <tr>
-            <td>Имя:</td>
-            <td colspan="3">Елена</td>
-        </tr>
-        <tr>
-            <td>Отчество:</td>
-            <td colspan="3">Павловна</td>
-        </tr>
-        <tr>
-            <td>Дата рождения:</td>
-            <td>13.10.1948</td>
-            <td>Дата смерти:</td>
-            <td>28.04.2021</td>
-        </tr>
-        <tr>
-            <td>Эпитафия:</td>
-            <td colspan="3">Ты всегда в наших сердцах</td>
-        </tr>
-    </table>
-
-    <h2>Внесенные платежи</h2>
-
-    <table class="list">
-        <tr>
-            <th>Сумма</th>
-            <th>Комментарий</th>
-        </tr>
-        <tr>
-            <td class="td">45</td>
-            <td class="td">Аванс</td>
-        </tr>
-    </table>
-    --}}
-
-
 
 </div>
 

@@ -78,6 +78,9 @@ form .field_area:first-child {
     box-sizing: border-box;
     width: 100%;
 }
+.field_area.inline label {
+    display: inline;
+}
 
 .btn {
     padding: 7px 10px 9px;
@@ -100,24 +103,37 @@ form .field_area:first-child {
     max-width: 320px;
     width: 100%;
 }
+
+.err {
+    margin: 15px 0 10px;
+    color: #ff0000;
+}
 </style>
 </head>
 <body>
 
 <div class="auth_area">
-    <form action="{{ route('login') }}" method="post">
+    <form action="{{ route('user.login') }}" method="post">
+        @csrf
         <div class="field_group">
             <h2>Вход в CRM</h2>
             <div class="field_area">
                 <label for="name">Логин</label>
                 <input type="text" name="name" id="name" class="field">
+                @error('name')<div class="err">{{ $message }}</div>@enderror
             </div>
             <div class="field_area">
                 <label for="password">Пароль</label>
                 <input type="password" name="password" id="password" class="field">
+                @error('password')<div class="err">{{ $message }}</div>@enderror
+            </div>
+            <div class="field_area inline">
+                <input type="checkbox" name="remember" id="remember">
+                <label for="remember">Запомнить меня</label>
             </div>
             <div class="field_area">
                 <input type="submit" value="Войти" class="btn">
+                @error('formError')<div class="err">{{ $message }}</div>@enderror
             </div>
         </div>
     </form>

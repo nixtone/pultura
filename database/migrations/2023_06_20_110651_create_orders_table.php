@@ -14,21 +14,22 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained();
             $table->foreignId('status_id')->constrained()->default(1);
 
             // Внешний вид памятника
-            $table->integer('model')->nullable();
-            $table->string('model_size')->nullable();
-            $table->integer('material')->nullable();
-            $table->integer('portrait')->nullable();
+            $table->integer('model')->default(0);
+            $table->string('model_size')->default('');
+            $table->integer('material')->default(0);
+            $table->integer('portrait')->default(0);
 
             // Текст для памятника
-            $table->string('lastname')->nullable();
-            $table->string('firstname')->nullable();
-            $table->string('fathername')->nullable();
+            $table->string('lastname')->default('');
+            $table->string('firstname')->default('');
+            $table->string('fathername')->default('');
             $table->date('birth_date')->nullable();
             $table->date('death_date')->nullable();
-            $table->string('epitafia')->nullable();
+            $table->string('epitafia')->default('');
 
             // Гравировка
             $table->integer('crescent')->default(0); // Полумесяц
@@ -57,7 +58,7 @@ return new class extends Migration
 
             // Остальное
             $table->date('deadline_date')->nullable();
-            $table->float('total_amount')->default(0); // Итоговая цена
+            $table->text('price_list')->null(); // Смета
             $table->text('comment')->nullable();
 
             //

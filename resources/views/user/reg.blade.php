@@ -32,8 +32,9 @@
         <div class="field_area">
             <label for="user_group">Группа доступа</label>
             <select name="user_group" id="user_group" class="field">
-                <option value="1" selected>Пользователь</option>
-                <option value="2">Администратор</option>
+                @foreach($userGroupList as $userGroup)
+                <option value="{{ $userGroup->id }}">{{ $userGroup->name }}</option>
+                @endforeach
             </select>
         </div>
         <div class="field_area">

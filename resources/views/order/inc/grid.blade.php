@@ -14,7 +14,12 @@
             @elseif(!empty($product->files[0]))
                 <img src="{{ asset($product->files[0]) }}" alt="" class="preview">
             @endif
-            @if($displayName)<div class="name">{{ $product->name }}</div>@endif
+            @if($displayName)
+            <div class="name">
+                <span>{{ $product->name }}</span>
+                <span class="price"><span class="digit">{{ $product->price }}</span> ₽</span>
+            </div>
+            @endif
         </div>
         @endif
     @endforeach
