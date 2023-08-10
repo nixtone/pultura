@@ -54,8 +54,7 @@
                 <div class="field_area model-size_area" style="display: none;">
                     <label for="">Размер стеллы</label>
                     @foreach($categoryList->where('parent_id', 1) as $modelCat)
-                        <select name="model_size" class="field model-size c{{ $modelCat->id }}" data-cat="{{ $modelCat->id }}" style="display: none;">
-                            <option value="" selected></option>
+                        <select name="model_size" class="field model-size c{{ $modelCat->id }} priceRequestChange" data-cat="{{ $modelCat->id }}" style="display: none;">
                             @foreach($sizeList as $size)
                                 @if($size->category_id == $modelCat->id)
                                 <option value="{{ $size->id }}" data-w="{{ $size->width }}" data-h="{{ $size->height }}">{{ $size->width }} x {{ $size->height }} x {{ $size->thick }}</option>
@@ -80,21 +79,21 @@
                 <div class="field_area">
                     <label for="lastname">Фамилия</label>
                     <div class="wrap">
-                        <input type="text" name="lastname" id="lastname" class="field text" data-font="main">
+                        <input type="text" name="lastname" id="lastname" class="field text priceRequestKeyup" data-font="main">
                         <input type="number" name="" class="field size" value="20">
                     </div>
                 </div>
                 <div class="field_area">
                     <label for="firstname">Имя</label>
                     <div class="wrap">
-                        <input type="text" name="firstname" id="firstname" class="field text" data-font="main">
+                        <input type="text" name="firstname" id="firstname" class="field text priceRequestKeyup" data-font="main">
                         <input type="number" name="" class="field size" value="14">
                     </div>
                 </div>
                 <div class="field_area">
                     <label for="fathername">Отчество</label>
                     <div class="wrap">
-                        <input type="text" name="fathername" id="fathername" class="field text" data-font="main">
+                        <input type="text" name="fathername" id="fathername" class="field text priceRequestKeyup" data-font="main">
                         <input type="number" name="" class="field size" value="14">
                     </div>
                 </div>
@@ -102,20 +101,30 @@
                     <table>
                         <tr>
                             <td><label for="birth_date">Дата рождения</label></td>
+                            <td></td>
                             <td><label for="death_date">Дата смерти</label></td>
                         </tr>
                         <tr>
                             <td class="wrap">
-                                <input type="text" name="birth_date" id="birth_date" class="field text datemask" data-font="main">
+                                <input type="text" name="birth_date" id="birth_date" class="field text priceRequestKeyup" data-font="main">
                                 <input type="number" name="" class="field size" value="14">
                             </td>
+                            <td>
+                                {{--
+                                <div class="field_area inline">
+                                    <input type="checkbox" name="" id="defis">
+                                    <label for="defis"></label>
+                                </div>
+                                --}}
+                            </td>
                             <td class="wrap">
-                                <input type="text" name="death_date" id="death_date" class="field text datemask" data-font="main">
+                                <input type="text" name="death_date" id="death_date" class="field text priceRequestKeyup" data-font="main">
                                 <input type="number" name="" class="field size" value="14">
                             </td>
                         </tr>
                     </table>
                 </div>
+
 
                 @include('order.inc.font', ['title' => 'Основной шрифт', 'group' => 'main'])
 
@@ -123,7 +132,7 @@
                 <div class="field_area">
                     <label for="epitafia">Эпитафия</label>
                     <div class="wrap">
-                        <textarea name="epitafia" id="epitafia" cols="3" class="field text" data-font="epitafia"></textarea>
+                        <textarea name="epitafia" id="epitafia" cols="3" class="field text priceRequestKeyup" data-font="epitafia"></textarea>
                         <input type="number" name="" class="field size" value="18">
                     </div>
                 </div>
@@ -188,10 +197,10 @@
                 <h2>Облицовка</h2>
                 <div class="field_area">
                     <label for="face_m2">Площадь (м<sup>2</sup>)</label>
-                    <input type="text" name="face_m2" id="face_m2" class="field">
+                    <input type="text" name="face_m2" id="face_m2" class="field priceRequestKeyup">
                 </div>
                 <div class="field_area">
-                    <select name="facing" id="" class="field">
+                    <select name="facing" id="" class="field priceRequestChange">
                         <option value="0" selected></option>
                         @foreach($productList->where('category_id', 23) as $product)
                         <option value="{{ $product->id }}">{{ $product->name }} / {{ $product->price }}</option>
@@ -210,7 +219,7 @@
                         </tr>
                         <tr>
                             <td><input type="text" name="delivery_addr" id="delivery_addr" class="field"></td>
-                            <td><input type="text" name="delivery_km" id="delivery_km" class="field text"></td>
+                            <td><input type="text" name="delivery_km" id="delivery_km" class="field text priceRequestKeyup"></td>
                         </tr>
                     </table>
                 </div>
@@ -218,12 +227,12 @@
 {{--                    <input type="checkbox" name="install" id="install">--}}
 
                     <label for="install">Установка (стоимость)</label>
-                    <input type="text" name="install" id="install" class="field">
+                    <input type="text" name="install" id="install" class="field priceRequestKeyup">
                 </div>
                 <div class="field_area">
 {{--                    <input type="checkbox" name="deinstall" id="deinstall">--}}
                     <label for="deinstall">Демонтаж (стоимость)</label>
-                    <input type="text" name="deinstall" id="deinstall" class="field">
+                    <input type="text" name="deinstall" id="deinstall" class="field priceRequestKeyup">
                 </div>
             </div>
 
@@ -255,7 +264,7 @@
                 </div>
                 <div class="field_area">
                     <label for="total_amount">Корректировка цены</label>
-                    <input type="text" value="0" id="total_amount" class="field">
+                    <input type="text" value="0" id="total_amount" class="field priceRequestKeyup">
                 </div>
                 <div class="field_area">
                     <label for="comment">Комментарий к заказу</label>

@@ -14,4 +14,8 @@ class Client extends Model
     public function Orders() {
         return $this->hasMany(Order::class);
     }
+
+    public function getClientCategoryAttribute($cat_id) {
+        return $cat_id ? ClientCategory::find($cat_id) : $cat_id ;
+    }
 }

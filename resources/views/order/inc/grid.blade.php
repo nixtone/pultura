@@ -4,7 +4,7 @@
         @if(empty($product->files))
             @continue
         @else
-        <div class="item" data-price="{{ $product->price }}"
+        <div class="item priceRequestClick" data-price="{{ $product->price }}"
             data-id="{{ $product->id }}"
             data-name="{{ $product->name }}"
             data-cat="{{ $category->id }}"

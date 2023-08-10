@@ -28,6 +28,14 @@ class Order extends Model
         return str_replace("public", "storage", Storage::files("/public/order/{$this->id}")[0]);
     }
 
+    public function getBirthDateAttribute($value) {
+        return date("d.m.Y", strtotime($value));
+    }
+
+    public function getDeathDateAttribute($value) {
+        return date("d.m.Y", strtotime($value));
+    }
+
     public function getPriceListAttribute($value) {
         return unserialize($value);
     }

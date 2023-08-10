@@ -11,8 +11,9 @@ use App\Models\ClientCategory;
 class ClientController extends Controller
 {
     public function list() {
-        $clientList = Client::all()->reverse();
-        return view('client.list', compact('clientList'));
+        $clientCategory = ClientCategory::all();
+        $clientList = (request()->get('cat') ? Client::where('client_category', request()->get('cat'))->get() : Client::all())->reverse();
+        return view('client.list', compact('clientList', 'clientCategory'));
     }
 
     public function item(Client $client) {

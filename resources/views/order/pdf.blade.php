@@ -49,8 +49,8 @@ td, th {
     <div class="tac">Наряд-заказ № {{ $order->id }} (И.П.Сафиуллин С.Х.)</div>
     <div class="tac">Расчет стоимости материалов и работ.</div>
     <div class="justify">
-        <div>Дата приема: {{ $order->created_at }}</div>
-        <div>Желаемый срок исполнения до______2023г.</div>
+        <div>Дата приема: {{ date("d.m.Y", strtotime($order->created_at)) }}</div>
+        <div>Желаемый срок исполнения до {{ date("d.m.Y", strtotime($order->deadline_date)) }} г.</div>
         <div class="clear"></div>
     </div>
     <div>Заказчик: {{ $order->client->name }}</div>
@@ -58,9 +58,8 @@ td, th {
     <div>Телефон: {{ $order->client->phone }}</div>
     <div>Монтажные работы(чьи,где)_____</div>
     <div>
-        <div>Материал изделия______</div>
-        <div>Цвет______</div>
-        <div>Страна происхож.______</div>
+        <div>Материал изделия: @if(isset($order->material->category_id)) {{ $categoryList->find($order->material->category_id)->name }} @endif</div>
+        <div>Цвет: {{ $order->material->name }}</div>
     </div>
     <table>
         <tr>

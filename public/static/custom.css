@@ -238,10 +238,20 @@ table.list td, table.list th {
     border-left: 1px solid #dddbdb;
     border-right: 1px solid #dddbdb;
 }
-table.list .tac {
+
+table.s1 {
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+table.s1 th, table.s1 td {
+    border: 1px solid;
+    padding: 2px 10px;
+}
+
+.tac {
     text-align: center;
 }
-table.list .tar {
+.tar {
     text-align: right;
 }
 
@@ -450,6 +460,25 @@ header .user_area .name {
     height: 100%;
     background-position: 0% 0%;
     background-size: 100% 100%;
+}
+
+#client_category.block {
+    border: 1px solid #dddbdb;
+    padding: 15px;
+    box-sizing: border-box;
+}
+#client_category.block .inner {
+    display: flex;
+    gap: 5px;
+}
+#client_category .item {
+    padding: 3px 7px 4px;
+    border: 1px solid #0c6fd8;
+}
+#client_category .item:hover, #client_category .item.active {
+    background: #0c6fd8;
+    color: #f9feff;
+    text-decoration: none;
 }
 
 #order label.checked {

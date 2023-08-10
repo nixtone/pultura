@@ -37,12 +37,13 @@ $(document).ready(function() {
                     .attr('name', 'model_size')
                     .show();
                 $(".field_area.model-size_area").show();
+                // TODO: выбор первого размера
                 // Изменение размера памятника в эскизе
-                $(".field_area.model-size_area .field.model-size.c"+catID).change(function(event) {
+                $(".field_area.model-size_area .field.model-size.c"+catID).show().change(function(event) {
                     let selectedOption = $(this).find("option:selected");
                     let W = selectedOption.data('w');
                     let H = selectedOption.data('h');
-                    let Wm, Hm, Wp;
+                    let Wm, Hm, Wp, WidthLimit = 445, HeightLimit = 252;
                     switch(catID) {
                         case 2: {
                             Wm = W * 2;
@@ -50,9 +51,32 @@ $(document).ready(function() {
                             Wp = W * 2 + 20;
                         } break;
                         case 3: {
-                            Wm = 1;
-                            Hm = 1;
-                            Wp = 1;
+                            // решаю в лоб
+
+                            switch(W) {
+                                case 60: Wm = 320; break;
+                                case 70: Wm = 400; break;
+                                /*
+                                case 80: Wm = 480; break;
+                                case 100: Wm = 560; break;
+                                case 120: Wm = 640; break;
+                                */
+                                case 80: Wm = WidthLimit; break;
+                                case 100: Wm = WidthLimit; break;
+                                case 120: Wm = WidthLimit; break;
+                            }
+
+                            switch(H) {
+                                case 80: Hm = 240; break;
+                                case 100: Hm = 280; break;
+                                case 120: Hm = 320; break;
+                                case 140: Hm = 400; break;
+                                case 160: Hm = 480; break;
+                            }
+                            if(Hm > HeightLimit) Hm = HeightLimit;
+
+                            Wp = Wm + 20;
+                            if(Wp > WidthLimit) Wp = WidthLimit;
                         } break;
                     }
                     $("#constructor .monument.part").css({
@@ -63,32 +87,6 @@ $(document).ready(function() {
                         width: Wp + 'px',
                     });
                 });
-                /*
-                TODO: Горизонтальные размеры
-                let selectedOption = $(".field_area.model-size_area .field.model-size.c"+catID+" option:first");
-                let W = selectedOption.data('w');
-                let H = selectedOption.data('h');
-                let Wm, Hm, Wp;
-                switch(catID) {
-                    case 2: {
-                        Wm = W * 2;
-                        Hm = H * 8;
-                        Wp = W * 2 + 20;
-                    } break;
-                    case 3: {
-                        Wm = 1;
-                        Hm = 1;
-                        Wp = 1;
-                    } break;
-                }
-                $("#constructor .monument.part").css({
-                    width: Wm + 'px',
-                    height: Hm + 'px'
-                });
-                $("#constructor .postament.part").css({
-                    width: Wp + 'px',
-                });
-                */
             } break;
             case 'material': {
                 $("#constructor .part").css('background-image', 'url('+$(this).find(".preview").attr('src')+')');
@@ -136,13 +134,14 @@ $(document).ready(function() {
             $("#price_list").val(data.serialize);
         });
     }
-    $(".field_area .field.text").keyup(function(event) {
+    // .priceRequest
+    $(".priceRequestKeyup").keyup(function(event) { // .field_area .field.text
         getPriceRequest();
     });
-    $(".grid .item").click(function(event) {
+    $(".priceRequestClick").click(function(event) { // .grid .item
         getPriceRequest();
     });
-    $("select").change(function(event) {
+    $(".priceRequestChange").change(function(event) { // select
         getPriceRequest();
     });
 
@@ -164,6 +163,16 @@ $(document).ready(function() {
         // Отражаем текст в эскизе
         $("#constructor .item." + fieldName).html(value).css('font-size', fontSize+'px');
         $("#constructor .item.font_" + fontGroup).css('font-family', fontFamily);
+    });
+
+    // Дефис между датами
+    $("#defis").click(function() {
+        if($(this).prop('checked')) {
+            $("#constructor .item.birth_date").append('<span class="defis"> - </span>');
+        }
+        else {
+            $("#constructor .defis").remove();
+        }
     });
 
     // Выбор шрифта

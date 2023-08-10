@@ -195,7 +195,7 @@ class OrderController extends Controller
         $categoryList = Category::all();
 
         // Формируем PDF
-        $pdf = Pdf::loadView('order.pdf', compact('order'));
+        $pdf = Pdf::loadView('order.pdf', compact('order', 'categoryList'));
         $pdf->setOption([
             'defaultPaperSize' => "a4",
             'defaultFont' => 'dejavu serif',
@@ -326,12 +326,13 @@ class OrderController extends Controller
             ['name' => 'vase', 'where' => $data['vase'] ?? null],
         ];
         foreach($arFields as $field) {
-            if(!empty($data[$field['name']])) {
-                $total = $productList->where('id', $field['where'])->first()->price ?? 0;
-                $price[$field['name']] = $total;
-                $price['total'] += $total;
-            }
+            $total = $productList->where('id', $field['where'])->first()->price ?? 0;
+            $price[$field['name']] = $total;
+            $price['total'] += $total;
         }
+
+        # Корректировка цены
+        // $data['total_amount']
 
         // Смета
         $price['serialize'] = serialize($price);

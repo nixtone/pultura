@@ -48,6 +48,7 @@
         </tr>
     </table>
 
+    {{--
     <table class="list">
         <tr>
             <th colspan="3">Внешний вид памятника</th>
@@ -88,6 +89,36 @@
             <td colspan="2">{{ $order->epitafia }}</td>
         </tr>
     </table>
+    --}}
+
+    <h2>Текст для памятника</h2>
+    <table class="s1">
+        <tr>
+            <th width="140px">Фамилия</th>
+            <td>{{ $order->lastname }}</td>
+            <td rowspan="6" width="460px" class="tac"><h3>Эскиз</h3><img src="{{ asset($order->eskiz) }}" alt=""></td>
+        </tr>
+        <tr>
+            <th>Имя</th>
+            <td>{{ $order->firstname }}</td>
+        </tr>
+        <tr>
+            <th>Отчество</th>
+            <td>{{ $order->fathername }}</td>
+        </tr>
+        <tr>
+            <th>Дата рождения</th>
+            <td>{{ $order->birth_date }}</td>
+        </tr>
+        <tr>
+            <th>Дата смерти</th>
+            <td>{{ $order->death_date }}</td>
+        </tr>
+        <tr>
+            <th>Эпитафия</th>
+            <td>{{ $order->epitafia }}</td>
+        </tr>
+    </table>
 
 
     <h2>Смета</h2>
@@ -100,7 +131,12 @@
         </tr>
         @if(!empty($order->model->name))
         <tr>
-            <td>Стелла (модель: {{ $categoryList->find($order->model->category_id)->name }} "{{ $order->model->name }}", размер: {{ $order->model_size }}, материал: {{ $order->material->name }})</td>
+            <td>Стелла (модель:
+                {{ $categoryList->find($order->model->category_id)->name }}
+                "{{ $order->model->name }}",
+                размер: {{ $order->model_size }},
+                материал: @if(isset($order->material->category_id)) {{ $categoryList->find($order->material->category_id)->name }} "{{ $order->material->name }}" @endif)
+            </td>
             <td class="tac">{{ $order->price_list['stella'] }}</td>
             <td class="tac">1</td>
             <td class="tac">{{ $order->price_list['stella'] }}</td>
@@ -134,7 +170,7 @@
         <tr>
             <td>Облицовка ({{ $productList->find($order->facing)->name }})</td>
             <td class="tac">{{ $order->price_list['facing'] / $order->face_m2 }}</td>
-            <td class="tac">{{ $order->face_m2 }}</td>
+            <td class="tac">{{ $order->face_m2 }} м<sup>2</sup></td>
             <td class="tac">{{ $order->price_list['facing'] }}</td>
         </tr>
         @endif
@@ -165,6 +201,7 @@
             <td class="tac">{{-- TODO: Количество --}}</td>
             <td class="tac">
                 {{--
+                TODO: фиксировать вывод пустых значений
                 $order->price_list['lastname'] +
                 $order->price_list['firstname'] +
                 $order->price_list['fathername'] +
