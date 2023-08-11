@@ -14,7 +14,7 @@
         </tr>
         <tr>
             <td>
-                <form method="post">
+                <form method="post" id="status_area">
                     @csrf
                     @method('patch')
                     <select name="status_id" id="status_selected" class="field">
@@ -22,6 +22,7 @@
                             <option value="{{ $status->id }}" @if($status->id == $order->status->id) selected @endif class="status c{{ $status->id }}">{{ $status->name }}</option>
                         @endforeach
                     </select>
+                    <input type="hidden" name="id" value="{{ $order->id }}">
                 </form>
             </td>
             <td class="tac">{{ $order->deadline_date }}</td>

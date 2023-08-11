@@ -29,7 +29,8 @@ class OrderRequest extends FormRequest
             'firstname' => '',
             'fathername' => '',
             'birth_date' => '',
-            'epitafia' => ''
+            'epitafia' => '',
+            'status_id' => '',
         ];
     }
 

@@ -43,11 +43,12 @@ $(document).ready(function() {
     // Смена статуса
     $("#status_selected").change(function(event) {
         let $this = $(this);
+        // console.log($("#status_area").serialize());
         $.ajax({
             url: '/order/update/1',
             type: 'POST',
             dataType: 'json',
-            data: $this.serialize(),
+            data: $("#status_area").serialize(),
         })
         .always(function(data) {
             console.log(data);

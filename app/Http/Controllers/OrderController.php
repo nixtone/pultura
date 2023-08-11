@@ -175,8 +175,10 @@ class OrderController extends Controller
 
     public function update(OrderRequest $request, Order $order) {
         $data = $request->validated();
-        $order->update($data);
-        // TODO: полное очко с датами, в базе Ymd а нужно dmY
+        return $data;
+        //Order::where('id', $request->id)->update($request);
+        $order->update($request);
+
         return redirect()->route('order.item', $order->id);
     }
 
@@ -188,14 +190,22 @@ class OrderController extends Controller
     public function pdf(Order $order) {
 
         // Сбор данных
+        $productList = Product::all();
         $order->model = Product::find($order->model);
         $order->material = Product::find($order->material);
         $order->portrait = Product::find($order->portrait);
         $statusList = Status::all();
         $categoryList = Category::all();
 
+        // Калькуляция оплаты
+        $order->paid = 0;
+        foreach($order->pay as $pay) $order->paid += $pay->amount;
+        $order->remain = $order->price_list['total'] - $order->paid;
+        // Шаблон страницы
+        // return view('order.item', compact('order', 'productList', 'categoryList', 'statusList'));
+
         // Формируем PDF
-        $pdf = Pdf::loadView('order.pdf', compact('order', 'categoryList'));
+        $pdf = Pdf::loadView('order.pdf', compact('order', 'productList', 'categoryList', 'statusList'));
         $pdf->setOption([
             'defaultPaperSize' => "a4",
             'defaultFont' => 'dejavu serif',
@@ -327,7 +337,7 @@ class OrderController extends Controller
         ];
         foreach($arFields as $field) {
             $total = $productList->where('id', $field['where'])->first()->price ?? 0;
-            $price[$field['name']] = $total;
+            $price[$field['name']] = empty($data[$field['name']]) ? 0 : $total;
             $price['total'] += $total;
         }
 
