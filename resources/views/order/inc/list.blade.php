@@ -19,13 +19,15 @@
             <td><a href="{{ route('client.item', $order->client_id) }}">{{ $order->client->name }}</a></td>
             <td class="tac">{{ $order->created_at }}</td>
             <td class="tac">{{ $order->deadline_date }}</td>
-            <td class="tac">@if($order->status->id != 3)<a href="{{ route('order.edit', $order->id) }}" class="edit ico"></a>@endif</td>
+            <td class="tac">{{-- @if($order->status->id != 3)<a href="{{ route('order.edit', $order->id) }}" class="edit ico"></a>@endif --}}</td>
             <td class="tac">
+                @if(Auth::user()->user_group <= 2)
                 <form action="{{ route('order.delete', $order->id) }}" method="post">
                     @csrf
                     @method('delete')
                     <input type="submit" value="" class="delete ico">
                 </form>
+                @endif
             </td>
         </tr>
         @endforeach

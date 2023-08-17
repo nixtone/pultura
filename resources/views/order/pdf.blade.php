@@ -21,10 +21,10 @@ table.s1 td,
 table.s1 th {
     border: 1px solid;
 }
-table.s1 td,
+/*table.s1 td,
 table.s1 th {
-    padding: 5px;
-}
+    padding: 0px;
+}*/
 td, th {
     padding: 3px;
 }
@@ -34,6 +34,9 @@ h1, h2, h3 {
 
 .tac {
     text-align: center;
+}
+.tar {
+    text-align: right;
 }
 
 ol {
@@ -60,6 +63,9 @@ ul, ol, li {
 .first {
     font-weight: bold;
 }
+p {
+    line-height: 18px;
+}
 </style>
 </head>
 <body>
@@ -72,13 +78,10 @@ ul, ol, li {
     <table>
         <tr>
             <td width="50%">Дата приема: {{ date("d.m.Y", strtotime($order->created_at)) }}</td>
-            <td style="text-align: right;">Желаемый срок исполнения до {{ date("d.m.Y", strtotime($order->deadline_date)) }} г.</td>
+            <td style="text-align: right;">Желаемый срок исполнения до @if($order->deadline_date) {{ $order->deadline_date }} @else ____________________ @endif г.</td>
         </tr>
         <tr>
-            <td>Заказчик: {{ $order->client->name }}</td>
-        </tr>
-        <tr>
-            <td>Телефон: {{ $order->client->phone }}</td>
+            <td colspan="2"><strong>Заказчик:</strong> {{ $order->client->name }} / <strong>Телефон:</strong> {{ $order->client->phone }}</td>
         </tr>
         @if(!empty($order->client->addr))
         <tr>
@@ -86,11 +89,11 @@ ul, ol, li {
         </tr>
         @endif
         <tr>
-            <td>Монтажные работы(чьи,где): ______________________________________</td>
+            <td colspan="2">Монтажные работы(чьи,где): ___________________________________________________________________________________________________________________</td>
         </tr>
         <tr>
-            <td>Материал изделия: @if(isset($order->material->category_id)) {{ $categoryList->find($order->material->category_id)->name }} @endif</td>
-            <td>Цвет: {{ $order->material->name }}</td>
+            <td>Материал изделия: @if(isset($order->material)) {{ $categoryList->find($order->material->category_id)->name }} @else _______________________ @endif</td>
+            <td>Цвет: @if(isset($order->material)) {{ $order->material->name }} @else _______________________ @endif</td>
         </tr>
     </table>
 
@@ -98,7 +101,10 @@ ul, ol, li {
         <tr>
             <th width="140px">Фамилия</th>
             <td>{{ $order->lastname }}</td>
-            <td rowspan="6" width="460px" class="tac"><h3>Эскиз</h3><img src="{{-- asset($order->eskiz) --}}" alt=""></td>
+            <td rowspan="6" width="460px" class="tac">
+{{--                <h3>Эскиз</h3>--}}
+                <img src="{{ $order->EskizBase64 }}" alt="" style="max-height: 200px">
+            </td>
         </tr>
         <tr>
             <th>Имя</th>
@@ -122,6 +128,7 @@ ul, ol, li {
         </tr>
     </table>
 
+    <h2>Смета</h2>
     <table class="s1">
         <tr>
             <th width="100%">Наименования</th>
@@ -314,12 +321,16 @@ ul, ol, li {
                 <td class="tac">{{ $order->price_list['delivery_km'] }}</td>
             </tr>
         @endif
+        <tr>
+            <td colspan="4" class="tar"><strong>Итого:</strong> </td>
+        </tr>
     </table>
 
-    <div>Памятник осмотрен со всех сторон, претензий не имею, с условиями заказа ознакомлен и согласен, данные, надписей верны,<br>
-        адрес и № телефона верны./_______________________/ Подпись Заказчика</div>
-    <div>Аванс, (полную оплату) в сумме _____ 00 коп получил. /___/ Подпись приёмщика, печать.</div>
-    <div>Справку на оформление "Разрешения" (см.п.3.2.2 "Договора") получил: /___/ Подпись заказчика.</div>
+    <p>Памятник осмотрен со всех сторон, претензий не имею, с условиями заказа ознакомлен и согласен, данные, надписей верны,<br>
+        адрес и номер телефона верны. __________________ Подпись Заказчика</p>
+    <p>Аванс, (полную оплату) в сумме _________________________________________________________________________________________________________________<br>
+        ______________________________________________________________________________________ 00 коп получил. _________ Подпись приёмщика, печать.</p>
+    <p>Справку на оформление "Разрешения" (см.п.3.2.2 "Договора") получил: __________________ Подпись заказчика.</p>
 
     {{--
     <table>

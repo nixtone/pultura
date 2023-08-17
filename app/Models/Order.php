@@ -25,15 +25,26 @@ class Order extends Model
     }
 
     public function getEskizAttribute() {
-        return str_replace("public", "storage", Storage::files("/public/order/{$this->id}")[0]);
+        // return str_replace("public", "storage", Storage::files("/public/order/{$this->id}")[0]);
+        //return str_replace("public", "storage", Storage::files("/public/order/{$this->id}")[0]);
+        return "storage/order/".$this->id."/eskiz.png";
+    }
+    public function getEskizBase64Attribute() {
+        return Storage::disk('public')->get("order/".$this->id."/eskiz.base64");
     }
 
+    /*
     public function getBirthDateAttribute($value) {
-        return date("d.m.Y", strtotime($value));
+        return $value ? date("d.m.Y", strtotime($value)) : '' ;
     }
 
     public function getDeathDateAttribute($value) {
-        return date("d.m.Y", strtotime($value));
+        return $value ? date("d.m.Y", strtotime($value)) : '' ;
+    }
+    */
+
+    public function getDeadlineDateAttribute($value) {
+        return $value ? date("d.m.Y", strtotime($value)) : '' ;
     }
 
     public function getPriceListAttribute($value) {

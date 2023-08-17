@@ -25,13 +25,27 @@ class DatabaseSeeder extends Seeder
             \App\Models\UserGroup::factory()->create(['name' => $group]);
         }
 
-        // Первый пользователь
+        // Пользователи
         \App\Models\User::factory()->create([
             'name' => 'Haidar',
-            'phone' => '+7 (000) 123-45-67',
+            'phone' => '+7 (000) 111-11-11',
             'email' => 'haidar@haidar.ru',
-            'password' => 'haidar1',
+            'password' => 'guS93!sQ',
             'user_group' => 1,
+        ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Anton',
+            'phone' => '+7 (000) 222-22-22',
+            'email' => 'anton@anton.ru',
+            'password' => 'g4jsD#Kz',
+            'user_group' => 2,
+        ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Sotrudnik',
+            'phone' => '+7 (000) 333-33-33',
+            'email' => 'sotrudnik@sotrudnik.ru',
+            'password' => 'bk3&v0cV',
+            'user_group' => 3,
         ]);
 
         // Статусы

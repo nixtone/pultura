@@ -17,7 +17,7 @@
             <td><a href="{{ route('user.item', $user->id) }}">{{ $user->name }}</a></td>
             <td class="tac">{{ $user->phone }}</td>
             <td class="tac">{{ $user->email }}</td>
-            <td class="tac">{{ $user->user_group }}</td>
+            <td class="tac">{{ $user->GroupLabel }}</td>
             <td class="tac">{{ $user->created_at }}</td>
             <td class="tac"><a href="{{ route('user.edit', $user->id) }}" class="edit ico"></a></td>
             <td class="tac">

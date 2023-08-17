@@ -43,7 +43,6 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ];*/
-        dd($data);
         $user = User::create($data);
         return redirect()->route('user.list');
     }

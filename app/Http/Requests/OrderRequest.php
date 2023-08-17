@@ -23,7 +23,6 @@ class OrderRequest extends FormRequest
     {
         return [
             //'client_id' => 'integer|required',
-            //'status_id' => 'integer',
 
             'lastname' => '',
             'firstname' => '',

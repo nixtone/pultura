@@ -14,7 +14,7 @@
         </tr>
         <tr>
             <td>
-                <form method="post" id="status_area">
+                <form action="{{ route('order.update', $order) }}" method="post" id="status_area">
                     @csrf
                     @method('patch')
                     <select name="status_id" id="status_selected" class="field">
@@ -23,6 +23,7 @@
                         @endforeach
                     </select>
                     <input type="hidden" name="id" value="{{ $order->id }}">
+                    <input type="submit" value="Сменить" class="btn">
                 </form>
             </td>
             <td class="tac">{{ $order->deadline_date }}</td>
@@ -97,7 +98,10 @@
         <tr>
             <th width="140px">Фамилия</th>
             <td>{{ $order->lastname }}</td>
-            <td rowspan="6" width="460px" class="tac"><h3>Эскиз</h3><img src="{{ asset($order->eskiz) }}" alt=""></td>
+            <td rowspan="6" width="460px" class="tac">
+                <h3>Эскиз</h3>
+                <img src="{{ asset($order->eskiz) }}" alt="">
+            </td>
         </tr>
         <tr>
             <th>Имя</th>

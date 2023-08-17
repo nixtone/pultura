@@ -27,8 +27,8 @@ return new class extends Migration
             $table->string('lastname')->default('');
             $table->string('firstname')->default('');
             $table->string('fathername')->default('');
-            $table->date('birth_date')->nullable();
-            $table->date('death_date')->nullable();
+            $table->string('birth_date')->default('');
+            $table->string('death_date')->default('');
             $table->string('epitafia')->default('');
 
             // Гравировка

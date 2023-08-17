@@ -134,6 +134,7 @@ $(document).ready(function() {
             $("#price_list").val(data.serialize);
         });
     }
+    getPriceRequest();
     // .priceRequest
     $(".priceRequestKeyup").keyup(function(event) { // .field_area .field.text
         getPriceRequest();
@@ -144,6 +145,7 @@ $(document).ready(function() {
     $(".priceRequestChange").change(function(event) { // select
         getPriceRequest();
     });
+
 
     // Синхронизация с "Итого" при корректировке цены
     $("#total_amount").keyup(function(event) {

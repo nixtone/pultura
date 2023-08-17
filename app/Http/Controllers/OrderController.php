@@ -87,8 +87,8 @@ class OrderController extends Controller
         $data['lastname'] = $request->lastname ?? '';
         $data['firstname'] = $request->firstname ?? '';
         $data['fathername'] = $request->fathername ?? '';
-        if($request->birth_date) $data['birth_date'] = date("Y-m-d", strtotime($request->birth_date));
-        if($request->death_date) $data['death_date'] = date("Y-m-d", strtotime($request->death_date));
+        $data['birth_date'] = $request->birth_date ?? ''; // date("Y-m-d", strtotime($request->birth_date)) : null ;
+        $data['death_date'] = $request->death_date ?? ''; // date("Y-m-d", strtotime($request->death_date)) : null ;
         $data['epitafia'] = $request->epitafia ?? '';
 
         // Гравировка
@@ -154,6 +154,7 @@ class OrderController extends Controller
             $newDir.'/eskiz.png',
             base64_decode(str_replace("data:image/png;base64,", "", $request->eskiz_image))
         );
+        Storage::put($newDir.'/eskiz.base64', $request->eskiz_image);
 
 
         # Прием оплаты
@@ -174,11 +175,12 @@ class OrderController extends Controller
     }
 
     public function update(OrderRequest $request, Order $order) {
-        $data = $request->validated();
-        return $data;
+        //$data = $request->validated();
+        //return $request;
+        $data['status_id'] = $request->status_id;
+        $data['id'] = $request->id;
         //Order::where('id', $request->id)->update($request);
-        $order->update($request);
-
+        $order->update($data);
         return redirect()->route('order.item', $order->id);
     }
 
@@ -313,14 +315,27 @@ class OrderController extends Controller
             $price['total'] += $data['deinstall'];
         }
 
-        $arFields = [
-            // Текст для памятника
-            ['name' => 'portrait', 'where' => $data['portrait'] ?? null],
+        // Текст для памятника
+        $textFields = [
             ['name' => 'lastname', 'where' => 271],
             ['name' => 'firstname', 'where' => 272],
             ['name' => 'fathername', 'where' => 273],
             ['name' => 'birth_date', 'where' => 274],
             ['name' => 'death_date', 'where' => 275],
+        ];
+        foreach($textFields as $field) {
+            if(empty($data[$field['name']])) {
+                $total = 0;
+            }
+            else {
+                $total = $productList->where('id', $field['where'])->first()->price;
+            }
+            $price[$field['name']] = $total;
+            $price['total'] += $total;
+        }
+
+        $arFields = [
+            ['name' => 'portrait', 'where' => $data['portrait'] ?? null],
             //Гравировка
             ['name' => 'crescent', 'where' => $data['crescent'] ?? null],
             ['name' => 'cross', 'where' => $data['cross'] ?? null],
@@ -331,12 +346,13 @@ class OrderController extends Controller
             ['name' => 'angel', 'where' => $data['angel'] ?? null],
             ['name' => 'bird', 'where' => $data['bird'] ?? null],
             // Дополнения
-            ['name' => 'tombstone', 'where' => $data['tombstone'] ?? null],
-            ['name' => 'fence', 'where' => $data['fence'] ?? null],
-            ['name' => 'vase', 'where' => $data['vase'] ?? null],
+            ['name' => 'tombstone', 'where' => $data['tombstone'] ?? null], // Цветник / надгробие
+            ['name' => 'fence', 'where' => $data['fence'] ?? null], // Ограда
+            ['name' => 'vase', 'where' => $data['vase'] ?? null], // Вазы
         ];
         foreach($arFields as $field) {
             $total = $productList->where('id', $field['where'])->first()->price ?? 0;
+            //if($field['name'] == 'lastname') return $data[$field['name']];
             $price[$field['name']] = empty($data[$field['name']]) ? 0 : $total;
             $price['total'] += $total;
         }

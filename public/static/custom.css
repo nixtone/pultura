@@ -505,6 +505,11 @@ header .user_area .name {
     color: #da7070;
 }
 
+#status_area {
+    display: flex;
+    gap: 5px;
+}
+
 footer .container {
 	background: #122b45;
 	color: #e2e8e9;

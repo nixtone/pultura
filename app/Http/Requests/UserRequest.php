@@ -25,8 +25,8 @@ class UserRequest extends FormRequest
             'name' => 'required',
             'phone' => 'required',
             'email' => '',
-            'password' => '',
-            'user_group' => '',
+            'password' => 'required',
+            'user_group' => 'required',
             'comment' => '',
         ];
     }

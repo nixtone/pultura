@@ -51,10 +51,10 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($password);
     }
 
-    /*
-    public function getUserGroupAttribute($user_group) {
-        return UserGroup::find($user_group)->name;
+    public function getGroupLabelAttribute($ug) {
+        $group = UserGroup::find($this->user_group);
+        $group = $group ? $group->name : '' ;
+        return $group;
     }
-    */
 
 }
