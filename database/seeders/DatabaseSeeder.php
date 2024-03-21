@@ -61,7 +61,13 @@ class DatabaseSeeder extends Seeder
         }
 
         // Категории клиентов
-        \App\Models\ClientCategory::factory()->create(['name' => 'Дилеры']);
+        $clientCategory = [
+            ['name' => 'Клиенты'],
+            ['name' => 'Дилеры'],
+        ];
+        foreach($clientCategory as $client) {
+            \App\Models\ClientCategory::factory()->create(['name' => $client['name']]);
+        }
 
         // Категории
         $categoryList = [

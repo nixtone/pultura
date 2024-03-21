@@ -17,7 +17,7 @@
     </tr>
     <tr>
         <td>{{ $client->phone }}</td>
-        <td>{{ $client->client_category }}</td>
+        <td>{{ $client->client_category->name }}</td>
         <td>{{ $client->email }}</td>
         <td colspan="3">{{ $client->addr }}</td>
     </tr>

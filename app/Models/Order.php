@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -43,8 +44,52 @@ class Order extends Model
     }
     */
 
-    public function getDeadlineDateAttribute($value) {
-        return $value ? date("d.m.Y", strtotime($value)) : '' ;
+    # Дедлайн на русском
+    public function getDeadlineDateRuAttribute($value) {
+        return Carbon::parse($this->deadline_date)->translatedFormat("d F Y");
+    }
+
+    # Сколько осталось дней?
+    public function getDayRestAttribute() {
+        $diff = Carbon::parse($this->deadline_date)->diffInDays(Carbon::now());
+        if(Carbon::parse($this->deadline_date)->isPast()) $diff = 0;
+        return $diff;
+    }
+
+    #
+    public function getLevelAttribute() {
+        $endPeriod = 10;
+        $day = $this->dayRest;
+        $level = 1;
+
+        /*
+        1 - много дней
+        2 - остается 10 дней
+        3 - сегодня
+        4 - завершено
+        */
+        switch($day) {
+            case ($day <= $endPeriod): {
+                $level = 2;
+            } break;
+            /**/
+            case (0): {
+                if(Carbon::parse($this->deadline_date)->isCurrentDay()) {
+                    $level = 3;
+                }
+                else {
+                    $level = 4;
+                }
+            } break;
+
+        }
+
+        return $level;
+    }
+
+    # Дата создания на русском
+    public function getCreatedAtRuAttribute() {
+        return Carbon::parse($this->created_at)->translatedFormat("d F Y / H:i");
     }
 
     public function getPriceListAttribute($value) {

@@ -29,7 +29,6 @@
             <div class="field_area">
                 <label for="">Категория</label>
                 <select name="client_category" id="client_category" class="field">
-                    <option value=""></option>
                     @foreach($clientCategories as $clientCat)
                     <option value="{{ $clientCat->id }}">{{ $clientCat->name }}</option>
                     @endforeach

@@ -402,6 +402,25 @@ header .user_area .name {
 	gap: 30px;
 }
 
+/*
+1 - много дней
+2 - остается 10 дней
+3 - сегодня
+4 - завершено
+*/
+#order.list .order_tr.level.c1 .deadline {
+    color: green;
+}
+#order.list .order_tr.level.c2 .deadline {
+    color: blue;
+}
+#order.list .order_tr.level.c3 .deadline {
+    color: red;
+}
+#order.list .order_tr.level.c4 .deadline {
+    color: gray;
+}
+
 #product .monument {
     max-width: 40px;
     display: block;
