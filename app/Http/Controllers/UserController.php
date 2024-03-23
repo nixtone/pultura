@@ -35,14 +35,10 @@ class UserController extends Controller
     }
 
     public function save(UserRequest $request) {
-        //dd($request);
+
         $data = $request->validated();
-        /*$data = [
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'password' => $request->password,
-        ];*/
+        // TODO: недоходит телефон и группа
+        dd($data);
         $user = User::create($data);
         return redirect()->route('user.list');
     }

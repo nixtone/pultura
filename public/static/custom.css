@@ -233,7 +233,7 @@ table.list tr:hover {
 	background: #dcf0e7;
 }
 table.list td, table.list th {
-    padding: 10px;
+    padding: 6px;
     box-sizing: border-box;
     border-left: 1px solid #dddbdb;
     border-right: 1px solid #dddbdb;
@@ -275,11 +275,11 @@ table.s1 th, table.s1 td {
     background: url(/static/images/delete.png);
 }
 
-.status.c1 { background: #ffea6a; } /*Принят*/
-.status.c2 { background: #78bdef; } /*Выполняется*/
-.status.c3 { background: #b7e6cc; } /*Готов*/
-.status.c4 { background: #da7070; } /*Отказ*/
-.status.c5 { background: #d4d4d4; } /*Остановлен*/
+.status.c1 .value { background: #ffea6a; } /*Принят*/
+.status.c2 .value { background: #78bdef; } /*Выполняется*/
+.status.c3 .value { background: #b7e6cc; } /*Готов*/
+.status.c4 .value { background: #da7070; } /*Отказ*/
+.status.c5 .value { background: #d4d4d4; } /*Остановлен*/
 
 .tab-area .tab.page .tab-item {
     display: none;
@@ -402,6 +402,12 @@ header .user_area .name {
 	gap: 30px;
 }
 
+#order.list .status .value {
+    padding: 5px 3px;
+}
+#order.list .number .id {
+    display: block;
+}
 /*
 1 - много дней
 2 - остается 10 дней

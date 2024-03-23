@@ -23,19 +23,29 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'phone' => 'required',
-            'email' => '',
+            'phone' => 'required|unique:users,phone',
+            'email' => 'email|unique:users,email',
             'password' => 'required',
-            'user_group' => 'required',
+            'user_group' => 'required|integer',
             'comment' => '',
         ];
     }
 
     public function messages()
     {
+        $message = [
+            'required' => 'обязательно для заполнения'
+        ];
         return [
-            'name.required' => 'обязательно для заполнения',
-            'phone.required' => 'обязательно для заполнения',
+            'name.required' => $message['required'],
+
+            'phone.required' => $message['required'],
+            'phone.unique' => 'такой номер уже занят',
+
+            'email.unique' => 'такой E-mail уже занят',
+            'email.email' => 'неправильный формат',
+
+            'password.required' => $message['required'],
 
         ];
     }
