@@ -64,11 +64,11 @@
                     @endforeach
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="material" id="material" class="ppField cpp" data-pp="material" value="0">
+                    <input type="checkbox" name="material" id="material" class="ppField priceRequestClick cpp" data-pp="material" value="0">
                     <label for="material">Материал <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="portrait" id="portrait" class="ppField cpp" data-pp="portrait" value="0">
+                    <input type="checkbox" name="portrait" id="portrait" class="ppField priceRequestClick cpp" data-pp="portrait" value="0">
                     <label for="portrait">Портрет <span class="product_name"></span></label>
                 </div>
             </div>

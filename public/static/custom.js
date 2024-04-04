@@ -77,6 +77,9 @@ $(document).ready(function() {
             if(label.hasClass('checked')) {
                 label.removeClass('checked').find(".product_name").text('');
                 switch(field) {
+                    case 'model': {
+                        $("#constructor .negative").css('background-image', '');
+                    } break;
                     case 'material': {
                         $("#constructor .part").css('background-image', 'unset');
                     } break;
