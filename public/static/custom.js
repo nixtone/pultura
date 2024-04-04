@@ -55,45 +55,73 @@ $(document).ready(function() {
         });
     });
 
-    // Отмена выбора на чекбоксе
-    function uncheck($this, ppWindowName) {
-        if($this.prop('checked') == false) {
-            $("label[for='"+ppWindowName+"']").removeClass('checked').closest(".field_area").find(".product_name").empty();
-            switch(ppWindowName) {
-                case 'model': {
-                    $(".field_area.model-size_area").hide().find(".field.model-size").removeAttr('name');
-                }
-            }
-            // TODO: не останавливает открытие popup
-            return false;
-        }
-    }
+
+
+
+    // Снятие всех чекбоксов при обновлении страницы
+    $('input:checked').prop('checked', false);
 
     // Попап
     $(".cpp").click(function(event) {
+        //event.preventDefault();
+
         // Сбор данных
-        let ppWindowName = $(this).data('pp');
         let $this = $(this);
         let maxHeight = $("body").height() > 900 ? 900 : $("body").height();
+        let field = $this.attr('id');
+        let label = $('label[for="'+field+'"]');
 
+        // Регулятор отмечаний чекбоксов
+        if($this.hasClass('ppField')) {
+            $this.prop('checked', false);
+            if(label.hasClass('checked')) {
+                label.removeClass('checked').find(".product_name").text('');
+                switch(field) {
+                    case 'material': {
+                        $("#constructor .part").css('background-image', 'unset');
+                    } break;
+                    case 'portrait': {
+                        $("#constructor .item.portrait .preview").attr('src', '');
+                    } break;
+                    case 'cross': {
+                        $("#constructor .item.cross .preview").attr('src', '');
+                    } break;
+                    case 'flower': {
+                        $("#constructor .item.flower .preview").attr('src', '');
+                    } break;
+                    case 'branch': {
+                        $("#constructor .item.branch .preview").attr('src', '');
+                    } break;
+                    case 'candle': {
+                        $("#constructor .item.candle .preview").attr('src', '');
+                    } break;
+                    case 'angel': {
+                        $("#constructor .item.angel .preview").attr('src', '');
+                    } break;
+                    case 'bird': {
+                        $("#constructor .item.bird .preview").attr('src', '');
+                    } break;
+                }
+                return;
+            }
+        }
+
+        // Стили
         $("body").addClass('blockScroll');
         $(".popup, .grid").css('max-height', maxHeight);
-        //$(".tab-area .tab.page .tab-item .grid").height($(".tab-area .tab.page .tab-item").height());
-        // Снятие чекбокса
-        uncheck($this, ppWindowName);
-        // Открытие
+
+        // естественное
         $(".overlay .inner > *").hide();
-        $(".overlay, .overlay ." + ppWindowName).fadeIn(150);
-        // Закрытие
-        $(".overlay").click(function(event) {
-            if(!$(".popup").is(event.target) && $(".popup").has(event.target).length === 0 || event.target.className == "close") {
-                $(".overlay").fadeOut(150);
-                //
-                $("body").removeClass('blockScroll');
-                uncheck($this, ppWindowName);
-            }
-        });
+        $(".overlay, .overlay ."+$(this).data('pp')).fadeIn(150);
     });
+    // естественное
+    $(".overlay").click(function(event) {
+        if(!$(".popup").is(event.target) && $(".popup").has(event.target).length === 0 || event.target.className == "close")
+            $(".overlay").fadeOut(150);
+        // Стили
+        $("body").removeClass('blockScroll');
+    });
+
 
     // Табы
     $(".tab-area .tab").each(function(index, el) {

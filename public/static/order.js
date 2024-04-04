@@ -1,12 +1,5 @@
 $(document).ready(function() {
 
-    // Выбор клиента
-    /*
-    $(".field_group.user_choose input[name='choose_client']").click(function(event) {
-        $(".field_group.user_choose .row").removeClass('active').parent().find(".row.c" + $(this).val()).addClass('active');
-    });
-    */
-
     // Выбор наименований
     $(".window .item").click(function(event) {
         // Сбор данных
@@ -127,7 +120,7 @@ $(document).ready(function() {
             }
         })
         .always(function(data) {
-            console.log(data);
+            // console.log(data);
             $(".preload").hide();
             $("#order-total .digit").text(data.total);
             $("#total_amount").val(data.total);

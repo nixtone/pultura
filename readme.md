@@ -37,3 +37,10 @@ Laravel v10.13.5
 7. php artisan storage:link  
 8. Разместить в корне .htaccess  
 9. Копировать каталог картинок "product" в "/storage/app/public/"  
+
+### Материалы  
+
+[postament](https://postament.ru/constructor/?ysclid=lui9wjml6o968483028)  
+[monument-nd](https://monument-nd.ru/konstruktor-pamjatnikov-na-mogilu/)  
+[Web-приложение KPam-3D](https://kpam3d.ru/?ysclid=lui9woau3f430392135)  
+[konstruktor-pamyatnikov](https://konstruktor-pamyatnikov.ru/)  
