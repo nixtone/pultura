@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+    // Снятие всех чекбоксов и очистка полей, при обновлении страницы
+    $('input:checked').prop('checked', false);
+    $('input.field.text, textarea').val('');
+
     // Выбор наименований
     $(".window .item").click(function(event) {
         // Сбор данных

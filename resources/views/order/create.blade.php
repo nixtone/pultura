@@ -299,7 +299,7 @@
                         <div class="item fathername font_main"></div>
                         <div class="item birth_date font_main"></div>
                         <div class="item death_date font_main"></div>
-                        <div class="item epitafia font_epitafia"></div>
+                        <pre class="item epitafia font_epitafia"></pre>
 
                         <div class="item cross">
                             <img src="" alt="" class="preview bimg" style="max-width: 50px;">

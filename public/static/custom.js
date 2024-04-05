@@ -58,8 +58,7 @@ $(document).ready(function() {
 
 
 
-    // Снятие всех чекбоксов при обновлении страницы
-    $('input:checked').prop('checked', false);
+
 
     // Попап
     $(".cpp").click(function(event) {
@@ -79,6 +78,14 @@ $(document).ready(function() {
                 switch(field) {
                     case 'model': {
                         $("#constructor .negative").css('background-image', '');
+                        $(".field_area.model-size_area").hide();
+                        $("#constructor .monument.part").css({
+                            width: '160px',
+                            height: '320px'
+                        });
+                        $("#constructor .postament.part").css({
+                            width: '180px',
+                        });
                     } break;
                     case 'material': {
                         $("#constructor .part").css('background-image', 'unset');
