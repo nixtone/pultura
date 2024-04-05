@@ -144,35 +144,35 @@
             <div class="field_group">
                 <h2>Гравировка</h2>
                 <div class="field_area inline">
-                    <input type="checkbox" name="crescent" id="crescent" class="ppField cpp" data-pp="crescent" value="0">
+                    <input type="checkbox" name="crescent" id="crescent" class="ppField cpp priceRequestClick" data-pp="crescent" value="0">
                     <label for="crescent">Полумесяц <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="cross" id="cross" class="ppField cpp" data-pp="cross" value="0">
+                    <input type="checkbox" name="cross" id="cross" class="ppField cpp priceRequestClick" data-pp="cross" value="0">
                     <label for="cross">Крест <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="flower" id="flower" class="ppField cpp" data-pp="flower" value="0">
+                    <input type="checkbox" name="flower" id="flower" class="ppField cpp priceRequestClick" data-pp="flower" value="0">
                     <label for="flower">Цветы <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="icon" id="icon" class="ppField cpp" data-pp="icon" value="0">
+                    <input type="checkbox" name="icon" id="icon" class="ppField cpp priceRequestClick" data-pp="icon" value="0">
                     <label for="icon">Иконы <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="branch" id="branch" class="ppField cpp" data-pp="branch" value="0">
+                    <input type="checkbox" name="branch" id="branch" class="ppField cpp priceRequestClick" data-pp="branch" value="0">
                     <label for="branch">Ветвь <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="candle" id="candle" class="ppField cpp" data-pp="candle" value="0">
+                    <input type="checkbox" name="candle" id="candle" class="ppField cpp priceRequestClick" data-pp="candle" value="0">
                     <label for="candle">Свечи <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="angel" id="angel" class="ppField cpp" data-pp="angel" value="0">
+                    <input type="checkbox" name="angel" id="angel" class="ppField cpp priceRequestClick" data-pp="angel" value="0">
                     <label for="angel">Ангелы <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="bird" id="bird" class="ppField cpp" data-pp="bird" value="0">
+                    <input type="checkbox" name="bird" id="bird" class="ppField cpp priceRequestClick" data-pp="bird" value="0">
                     <label for="bird">Птицы <span class="product_name"></span></label>
                 </div>
             </div>
@@ -180,15 +180,15 @@
             <div class="field_group">
                 <h2>Дополнения</h2>
                 <div class="field_area inline">
-                    <input type="checkbox" name="tombstone" id="tombstone" class="ppField cpp" data-pp="tombstone">
+                    <input type="checkbox" name="tombstone" id="tombstone" class="ppField cpp priceRequestClick" data-pp="tombstone">
                     <label for="tombstone">Цветник / надгробие <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="fence" id="fence" class="ppField cpp" data-pp="fence">
+                    <input type="checkbox" name="fence" id="fence" class="ppField cpp priceRequestClick" data-pp="fence">
                     <label for="fence">Ограда <span class="product_name"></span></label>
                 </div>
                 <div class="field_area inline">
-                    <input type="checkbox" name="vase" id="vase" class="ppField cpp" data-pp="vase">
+                    <input type="checkbox" name="vase" id="vase" class="ppField cpp priceRequestClick" data-pp="vase">
                     <label for="vasee">Вазы <span class="product_name"></span></label>
                 </div>
             </div>
