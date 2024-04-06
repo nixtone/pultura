@@ -284,9 +284,9 @@ class OrderController extends Controller
 
         # Облицовка
         if(!empty($data['facing']) AND !empty($data['face_m2'])) {
-            $total = $productList->where('id', (int)$data['facing'])->first()->price * (int)$data['face_m2'];
+            $total = $productList->where('id', (int)$data['facing'])->first()->price * (float)$data['face_m2'];
             $price['facing'] = $total;
-            $price['total'] += $total;
+            $price['total'] += round($total, 2);
         }
 
         # Услуги

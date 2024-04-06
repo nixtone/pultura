@@ -56,7 +56,19 @@ $(document).ready(function() {
     });
 
 
+    // Подтверждение удаления
+    $(".delete").click(function(event) {
+        if($(this).hasClass('true')) {
+            return;
+        }
+        if(confirm("Точно удаляем?")) {
+            $(this).addClass('true').trigger('click');
+        }
+        else {
+            event.preventDefault();
+        }
 
+    });
 
 
 

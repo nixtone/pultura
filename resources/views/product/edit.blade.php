@@ -2,10 +2,17 @@
 
 @section('title', 'Редакция товара: '.$product->name)
 @section('content')
-<div id="product" class="block">
+<div id="product" class="edit block">
     <form action="{{ route('catalog.product.update', $product->id) }}" method="post">
         @csrf
         @method('patch')
+        <div class="preview_area">
+            @foreach($product->files as $file)
+                <a href="{{ asset($file) }}" data-fancybox="gallery" class="preview_wrap">
+                    <img src="{{ asset($file) }}" alt="" class="preview bimg">
+                </a>
+            @endforeach
+        </div>
         <div class="field_area">
             <label for="name">Название @error('name') <span class="err">{{ $message }}</span> @enderror</label>
             <input type="text" name="name" id="name" class="field" value="{{ $product->name }}">

@@ -264,7 +264,7 @@
                 </div>
                 <div class="field_area">
                     <label for="total_amount">Корректировка цены</label>
-                    <input type="text" value="0" id="total_amount" class="field priceRequestKeyup">
+                    <input type="text" value="0" id="total_amount" class="field">
                 </div>
                 <div class="field_area">
                     <label for="comment">Комментарий к заказу</label>

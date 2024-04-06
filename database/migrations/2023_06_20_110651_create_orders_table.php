@@ -47,7 +47,7 @@ return new class extends Migration
             $table->integer('vase')->nullable(); // Ваза
 
             // Облицовка
-            $table->integer('face_m2')->nullable();
+            $table->float('face_m2')->nullable();
             $table->integer('facing')->nullable();
 
             // Услуги

@@ -438,11 +438,12 @@ header .user_area .name {
     display: flex;
     gap: 5px;
 }
-#product.item .preview_wrap {
+#product .preview_wrap {
     max-width: 100px;
     display: block;
     border: 1px solid;
     padding: 5px;
+    background: #eee;
 }
 
 
