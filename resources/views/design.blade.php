@@ -11,24 +11,21 @@
 <style>
 @font-face {
     font-family: 'Open Sans';
-    src: url('{{ asset('/static/opensans/OpenSans-Extrabold.woff2') }}') format('woff2'),
-    url('{{ asset('/static/opensans/OpenSans-Extrabold.woff') }}') format('woff');
+    src: url('{{ asset('/static/fonts/opensans/OpenSans-Extrabold.woff2') }}') format('woff2');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
     font-family: 'Open Sans';
-    src: url('{{ asset('/static/opensans/OpenSans-Bold.woff2') }}') format('woff2'),
-    url('{{ asset('/static/opensans/OpenSans-Bold.woff') }}') format('woff');
+    src: url('{{ asset('/static/fonts/opensans/OpenSans-Bold.woff2') }}') format('woff2');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
     font-family: 'Open Sans';
-    src: url('{{ asset('/static/opensans/OpenSans.woff2') }}') format('woff2'),
-    url('{{ asset('/static/opensans/OpenSans.woff') }}') format('woff');
+    src: url('{{ asset('/static/fonts/opensans/OpenSans.woff2') }}') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -36,55 +33,60 @@
 
 @if(Route::is('order.create'))
 @font-face {
-    font-family: "timesbi";
-    src:url("/static/fonts/timesbi.ttf") format("truetype");
-    font-style: normal;
+    font-family: 'AcademyC';
+    src: url('/static/fonts/constructor/AcademyC.woff2') format('woff2');
     font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 @font-face {
-    font-family: "timesbd";
-    src:url("/static/fonts/timesbd.ttf") format("truetype");
-    font-style: normal;
+    font-family: 'AnastasiaScript';
+    src: url('/static/fonts/constructor/AnastasiaScript.woff2') format('woff2');
     font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 @font-face {
-    font-family: "arialbd";
-    src:url("/static/fonts/arialbd.ttf") format("truetype");
+    font-family: 'Arial';
+    src: url('/static/fonts/constructor/Arial-BoldMT.woff2') format('woff2');
+    font-weight: bold;
     font-style: normal;
-    font-weight: normal;
+    font-display: swap;
 }
 @font-face {
-    font-family: "Academy";
-    src:url("/static/fonts/academyc.otf") format("truetype");
-    font-style: normal;
+    font-family: 'Asessor';
+    src: url('/static/fonts/constructor/Asessor.woff2') format('woff2');
     font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 @font-face {
-    font-family: "cyrillicold";
-    src: url("/static/fonts/CyrillicOldBold/CyrillicOldBold.eot");
-    src: url("/static/fonts/CyrillicOldBold/CyrillicOldBold.eot?#iefix") format("embedded-opentype"),
-    url("/static/fonts/CyrillicOldBold/CyrillicOldBold.woff") format("woff"),
-    url("/static/fonts/CyrillicOldBold/CyrillicOldBold.ttf") format("truetype");
-    font-style: normal;
+    font-family: 'Carolina';
+    src: url('/static/fonts/constructor/Carolina.woff2') format('woff2');
     font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 @font-face {
-    font-family: anastasia;
-    src: url("/static/fonts/anastasia.ttf");
+    font-family: 'Times New Roman';
+    src: url('/static/fonts/constructor/TimesNewRomanPS-BoldMT.woff2') format('woff2');
+    font-weight: bold;
     font-style: normal;
-    font-weight: normal;
+    font-display: swap;
 }
 @font-face {
-    font-family: carolina;
-    src: url("/static/fonts/carolina.ttf");
-    font-style: normal;
-    font-weight: normal;
+    font-family: 'Times New Roman';
+    src: url('/static/fonts/constructor/TimesNewRomanPS-BoldItalicMT.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
 }
 @font-face {
-    font-family: asessor;
-    src: url("/static/fonts/asessor.ttf");
+    font-family: 'CyrillicOld';
+    src: url('/static/fonts/constructor/CyrillicOld.woff2') format('woff2');
+    font-weight: bold;
     font-style: normal;
-    font-weight: normal;
+    font-display: swap;
 }
 @endif
 </style>
@@ -97,16 +99,16 @@
             <div class="col c1">
                 <a href="{{ route('home') }}" id="logo"><img src="{{ asset('/static/images/logo.png') }}" alt="" class="bimg" style="width: 36px;"></a>
                 <nav>
-                    <a href="{{ route('home') }}" class="active1">Заказы</a>
+                    <a href="{{ route('home') }}" class="@if(str_contains(Route::currentRouteName(), "order.")) active @endif">Заказы</a>
                     @if(Auth::user()->user_group <= 2)
-                    <a href="{{ route('client.list') }}">Клиенты</a>
-                    <a href="{{ route('catalog.category.list') }}">Каталог</a>
-                    <a href="{{ route('user.list') }}">Сотрудники</a>
-                    <a href="{{ route('help') }}">Справка</a>
+                    <a href="{{ route('client.list') }}" class="@if(str_contains(Route::currentRouteName(), "client.")) active @endif">Клиенты</a>
+                    <a href="{{ route('catalog.category.list') }}" class="@if(str_contains(Route::currentRouteName(), "catalog.")) active @endif">Каталог</a>
+                    <a href="{{ route('user.list') }}" class="@if(str_contains(Route::currentRouteName(), "user.")) active @endif">Сотрудники</a>
+                    <a href="{{ route('help') }}" class="@if(str_contains(Route::currentRouteName(), "help")) active @endif">Справка</a>
                     @endif
                 </nav>
             </div>
-            <div class="user_area col c2">
+            <div class="col c2 user_area">
                 <a href="{{ route('user.item', Auth::user()->id) }}" class="name">{{ Auth::user()->name }}</a>
             </div>
         </div>
@@ -119,68 +121,59 @@
 
 </div>
 <footer>
-    <div class="container">CRM <?=date('Y')?></div>
+    <div class="container">CRM 2023 — <?=date('Y')?></div>
 </footer>
 
+
+
+<script src="{{ asset('/static/js/jquery.min.js') }}"></script>
+<script src="{{ asset('/static/js/jquery.maskedinput.min.js') }}"></script>
+<script src="{{ asset('/static/fancy/jquery.fancybox.min.js') }}"></script>
+
+<!-- Заказ -->
+@if(Route::is('order.create'))
 <div class="overlay" style="display: none;">
     <div class="popup">
         <div class="close"></div>
         <div class="inner">
-
-            @if(Route::is('order.create'))
-                @include('order.inc.window', [
-                    'title' => 'Модели памятников',
-                    'field' => 'model',
-                    'parent_cat' => 1,
-                    'displayName' => 0
-                ])
-                @include('order.inc.window', ['title' => 'Материал', 'field' => 'material', 'parent_cat' => 4, 'displayName' => 1])
-                @include('order.inc.window', ['title' => 'Портрет', 'field' => 'portrait', 'parent_cat' => 7, 'displayName' => 1])
-
-                @include('order.inc.window', ['title' => 'Полумесяц', 'field' => 'crescent', 'parent_cat' => 27, 'displayName' => 1])
-                @include('order.inc.window', ['title' => 'Кресты', 'field' => 'cross', 'parent_cat' => 11, 'displayName' => 1])
-                @include('order.inc.window', ['title' => 'Цветы', 'field' => 'flower', 'parent_cat' => 12, 'displayName' => 1])
-                @include('order.inc.window', ['title' => 'Иконы', 'field' => 'icon', 'parent_cat' => 26, 'displayName' => 1])
-                @include('order.inc.window', ['title' => 'Ветви', 'field' => 'branch', 'parent_cat' => 13, 'displayName' => 1])
-                @include('order.inc.window', ['title' => 'Свечи', 'field' => 'candle', 'parent_cat' => 14, 'displayName' => 1])
-                @include('order.inc.window', ['title' => 'Ангелы', 'field' => 'angel', 'parent_cat' => 15, 'displayName' => 1])
-                @include('order.inc.window', ['title' => 'Птицы', 'field' => 'bird', 'parent_cat' => 16, 'displayName' => 1])
-
-                @include('order.inc.window', ['title' => 'Цветник / надгробие', 'field' => 'tombstone', 'parent_cat' => 17, 'displayName' => 1])
-                @include('order.inc.window', ['title' => 'Ограда', 'field' => 'fence', 'parent_cat' => 18, 'displayName' => 1])
-                @include('order.inc.window', ['title' => 'Вазы', 'field' => 'vase', 'parent_cat' => 19, 'displayName' => 1])
-            @endif
-
+            @include('order.inc.window', ['title' => 'Модели памятников', 'field' => 'model', 'parent_cat' => 1, 'displayName' => 0, 'constructor' => 'image'])
+            @include('order.inc.window', ['title' => 'Материал', 'field' => 'material', 'parent_cat' => 4, 'displayName' => 1, 'constructor' => 'back'])
+            @include('order.inc.window', ['title' => 'Портрет', 'field' => 'portrait', 'parent_cat' => 7, 'displayName' => 1, 'constructor' => 'image'])
+            @include('order.inc.window', ['title' => 'Гравировка', 'field' => 'grave', 'parent_cat' => 10, 'displayName' => 1, 'constructor' => 'image'])
+            @include('order.inc.window', ['title' => 'Цветник / надгробие', 'field' => 'tombstone', 'parent_cat' => 17, 'displayName' => 1, 'constructor' => 'blank'])
+            @include('order.inc.window', ['title' => 'Ограда', 'field' => 'fence', 'parent_cat' => 18, 'displayName' => 1, 'constructor' => 'blank'])
+            @include('order.inc.window', ['title' => 'Вазы', 'field' => 'vase', 'parent_cat' => 19, 'displayName' => 1, 'constructor' => 'blank'])
         </div>
     </div>
 </div>
-
-<script src="{{ asset('/static/jquery.min.js') }}"></script>
-<script src="{{ asset('/static/jquery.maskedinput.min.js') }}"></script>
-<script src="{{ asset('/static/fancy/jquery.fancybox.min.js') }}"></script>
-@if(Route::is('order.create'))
-<script src="{{ asset('/static/html2canvas.min.js') }}"></script>
-<script src="{{ asset('/static/FileSaver.js') }}"></script>
+<script src="{{ asset('/static/js/html2canvas.min.js') }}"></script>
+<script src="{{ asset('/static/js/FileSaver.js') }}"></script>
+<script src="{{ asset('/static/js/fabric.min.js') }}"></script>
 <script>
-function convert() {
-    html2canvas(document.querySelector("#constructor .monument.part")).then(canvas => {
-        // Сохраняем содержимое холста как файл и скачиваем
-        /*
-        canvas.toBlob(function(blob) {
-            saveAs(blob, "hangge.png");
-        });
-        */
-        //console.log(canvas.toDataURL('image/png'));
-        //$("#comment").html(canvas.toDataURL('image/png'));
-
-        $("#eskiz_image").val(canvas.toDataURL('image/png'));
+function convert(whatReturn) {
+    html2canvas(document.querySelector("#constructor .canvas-container")).then(canvas => {
+        switch(whatReturn) {
+            // Скачать ескиз файлом
+            case 'file': {
+                canvas.toBlob(function(blob) {
+                    saveAs(blob, "eskiz.png");
+                });
+            } break;
+            // Прикрепить к заказу в base64
+            case 'code': {
+                // TODO: Собрать все данные от конструктора
+                $("#eskiz_field").val(canvas.toDataURL('image/png'));
+            } break;
+        }
         $("#send_order").attr('disabled', false);
     });
 }
 </script>
-<script src="{{ asset('/static/interact.min.js') }}"></script>
-<script src="{{ asset('/static/order.js') }}"></script>
+<script src="{{ asset('/static/js/interact.min.js') }}"></script>
+<script src="{{ asset('/static/js/order.js') }}"></script>
 @endif
-<script src="{{ asset('/static/custom.js') }}"></script>
+<!-- /Заказ -->
+
+<script src="{{ asset('/static/js/custom.js') }}"></script>
 </body>
 </html>

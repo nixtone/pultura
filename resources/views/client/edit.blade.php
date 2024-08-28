@@ -2,7 +2,7 @@
 
 @section('title', 'Редактирование клиента: '.$client->name)
 @section('content')
-<div id="client" class="edit block">
+<div id="client-edit" class="edit block">
     <form action="{{ route('client.update', $client->id) }}" method="post">
         @csrf
         @method('patch')

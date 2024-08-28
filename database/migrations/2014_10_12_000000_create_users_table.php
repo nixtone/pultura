@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('comment')->nullable();
-            $table->foreignId('user_group')->nullable()->constrained()->on('user_groups')->references('id');
+            $table->foreignId('user_group')->nullable()->default(0)->constrained()->on('user_groups')->references('id');
             $table->rememberToken();
             $table->timestamps();
         });

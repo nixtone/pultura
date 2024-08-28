@@ -46,4 +46,51 @@ class ClientController extends Controller
         $client->delete();
         return redirect()->route('client.list');
     }
+
+    // Препоиск. Подсказки при наборе
+    public function presearch(Request $request) {
+        // Сбор данных
+        $criterion = $request->input('criterion');
+        $category = $request->input('category');
+        $presearchQuery = $request->input($criterion);
+
+        // Запрос
+        $result = Client::where($criterion, 'like', "%$presearchQuery%");
+        if($category) $result = $result->where('client_category', $category);
+
+        // Результат
+        return $result->get();
+    }
+
+    // Результаты поиска
+    public function search(Request $request) {
+
+        // TODO: фиксировать в полях набранный поиск
+        //dump($request);
+        // Сбор данных
+        $criterion = $request->input('criterion');
+        $category = $request->input('category');
+        $presearchQuery = $request->input($criterion);
+        $clientCategory = ClientCategory::all();
+
+        // TODO: странный результат на телефоне
+        dd($presearchQuery);
+
+        // Запрос
+        $result = Client::where($criterion, 'like', "%$presearchQuery%");
+        if($category) $result = $result->where('client_category', $category);
+        $clientList = $result->get();
+
+        // Результат
+        return view('client.list', compact('clientList', 'clientCategory'));
+
+        /*
+        $presearchQuery = $request->input('query');
+        $clientCategory = ClientCategory::all();
+        $clientList = Client::where('name', 'like', "%$presearchQuery%")->get();
+        //dd($clientList);
+        return view('client.list', compact('clientList', 'clientCategory'));
+        */
+    }
+
 }

@@ -12,17 +12,51 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
+
             $table->id();
-            $table->foreignId('client_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('status_id')->constrained()->default(1);
+
+            // Детали заказа
+            $table->foreignId('client_id')->constrained()->onDelete('cascade'); // Клиент
+            $table->foreignId('user_id')->constrained(); // Кто создал заказ
+            $table->foreignId('status_id')->constrained()->default(1); // Статус выполнения заказа
+            $table->text('comment')->nullable(); // Комментарий к заказу
 
             // Внешний вид памятника
-            $table->integer('model')->default(0);
-            $table->string('model_size')->default('');
-            $table->integer('material')->default(0);
-            $table->integer('portrait')->default(0);
 
+            // Модель памятника (mm - monument)
+            $table->foreignId('mm_model')
+                ->default(0)
+                ->constrained()
+                ->on('products')
+                ->references('id');
+
+            // Размер памятника
+            $table->foreignId('mm_model_size')
+                ->default(0)
+                ->constrained()
+                ->on('products')
+                ->references('id');
+
+            // Материал памятника
+            $table->foreignId('mm_material')
+                ->default(0)
+                ->constrained()
+                ->on('products')
+                ->references('id');
+
+            // Содержимое памятника
+            $table->mediumText('mm_details')->nullable(); // текста, гравировки, дополнения, облицовка
+
+            // Услуги
+            $table->mediumText('services')->nullable(); // Адрес доставки, Киллометраж доставки, Установка, Демонтаж
+
+            // Даты
+            $table->date('deadline_date')->nullable(); // Исполнить заказ до
+            $table->softDeletes();
+            $table->timestamps();
+
+
+            /*
             // Текст для памятника
             $table->string('lastname')->default('');
             $table->string('firstname')->default('');
@@ -32,6 +66,7 @@ return new class extends Migration
             $table->string('epitafia')->default('');
 
             // Гравировка
+            $table->integer('portrait')->default(0);
             $table->integer('crescent')->default(0); // Полумесяц
             $table->integer('cross')->default(0); // Крест
             $table->integer('flower')->default(0); // Цветы
@@ -47,8 +82,9 @@ return new class extends Migration
             $table->integer('vase')->nullable(); // Ваза
 
             // Облицовка
-            $table->float('face_m2')->nullable();
-            $table->integer('facing')->nullable();
+            $table->float('face_m2')->comment('Площадь')->nullable();
+            $table->integer('facing')->comment('Материал')->nullable();
+
 
             // Услуги
             $table->integer('delivery_km')->nullable(); // Адрес доставки
@@ -56,14 +92,10 @@ return new class extends Migration
             $table->float('install')->nullable(); // Установка
             $table->float('deinstall')->nullable(); // Демонтаж
 
-            // Остальное
-            $table->date('deadline_date')->nullable();
-            $table->text('price_list')->null(); // Смета
-            $table->text('comment')->nullable();
+            //$table->text('price_list')->null(); // Смета
+            */
 
-            //
-            $table->softDeletes();
-            $table->timestamps();
+
         });
     }
 

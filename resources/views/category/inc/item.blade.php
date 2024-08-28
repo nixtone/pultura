@@ -1,4 +1,4 @@
-<tr>
+<tr class="c{{ $category->id }}">
     <td>@if($child) — @endif <a href="{{ route('catalog.category.item', $category->id) }}">{{ $category->name }}</a></td>
     <td class="tac"><a href="{{ route('catalog.category.edit', $category->id) }}" class="edit ico"></a></td>
     <td class="tac">

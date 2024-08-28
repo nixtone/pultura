@@ -17,7 +17,7 @@
         </tr>
         @else
         @foreach($productList as $product)
-        <tr>
+        <tr class="c{{ $product->id }}">
             <td class="preview_area">
                 @foreach($product->files as $file)
                     <a href="{{ asset($file) }}" data-fancybox="gallery">

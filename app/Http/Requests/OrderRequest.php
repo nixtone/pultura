@@ -22,14 +22,45 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //'client_id' => 'integer|required',
 
-            'lastname' => '',
-            'firstname' => '',
-            'fathername' => '',
-            'birth_date' => '',
-            'epitafia' => '',
-            'status_id' => '',
+            // string|nullable|required|unique:books,name|max:150
+            // 'file|max:500'
+            // 'integer|nullable|required|max:9999'
+
+            /*
+            client_id
+            user_id
+            status_id
+            comment
+
+            mm_model
+            mm_model_size
+            mm_material
+            mm_details
+
+            services
+            deadline_date
+            */
+
+            'client_id' => 'integer|required',
+            'user_id' => 'integer|required',
+            'status_id' => 'integer|required',
+            'comment' => 'string|nullable',
+
+            'mm_model' => 'integer|nullable',
+            'mm_model_size' => 'string|nullable',
+            'mm_material' => 'integer|nullable',
+            'mm_details' => 'string|nullable',
+
+            'services' => '',
+            'deadline_date' => '',
+
+
+            'eskiz' => '',
+            'client_file' => '',
+            'payment' => '',
+            'total_correct' => '',
+
         ];
     }
 

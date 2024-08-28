@@ -1,4 +1,4 @@
-<div class="window {{ $field }}" style="display: none;" data-field="{{ $field }}">
+<div class="window {{ $field }}" data-field="{{ $field }}" data-construct="{{ $constructor }}" style="display: none;">
 
     <h2>{{ $title }}</h2>
 
@@ -10,7 +10,7 @@
         <div class="tab-area {{ $field }}" data-name="{{ $field }}">
             <div class="tab label">
                 @foreach($categoryList->where('parent_id', $parent_cat) as $category)
-                    <div class="tab-item c{{ $category->id }}" data-count="{{ $category->id }}">{{ $category->name }}</div>
+                    <div class="tab-item c{{ $category->id }}" data-count="{{ $category->id }}" data-cat="">{{ $category->name }}</div>
                 @endforeach
             </div>
             <div class="tab page">

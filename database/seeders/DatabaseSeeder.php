@@ -112,6 +112,10 @@ class DatabaseSeeder extends Seeder
 
             ['name' => 'Текст для памятника', 'parent_id' => null],
 
+            ['name' => 'Размеры', 'parent_id' => null],
+            ['name' => 'Вертикальные', 'parent_id' => 29],
+            ['name' => 'Горизонтальные', 'parent_id' => 29],
+
         ];
         foreach($categoryList as $category) {
             \App\Models\Category::factory()->create([
@@ -121,6 +125,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // Размеры стеллы
+        /*
         $sizeList = [
             ['width' => 80, 'height' => 40, 'thick' => 5, 'category_id' => 2],
             ['width' => 100, 'height' => 50, 'thick' => 5, 'category_id' => 2],
@@ -164,6 +169,7 @@ class DatabaseSeeder extends Seeder
                 'category_id' => $size['category_id'],
             ]);
         }
+        */
 
         // Товары
         $productList = [
@@ -496,6 +502,42 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Дата смерти', 'price' => 500, 'category_id' => 28, 'sort' => 0],
             ['name' => 'Эпитафия', 'price' => 45, 'category_id' => 28, 'sort' => 0],
 
+            // Размеры
+
+            // Вертикальные
+            ['name' => '80 x 40 x 5', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '100 x 50 x 5', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '120 x 60 x 5', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '80 x 40 x 8', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '100 x 50 x 8', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '120 x 60 x 8', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '140 x 70 x 8', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '80 x 40 x 10', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '100 x 40 x 10', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '120 x 40 x 10', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '140 x 40 x 10', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '160 x 40 x 10', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '100 x 50 x 12', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '120 x 60 x 12', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '140 x 70 x 12', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+            ['name' => '160 x 80 x 12', 'price' => 0, 'category_id' => 30, 'sort' => 0],
+
+            // Горизонтальные
+            ['name' => '70 x 100 x 5', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '80 x 120 x 5', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '60 x 80 x 8', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '70 x 100 x 8', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '80 x 120 x 8', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '100 x 140 x 8', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '60 x 80 x 10', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '70 x 100 x 10', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '80 x 120 x 10', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '100 x 140 x 10', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '120 x 160 x 10', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '70 x 100 x 12', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '80 x 120 x 12', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '100 x 140 x 12', 'price' => 0, 'category_id' => 31, 'sort' => 0],
+            ['name' => '120 x 160 x 12', 'price' => 0, 'category_id' => 31, 'sort' => 0],
 
         ];
         foreach($productList as $product) {
