@@ -257,6 +257,11 @@
                                             <!-- <label for="font_size">Размер</label> -->
                                             <input type="number" name="font_size" id="font_size" value="25" size="2" class="field">
                                         </div>
+                                        <!-- TODO: Высота строки
+                                        <div class="field_area c4">
+                                            <input type="number" name="font_weight" id="font_weight" value="25" size="2" class="field">
+                                        </div>
+                                        -->
                                         <div class="field_area c3 nomb">
                                             <!-- <label for="text_align">Выравнивание</label> -->
                                             <div id="text_align" class="text_align">
@@ -274,34 +279,34 @@
                                         </div>
                                         <div class="tab page">
                                             <div class="tab-item c1">
-                                                <div class="field_area">
+                                                <div class="field_area lastname">
                                                     <label for="lastname">Фамилия</label>
                                                     <input type="text" name="lastname" id="lastname" class="field text">
                                                     <img src="{{ asset('/static/images/ico/add.png') }}" alt="" class="add text">
                                                 </div>
-                                                <div class="field_area">
+                                                <div class="field_area firstname">
                                                     <label for="firstname">Имя</label>
                                                     <input type="text" name="firstname" id="firstname" class="field text">
                                                     <img src="{{ asset('/static/images/ico/add.png') }}" alt="" class="add text">
                                                 </div>
-                                                <div class="field_area">
+                                                <div class="field_area fathername">
                                                     <label for="fathername">Отчество</label>
                                                     <input type="text" name="fathername" id="fathername" class="field text">
                                                     <img src="{{ asset('/static/images/ico/add.png') }}" alt="" class="add text">
                                                 </div>
                                                 <div class="date_area">
-                                                    <div class="field_area c1">
+                                                    <div class="field_area birth_date c1">
                                                         <label for="birth_date">Дата рождения</label>
                                                         <input type="text" name="birth_date" id="birth_date" class="field text">
                                                         <img src="{{ asset('/static/images/ico/add.png') }}" alt="" class="add text">
                                                     </div>
-                                                    <div class="field_area c2 nomb">
+                                                    <div class="field_area death_date c2 nomb">
                                                         <label for="death_date">Дата смерти</label>
                                                         <input type="text" name="death_date" id="death_date" class="field text">
                                                         <img src="{{ asset('/static/images/ico/add.png') }}" alt="" class="add text">
                                                     </div>
                                                 </div>
-                                                <div class="field_area">
+                                                <div class="field_area epitafia">
                                                     <label for="epitafia">Эпитафия</label>
                                                     <textarea name="epitafia" id="epitafia" cols="3" class="field text"></textarea>
                                                     <img src="{{ asset('/static/images/ico/add.png') }}" alt="" class="add text">

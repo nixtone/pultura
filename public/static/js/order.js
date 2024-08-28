@@ -88,7 +88,8 @@ $(document).ready(function() {
             fontStyle: font.style ?? 'normal',
             textAlign: align,
             // lineHeight: 30,
-            fill: '#fff'
+            fill: '#fff',
+            editable: false
         });
         canvas.add(textBox).setActiveObject(textBox);
     }
@@ -96,7 +97,7 @@ $(document).ready(function() {
     // Кнопка удаления
     const addDeleteBtn = (x, y) => {
         $(".deleteBtn").remove();
-        $("#constructor .canvas-container").append('<div class="delete_btn" style="top:'+y+'px; left:'+x+'px;"></div>');
+        $("#constructor .inner").append('<div class="delete_btn" style="top:'+(y-10)+'px; left:'+(x-10)+'px;"><img src="/static/images/ico/delete.svg" class="bimg"></div>');
     }
 
     // Инициализация
@@ -113,7 +114,6 @@ $(document).ready(function() {
     /* ----------------------------------------- */
 
     // Кнопка удаления
-    // TODO: нет крестика, позиционирование, если удалять сразу при появлении не схватывается getActiveObject()
     canvas.on('object:selected',function(event){
         addDeleteBtn(
             event.target.oCoords.tr.x,
@@ -125,9 +125,18 @@ $(document).ready(function() {
             event.target.oCoords.tr.x,
             event.target.oCoords.tr.y
         );
+        console.log(event);
     });
-    canvas.on('mouse:down',function(e){
-        if(!canvas.getActiveObject()) $(".delete_btn").remove();
+    canvas.on('mouse:down',function(event){
+        if(!canvas.getActiveObject()) {
+            $(".delete_btn").remove();
+        }
+        else {
+            addDeleteBtn(
+                event.target.oCoords.tr.x,
+                event.target.oCoords.tr.y
+            );
+        }
     });
     canvas.on('object:modified',function(event){
         addDeleteBtn(
@@ -152,9 +161,22 @@ $(document).ready(function() {
         [fieldName, fieldValue] = delID.split(":");
         fieldValue = parseInt(fieldValue);
 
-        // Удаляем значение
-        const delIndex = conList[fieldName].indexOf(fieldValue);
-        conList[fieldName].splice(delIndex,1);
+        // Удаляем из сметы
+        if(fieldName.includes("text", 0)) { // текстовые поля
+            // данные
+            let key, textFieldName;
+            [key, textFieldName] = fieldName.split(".");
+            let tabArea = $(".tab-area.deceased .tab.page .tab-item.c" + fieldValue + " .field_area." + textFieldName);
+            // удаляем из сметы
+            delete conList[key][fieldValue][textFieldName];
+            // раскрытие поля
+            tabArea.find(".field").attr('disabled', false);
+            tabArea.find(".add.text").removeClass('disabled');
+        }
+        else { // остальные поля
+            const delIndex = conList[fieldName].indexOf(fieldValue); // ищем удаляемый productID среди значений
+            conList[fieldName].splice(delIndex,1);
+        }
 
         // Удаляем элемент с холста
         if(canvas.getActiveObject()) {
@@ -241,10 +263,6 @@ $(document).ready(function() {
             constructor: window.data('construct'),
         }
         const canvasElementID = item.field+":"+item.id;
-
-        //console.log(item);
-        //console.log(canvas);
-        //console.log(conList);
 
         // Сохранение новых данных
         switch(item.field) {
@@ -337,14 +355,10 @@ $(document).ready(function() {
         };
         // добавляем в смету
         const activeCount = parseInt($(".field_group.monument-text .tab.label .tab-item.active").data('count'));
-
-        if(conList.text[activeCount]) conList.text[activeCount] = {};
-        // conList.text[activeCount][field.name] = field.val; // TODO: упаковать данные
-
-        console.log(conList);
-
+        if(!conList.text[activeCount]) conList.text[activeCount] = {};
+        conList.text[activeCount][field.name] = field.val;
         // добавляем на холст
-        text(field.val, 'test1', align, font); // TODO: сформировать id (canvasElementID)
+        text(field.val, "text." + field.name + ":" + activeCount, align, font);
     });
 
     // Новая группа текстовых полей

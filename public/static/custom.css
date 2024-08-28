@@ -546,9 +546,6 @@ header {
     .canvas_area {
         background-color: #eee;
         position: relative;
-        .inner {
-            position: sticky;
-        }
     }
     .material_area {
         margin-top: 10px;
