@@ -13,7 +13,7 @@
             <div class="tab page">
                 <div class="tab-item c1">
 
-                    <form action="{{ route('order.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('order.store') }}" method="post" enctype="multipart/form-data" id="order_form">
                         @csrf
 
                         <!--
@@ -131,34 +131,32 @@
                             </div>
                         </div>
 
-                        <div class="field_group">
+
+                        <div class="field_group estimate" style="display: none">
                             <h2>Смета</h2>
                             <table class="list" style="margin: 0">
-                                <tr>
+                                <tr class="label_tr">
                                     <th>Наименование</th>
                                     <th>Количество</th>
                                     <th>Сумма</th>
                                     <th>Итого</th>
                                 </tr>
+                                {{--
                                 <tr>
                                     <td>Гравировка</td>
                                     <td class="tac">2</td>
                                     <td class="tac">500</td>
                                     <td class="tac">1000</td>
                                 </tr>
-                                <tr>
-                                    <td>Модель</td>
-                                    <td class="tac">1</td>
-                                    <td class="tac">1000</td>
-                                    <td class="tac">1000</td>
-                                </tr>
-                                <tr>
+                                --}}
+                                <tr class="total_tr">
                                     <td><input type="text" name="payment" id="payment" class="field" placeholder="Платеж"></td>
                                     <td><input type="text" name="total_correct" id="total_correct" class="field" placeholder="Корректировка"></td>
-                                    <td colspan="2" class="tac">Итого: <strong class="digit">0</strong> ₽</td>
+                                    <td colspan="2" class="price_td tac">Итого: <strong class="digit">0</strong> ₽</td>
                                 </tr>
                             </table>
                         </div>
+
 
                         {{--
                         <div class="err">@error('payment') {{ $message }} @enderror</div>
@@ -171,6 +169,7 @@
                         <div class="err">@error('user_id') {{ $message }} @enderror</div>
                         --}}
 
+                        {{--
                         <!-- Поля конструктора -->
                         <div id="constructor_rows">
                             <input type="hidden" name="mm_model">
@@ -178,12 +177,15 @@
                             <input type="hidden" name="mm_material">
                             <input type="hidden" name="mm_details">
                         </div>
+                        --}}
 
                         <!-- Готово -->
-                        <input type="hidden" name="eskiz">
+                        <input type="hidden" name="eskiz" id="eskiz_field">
+                        <input type="hidden" name="price_list" id="price_list">
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="status_id" value="1">
-                        <input type="submit" class="btn" value="Создать">
+                        <input type="submit" id="order_estimate_btn" class="btn" value="Подсчет сметы">
+                        <input type="submit" id="order_create_btn" class="btn" value="Создать" style="display: none;">
 
                     </form>
 
@@ -257,9 +259,9 @@
                                             <!-- <label for="font_size">Размер</label> -->
                                             <input type="number" name="font_size" id="font_size" value="25" size="2" class="field">
                                         </div>
-                                        <!-- TODO: Высота строки
+                                        <!-- Высота строки
                                         <div class="field_area c4">
-                                            <input type="number" name="font_weight" id="font_weight" value="25" size="2" class="field">
+                                            <input type="number" name="line_height" id="line_height" value="1" size="2" class="field">
                                         </div>
                                         -->
                                         <div class="field_area c3 nomb">
@@ -318,26 +320,27 @@
                                 </div>
                             </div>
 
-                            <div class="field_group">
+
+                            <div class="field_group additional">
                                 <h2>Дополнения</h2>
                                 <div class="inner">
-                                    <div class="field_area inline">
-                                        <input type="checkbox" name="tombstone" id="tombstone" data-pp="tombstone" class="cpp">
-                                        <label for="tombstone">Цветник / надгробие <span class="product_name"></span></label>
+                                    <div class="field_area inline tombstone">
+                                        {{-- <input type="checkbox" name="tombstone" id="tombstone" data-pp="tombstone" class="cpp"> --}}
+                                        <label for="tombstone" class="cpp additional_item" data-pp="tombstone">Цветник / надгробие <span class="product_name"></span></label>
                                     </div>
-                                    <div class="field_area inline">
-                                        <input type="checkbox" name="fence" id="fence" data-pp="fence" class="cpp">
-                                        <label for="fence">Ограда <span class="product_name"></span></label>
+                                    <div class="field_area inline fence">
+                                        {{-- <input type="checkbox" name="fence" id="fence" data-pp="fence" class="cpp"> --}}
+                                        <label for="fence" class="cpp additional_item" data-pp="fence">Ограда <span class="product_name"></span></label>
                                     </div>
-                                    <div class="field_area inline">
-                                        <input type="checkbox" name="vase" id="vase" data-pp="vase" class="cpp">
-                                        <label for="vase">Вазы <span class="product_name"></span></label>
+                                    <div class="field_area inline vase">
+                                        {{-- <input type="checkbox" name="vase" id="vase" data-pp="vase" class="cpp"> --}}
+                                        <label for="vase" class="cpp additional_item" data-pp="vase">Вазы <span class="product_name"></span></label>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="field_group">
-                                <h2>Облицовка</h2>
+                            <div class="field_group face">
+                                <h2>Облицовка <span class="result" style="font-weight: normal"></span></h2>
                                 <div class="inner">
                                     <div class="field_area">
                                         <label for="face_m2">Площадь (м<sup>2</sup>)</label>
@@ -354,6 +357,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="output_area">
                                 <input type="submit" value="Сохранить эскиз" class="btn" onclick="convert('code')">

@@ -20,6 +20,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
+Route::get('/test', [OrderController::class, 'test'])->name('test');
 
 // Вход
 Route::name('user.')->controller(UserController::class)->group(function() {

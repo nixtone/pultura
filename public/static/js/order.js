@@ -87,7 +87,7 @@ $(document).ready(function() {
             fontWight: font.weight ?? 'normal',
             fontStyle: font.style ?? 'normal',
             textAlign: align,
-            // lineHeight: 30,
+            // lineHeight: font.lineHeight,
             fill: '#fff',
             editable: false
         });
@@ -97,18 +97,24 @@ $(document).ready(function() {
     // Кнопка удаления
     const addDeleteBtn = (x, y) => {
         $(".deleteBtn").remove();
-        $("#constructor .inner").append('<div class="delete_btn" style="top:'+(y-10)+'px; left:'+(x-10)+'px;"><img src="/static/images/ico/delete.svg" class="bimg"></div>');
+        $("#constructor > .canvas_area > .inner").append('<div class="delete_btn" style="top:'+(y-10)+'px; left:'+(x-10)+'px;"><img src="/static/images/ico/delete.svg" class="bimg"></div>');
     }
 
     // Инициализация
     const canvas = initCanvas('canvas');
+    // смета
     let conList = {
         model: [],
+        size: 0,
         material: 0,
         portrait: [],
         grave: [],
         text: {},
-        face: [],
+        face: [], // облицовка
+        // дополнения
+        tombstone: 0,
+        fence: 0,
+        vase: 0,
     };
 
     /* ----------------------------------------- */
@@ -231,6 +237,14 @@ $(document).ready(function() {
     // Открытие
     $(".cpp").click(function(event) {
         event.preventDefault();
+        // Uncheck дополнений
+        if($(this).closest('.field_area').hasClass('checked')) {
+            $(this).closest('.field_area').removeClass('checked').find(".product_name").html('');
+            // удаление из сметы
+            conList[$(this).data('pp')] = 0;
+            return;
+        }
+        //
         $(".overlay .inner > *").hide();
         $(".overlay, .overlay ." + $(this).data('pp')).fadeIn(150);
         // Стили
@@ -244,7 +258,7 @@ $(document).ready(function() {
     });
     // Выбор наименования из Popup
     $(".window .item").click(function(event) {
-        // Скрытие инструкции
+        // Скрытие инструкции TODO: переставить на любое добавление на холст
         $(".instruction").hide();
         // Сбор данных
         const window = $(this).closest('.window');
@@ -268,21 +282,16 @@ $(document).ready(function() {
         switch(item.field) {
             case 'model': {
 
-                // TODO: Раскрытие размеров
-                /*
-                // Скрыть все выборы размеров моделей
-                $("#constructor .field_group.model_size").hide();
-                $("#constructor .field.model_size").hide().attr('disabled', true);
-                // Открыть размеры выбранной категории моделей
-                let sizeID = item.catID = 2 ? 30 : 31;
-                $("#constructor .field_group.model_size, #mm_model_size" + sizeID).show();
-                $("#mm_model_size" + sizeID).attr('disabled', false);
-                $("#constructor_rows input[name='mm_model']").val(item.id);
-                */
+                // Раскрытие размеров
+                const vertical = 30,
+                      horizontal = 31;
+                $("#constructor .field_group.model_size").show();
+                $("#mm_model_size" + (item.catID == 2 ? vertical : horizontal)).show().attr('disabled', false);
+                $("#mm_model_size" + (item.catID == 2 ? horizontal : vertical)).hide().attr('disabled', true);
 
-                // Добавляем в смету
+                // Добавляем в смету модель
                 conList[item.field].push(item.id);
-                // Добавляем на холст
+                // Добавляем на холст модель
                 image(item.negative, item.field+":"+item.id, stroke);
                 // Открыть материал и остановиться
                 $(".tool.material").trigger('click');
@@ -310,6 +319,14 @@ $(document).ready(function() {
                 // Добавляем в смету
                 conList[item.field].push(item.id);
             } break;
+            case 'tombstone':
+            case 'fence':
+            case 'vase': {
+                $(".field_area.tombstone").addClass('checked');
+                $(".field_area.tombstone .product_name").html(item.name);
+                // Добавляем в смету
+                conList[item.field] = item.id;
+            } break;
         }
 
         // Добавление элемента на холст
@@ -324,6 +341,12 @@ $(document).ready(function() {
 
         // Закрываем по итогу выбора
         closePopup();
+    });
+
+    // Размер
+    $(".field.model_size").change(function(event) {
+        // Запись в смету
+        conList.size = parseInt($(this).find("option:selected").val());
     });
 
     // Текста
@@ -352,6 +375,7 @@ $(document).ready(function() {
             size: $("#font_size").val(),
             weight: fontSelected.data('weight'),
             style: fontSelected.data('style'),
+            // lineHeight: $("#line_height").val(),
         };
         // добавляем в смету
         const activeCount = parseInt($(".field_group.monument-text .tab.label .tab-item.active").data('count'));
@@ -391,18 +415,79 @@ $(document).ready(function() {
 
     // Добавление "облицовки"
     $(".add.face").click(function(event) {
+        // Сбор данных
+        const faceOption = $("#facing").find(':selected');
         const face = {
             m2: parseInt($("#face_m2").val()),
-            facing: parseInt($("#facing").find(':selected').val())
+            facing: parseInt(faceOption.val())
         }
+        let faceName, facePrice;
+        [faceName, facePrice] = faceOption.html().split(" / ");
+        // добавляем в смету
         conList['face']['m2'] = face.m2;
         conList['face']['facing'] = face.facing;
+        // выводим выбор
+        $(".field_group.face .result").html("- " + faceName + " (" + face.m2 + "м<sup>2</sup>)");
+    });
 
+
+    /* ----------------------------------------- */
+
+    // Запрос сметы
+    $("#order_estimate_btn").click(function(event) {
+        event.preventDefault();
+
+        //
+        $("#price_list").val(JSON.stringify(conList));
+
+        //
+        $.post('/order/price', $("#order_form").serialize(), function(data) {
+            console.log(data);
+
+            // Показать смету
+            $(".field_group.estimate").show().find('.label_tr');
+
+            // Наполнение сметы
+            $.each(data.order, function(key, value){
+                console.log(key);
+                /*
+                model
+                grave
+                text
+
+                material +
+                size +
+                tombstone +
+                fence +
+                vase +
+                */
+                let new_tr;
+                switch(key) {
+                    /*
+                    case '': {
+                        new_tr = '';
+                    } break;
+                    */
+                    case 'material':
+                    case 'size':
+                    case 'tombstone':
+                    case 'fence':
+                    case 'vase': {
+                        new_tr = '<tr class="'+key+'"><td>' + value.label + '</td><td class="tac">-</td><td class="tac">-</td><td class="tac">' + value.price + '</td></tr>';
+                    } break;
+                }
+                $(".field_group.estimate .total_tr").before(new_tr);
+
+            });
+
+            // Итого
+            $(".field_group.estimate .price_td .digit").html(data.price);
+
+        });
+
+        //console.log(conList.serialize());
+        //console.log();
+        //console.log($("#eskiz_field").val());
     });
 
 });
-
-/*
-TODO: Добавление в смету: размера памятника, дополнений, облицовки
-text('test1', canvasElementID);
-*/

@@ -13,52 +13,56 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
 
-        // Группа доступа пользователя
         $userGroup = [
-            1 => 'Администратор',
-            2 => 'Модератор',
-            3 => 'Пользователь',
+            ['name' => 'Администратор'],
+            ['name' => 'Модератор'],
+            ['name' => 'Пользователь'],
         ];
         foreach($userGroup as $group) {
-            \App\Models\UserGroup::factory()->create(['name' => $group]);
+            \App\Models\UserGroup::factory()->create($group);
         }
 
-        // Пользователи
-        \App\Models\User::factory()->create([
-            'name' => 'Haidar',
-            'phone' => '+7 (000) 111-11-11',
-            'email' => 'haidar@haidar.ru',
-            'password' => 'guS93!sQ',
-            'user_group' => 1,
-        ]);
-        \App\Models\User::factory()->create([
-            'name' => 'Anton',
-            'phone' => '+7 (000) 222-22-22',
-            'email' => 'anton@anton.ru',
-            'password' => 'g4jsD#Kz',
-            'user_group' => 2,
-        ]);
-        \App\Models\User::factory()->create([
-            'name' => 'Sotrudnik',
-            'phone' => '+7 (000) 333-33-33',
-            'email' => 'sotrudnik@sotrudnik.ru',
-            'password' => 'bk3&v0cV',
-            'user_group' => 3,
-        ]);
+        $user = [
+            [
+                'name' => 'Haidar',
+                'phone' => '+7 (000) 111-11-11',
+                'email' => 'haidar@haidar.ru',
+                'password' => 'guS93!sQ',
+                'user_group' => 1,
+            ],
+            [
+                'name' => 'Anton',
+                'phone' => '+7 (000) 222-22-22',
+                'email' => 'anton@anton.ru',
+                'password' => 'g4jsD#Kz',
+                'user_group' => 2,
+            ],
+            [
+                'name' => 'Sotrudnik',
+                'phone' => '+7 (000) 333-33-33',
+                'email' => 'sotrudnik@sotrudnik.ru',
+                'password' => 'bk3&v0cV',
+                'user_group' => 3,
+            ],
+        ];
+        foreach($user as $userItem) {
+            \App\Models\User::factory()->create($userItem);
+        }
+
 
         // Статусы
         $statusList = [
-            1 => 'Принят',
-            2 => 'Выполняется',
-            3 => 'Готов',
-            4 => 'Отказ',
-            5 => 'Остановлен',
+            ['name' => 'Принят'],
+            ['name' => 'Выполняется'],
+            ['name' => 'Готов'],
+            ['name' => 'Отказ'],
+            ['name' => 'Остановлен'],
         ];
         foreach($statusList as $status) {
-            \App\Models\Status::factory()->create(['name' => $status]);
+            \App\Models\Status::factory()->create($status);
         }
+
 
         // Категории клиентов
         $clientCategory = [
@@ -66,8 +70,9 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Дилеры'],
         ];
         foreach($clientCategory as $client) {
-            \App\Models\ClientCategory::factory()->create(['name' => $client['name']]);
+            \App\Models\ClientCategory::factory()->create($client);
         }
+
 
         // Категории
         $categoryList = [
@@ -118,58 +123,9 @@ class DatabaseSeeder extends Seeder
 
         ];
         foreach($categoryList as $category) {
-            \App\Models\Category::factory()->create([
-                'name' => $category['name'],
-                'parent_id' => $category['parent_id'],
-            ]);
+            \App\Models\Category::factory()->create($category);
         }
 
-        // Размеры стеллы
-        /*
-        $sizeList = [
-            ['width' => 80, 'height' => 40, 'thick' => 5, 'category_id' => 2],
-            ['width' => 100, 'height' => 50, 'thick' => 5, 'category_id' => 2],
-            ['width' => 120, 'height' => 60, 'thick' => 5, 'category_id' => 2],
-            ['width' => 80, 'height' => 40, 'thick' => 8, 'category_id' => 2],
-            ['width' => 100, 'height' => 50, 'thick' => 8, 'category_id' => 2],
-            ['width' => 120, 'height' => 60, 'thick' => 8, 'category_id' => 2],
-            ['width' => 140, 'height' => 70, 'thick' => 8, 'category_id' => 2],
-            ['width' => 80, 'height' => 40, 'thick' => 10, 'category_id' => 2],
-            ['width' => 100, 'height' => 40, 'thick' => 10, 'category_id' => 2],
-            ['width' => 120, 'height' => 40, 'thick' => 10, 'category_id' => 2],
-            ['width' => 140, 'height' => 40, 'thick' => 10, 'category_id' => 2],
-            ['width' => 160, 'height' => 40, 'thick' => 10, 'category_id' => 2],
-            ['width' => 100, 'height' => 50, 'thick' => 12, 'category_id' => 2],
-            ['width' => 120, 'height' => 60, 'thick' => 12, 'category_id' => 2],
-            ['width' => 140, 'height' => 70, 'thick' => 12, 'category_id' => 2],
-            ['width' => 160, 'height' => 80, 'thick' => 12, 'category_id' => 2],
-
-            ['width' => 60, 'height' => 80, 'thick' => 5, 'category_id' => 3],
-            ['width' => 70, 'height' => 100, 'thick' => 5, 'category_id' => 3],
-            ['width' => 80, 'height' => 120, 'thick' => 5, 'category_id' => 3],
-            ['width' => 60, 'height' => 80, 'thick' => 8, 'category_id' => 3],
-            ['width' => 70, 'height' => 100, 'thick' => 8, 'category_id' => 3],
-            ['width' => 80, 'height' => 120, 'thick' => 8, 'category_id' => 3],
-            ['width' => 100, 'height' => 140, 'thick' => 8, 'category_id' => 3],
-            ['width' => 60, 'height' => 80, 'thick' => 10, 'category_id' => 3],
-            ['width' => 70, 'height' => 100, 'thick' => 10, 'category_id' => 3],
-            ['width' => 80, 'height' => 120, 'thick' => 10, 'category_id' => 3],
-            ['width' => 100, 'height' => 140, 'thick' => 10, 'category_id' => 3],
-            ['width' => 120, 'height' => 160, 'thick' => 10, 'category_id' => 3],
-            ['width' => 70, 'height' => 100, 'thick' => 12, 'category_id' => 3],
-            ['width' => 80, 'height' => 120, 'thick' => 12, 'category_id' => 3],
-            ['width' => 100, 'height' => 140, 'thick' => 12, 'category_id' => 3],
-            ['width' => 120, 'height' => 160, 'thick' => 12, 'category_id' => 3],
-        ];
-        foreach($sizeList as $size) {
-            \App\Models\Size::factory()->create([
-                'width' => $size['width'],
-                'height' => $size['height'],
-                'thick' => $size['thick'],
-                'category_id' => $size['category_id'],
-            ]);
-        }
-        */
 
         // Товары
         $productList = [
@@ -495,12 +451,12 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Доставка за км', 'price' => 30, 'category_id' => 24, 'sort' => 0],
 
             // Текст для памятника
-            ['name' => 'Фамилия', 'price' => 500, 'category_id' => 28, 'sort' => 0],
-            ['name' => 'Имя', 'price' => 500, 'category_id' => 28, 'sort' => 0],
-            ['name' => 'Отчество', 'price' => 500, 'category_id' => 28, 'sort' => 0],
-            ['name' => 'Дата рождения', 'price' => 500, 'category_id' => 28, 'sort' => 0],
-            ['name' => 'Дата смерти', 'price' => 500, 'category_id' => 28, 'sort' => 0],
-            ['name' => 'Эпитафия', 'price' => 45, 'category_id' => 28, 'sort' => 0],
+            ['name' => 'Фамилия', 'price' => 500, 'category_id' => 28, 'slug' => 'lastname', 'sort' => 0],
+            ['name' => 'Имя', 'price' => 500, 'category_id' => 28, 'slug' => 'firstname', 'sort' => 0],
+            ['name' => 'Отчество', 'price' => 500, 'category_id' => 28, 'slug' => 'fathername', 'sort' => 0],
+            ['name' => 'Дата рождения', 'price' => 500, 'category_id' => 28, 'slug' => 'birth_date', 'sort' => 0],
+            ['name' => 'Дата смерти', 'price' => 500, 'category_id' => 28, 'slug' => 'death_date', 'sort' => 0],
+            ['name' => 'Эпитафия', 'price' => 45, 'category_id' => 28, 'slug' => 'epitafia', 'sort' => 0],
 
             // Размеры
 
@@ -541,15 +497,10 @@ class DatabaseSeeder extends Seeder
 
         ];
         foreach($productList as $product) {
-            \App\Models\Product::factory()->create([
-                'name' => $product['name'],
-                'price' => $product['price'],
-                'category_id' => $product['category_id'],
-                'sort' => $product['sort'],
-            ]);
+            \App\Models\Product::factory()->create($product);
         }
 
-        //
+
 
     }
 }

@@ -177,6 +177,12 @@ a {
         cursor: pointer;
         margin-bottom: 5px;
         display: block;
+        .product_name:not(:empty) {
+            color: #fff;
+            background: #122b45;
+            padding: 2px 8px;
+            margin-left: 5px;
+        }
     }
     .add {
         position: absolute;
@@ -614,8 +620,32 @@ header {
         .inner {
             display: none;
         }
+        &.additional {
+            .field_area {
+                padding-left: 25px;
+                label::before {
+                    content: '';
+                    display: block;
+                    background-image: url('/static/images/ico/uncheck.png');
+                    width: 16px;
+                    height: 16px;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    background-size: 16px;
+                }
+                &.checked label::before {
+                     background-image: url('/static/images/ico/checked.png');
+                }
+            }
+        }
     }
+
 }
+
+
+
+
 
 #product {
     &.list .preview {
