@@ -18,6 +18,35 @@ class Order extends Model
 
     protected $guarded = false;
 
+
+
+    public function Client() {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function Status() {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function getServicesAttribute($value) {
+        return unserialize($value);
+    }
+
+    public function getPriceListAttribute($value) {
+        return objectToArray(json_decode($value));
+    }
+
+    public function getEstimateAttribute($value) {
+        return objectToArray(json_decode($value));
+    }
+
+    //
+    public function getDeadlineDateRuAttribute($value) {
+        return Carbon::parse($this->deadline_date)->translatedFormat("d F Y");
+        //return date("d.m.Y", strtotime($value));
+    }
+
+    /*
     public function getFilesAttribute($value) {
         foreach(Storage::files("/public/order/{$this->id}/files") as $file) {
             $result[pathinfo($file, PATHINFO_FILENAME)] = str_replace("public", "storage", $file);
@@ -33,16 +62,6 @@ class Order extends Model
     public function getEskizBase64Attribute() {
         return Storage::disk('public')->get("order/".$this->id."/eskiz.base64");
     }
-
-    /*
-    public function getBirthDateAttribute($value) {
-        return $value ? date("d.m.Y", strtotime($value)) : '' ;
-    }
-
-    public function getDeathDateAttribute($value) {
-        return $value ? date("d.m.Y", strtotime($value)) : '' ;
-    }
-    */
 
     # Дедлайн на русском
     public function getDeadlineDateRuAttribute($value) {
@@ -62,17 +81,17 @@ class Order extends Model
         $day = $this->dayRest;
         $level = 1;
 
-        /*
-        1 - много дней
-        2 - остается 10 дней
-        3 - сегодня
-        4 - завершено
-        */
+
+        // 1 - много дней
+        // 2 - остается 10 дней
+        // 3 - сегодня
+        // 4 - завершено
+
         switch($day) {
             case ($day <= $endPeriod): {
                 $level = 2;
             } break;
-            /**/
+
             case (0): {
                 if(Carbon::parse($this->deadline_date)->isCurrentDay()) {
                     $level = 3;
@@ -92,9 +111,7 @@ class Order extends Model
         return Carbon::parse($this->created_at)->translatedFormat("d F Y / H:i");
     }
 
-    public function getPriceListAttribute($value) {
-        return unserialize($value);
-    }
+
 
     public function getModelSizeAttribute($value) {
         if(!$value) return '';
@@ -102,9 +119,7 @@ class Order extends Model
         return $size->width." x ".$size->height." x ".$size->thick;
     }
 
-    public function Client() {
-        return $this->belongsTo(Client::class);
-    }
+
 
     public function Status() {
         return $this->belongsTo(Status::class);
@@ -113,4 +128,5 @@ class Order extends Model
     public function Pay() {
         return $this->hasMany(Pay::class);
     }
+    */
 }

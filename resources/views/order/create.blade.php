@@ -182,9 +182,12 @@
                         <!-- Готово -->
                         <input type="hidden" name="eskiz" id="eskiz_field">
                         <input type="hidden" name="price_list" id="price_list">
+                        <input type="hidden" name="estimate" id="estimate">
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="status_id" value="1">
-                        <input type="submit" id="order_estimate_btn" class="btn" value="Подсчет сметы">
+                        <div class="btn_area">
+                            <input type="submit" id="order_estimate_btn" class="btn" value="Подсчет сметы">
+                        </div>
                         <input type="submit" id="order_create_btn" class="btn" value="Создать" style="display: none;">
 
                     </form>
@@ -344,7 +347,7 @@
                                 <div class="inner">
                                     <div class="field_area">
                                         <label for="face_m2">Площадь (м<sup>2</sup>)</label>
-                                        <input type="number" name="face_m2" id="face_m2" class="field">
+                                        <input type="number" name="face_m2" id="face_m2" class="field" autocomplete="off">
                                         <img src="{{ asset('/static/images/ico/add.png') }}" alt="" class="add face">
                                     </div>
                                     <div class="field_area">
@@ -360,7 +363,9 @@
 
 
                             <div class="output_area">
-                                <input type="submit" value="Сохранить эскиз" class="btn" onclick="convert('code')">
+                                <div class="btn_area">
+                                    <input type="submit" value="Сохранить эскиз" class="btn" id="save_eskiz" onclick="convert('code')">
+                                </div>
                                 <input type="submit" value="Скачать эскиз" class="btn" onclick="convert('file')">
                             </div>
 

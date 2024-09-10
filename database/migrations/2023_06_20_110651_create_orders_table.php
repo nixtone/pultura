@@ -23,6 +23,7 @@ return new class extends Migration
 
             // Внешний вид памятника
 
+            /*
             // Модель памятника (mm - monument)
             $table->foreignId('mm_model')
                 ->default(0)
@@ -43,12 +44,17 @@ return new class extends Migration
                 ->constrained()
                 ->on('products')
                 ->references('id');
+            */
 
             // Содержимое памятника
-            $table->mediumText('mm_details')->nullable(); // текста, гравировки, дополнения, облицовка
+            // $table->mediumText('mm_details')->nullable(); // текста, гравировки, дополнения, облицовка
 
             // Услуги
-            $table->mediumText('services')->nullable(); // Адрес доставки, Киллометраж доставки, Установка, Демонтаж
+            $table->mediumText('services')->nullable(); // Адрес доставки, Км доставки, Установка, Демонтаж
+
+            $table->mediumText('price_list')->nullable(); // Данные от конструктора
+            $table->mediumText('estimate')->nullable(); // Данные от конструктора
+            $table->float('total_correct')->nullable();
 
             // Даты
             $table->date('deadline_date')->nullable(); // Исполнить заказ до

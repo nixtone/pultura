@@ -16,3 +16,9 @@ if (!function_exists('objectToArray')) {
         return array_map('objectToArray', (array)$object);
     }
 }
+
+if (!function_exists('prepareDate')) {
+    function prepareDate($date) {
+        return date("Y-m-d", strtotime($date));
+    }
+}

@@ -40,6 +40,11 @@ class OrderRequest extends FormRequest
 
             services
             deadline_date
+
+            'mm_model' => 'integer|nullable',
+            'mm_model_size' => 'string|nullable',
+            'mm_material' => 'integer|nullable',
+            'mm_details' => 'string|nullable',
             */
 
             'client_id' => 'integer|required',
@@ -47,17 +52,13 @@ class OrderRequest extends FormRequest
             'status_id' => 'integer|required',
             'comment' => 'string|nullable',
 
-            'mm_model' => 'integer|nullable',
-            'mm_model_size' => 'string|nullable',
-            'mm_material' => 'integer|nullable',
-            'mm_details' => 'string|nullable',
-
             'services' => '',
             'deadline_date' => '',
 
-
             'eskiz' => '',
             'client_file' => '',
+            'price_list' => '',
+            'estimate' => '',
             'payment' => '',
             'total_correct' => '',
 

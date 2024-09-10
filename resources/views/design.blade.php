@@ -161,8 +161,8 @@ function convert(whatReturn) {
             } break;
             // Прикрепить к заказу в base64
             case 'code': {
-                // TODO: Собрать все данные от конструктора
                 $("#eskiz_field").val(canvas.toDataURL('image/png'));
+                $("#save_eskiz").addClass('complete'); // .attr('disabled', true)
             } break;
         }
         $("#send_order").attr('disabled', false);

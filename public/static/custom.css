@@ -242,6 +242,9 @@ a {
         opacity: 0.5;
         cursor: default;
     }
+    &.complete {
+        background-color: #589f52;
+    }
 }
 
 table {
@@ -276,6 +279,26 @@ table.list {
         box-sizing: border-box;
         border-left: 1px solid #dddbdb;
         border-right: 1px solid #dddbdb;
+    }
+    .descr td {
+        background-color: #ccc;
+        text-align: center;
+    }
+}
+
+.preloader {
+    position: relative;
+    display: inline-block;
+    &::before {
+        content: '';
+        display: block;
+        background-image: url('/static/images/preloader.gif');
+        width: 44px;
+        height: 30px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 }
 

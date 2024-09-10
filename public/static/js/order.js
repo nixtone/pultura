@@ -110,11 +110,25 @@ $(document).ready(function() {
         portrait: [],
         grave: [],
         text: {},
-        face: [], // облицовка
+        face: {}, // облицовка
         // дополнения
         tombstone: 0,
         fence: 0,
         vase: 0,
+    };
+    // Транслит наименований
+    const conLabel = {
+        model: "Модель",
+        size: "Размер",
+        material: "Материал",
+        grave: "Гравировки",
+        portrait: "Портреты",
+        text: "Тексты",
+        face: "Облицовка",
+        tombstone: "Цветник / надгробие",
+        fence: "Ограда",
+        vase: "Вазы",
+        services: "Услуги"
     };
 
     /* ----------------------------------------- */
@@ -195,30 +209,6 @@ $(document).ready(function() {
     /* ----------------------------------------- */
 
 
-
-
-    // http://127.0.0.1:8000/
-    //back("/storage/product/147/1.png");
-    /*
-        //
-        $(".field.text").keyup(function(event) {
-            // console.log($(this).val());
-            let textVal = $(this).val();
-            text(textVal);
-        });
-        */
-
-    /*
-    function test1() {
-        canvas.on('selection:cleared', function() {
-            console.log('Снятие 1');
-        });
-    }
-    console.log(canvas.getActiveGroup());
-    */
-
-
-    /* ----------------------------------------- */
 
     // Переключатель группы полей
     $("#constructor h2").click(function(event) {
@@ -426,6 +416,7 @@ $(document).ready(function() {
         // добавляем в смету
         conList['face']['m2'] = face.m2;
         conList['face']['facing'] = face.facing;
+        console.log(conList); // TODO: не доходит до сметы
         // выводим выбор
         $(".field_group.face .result").html("- " + faceName + " (" + face.m2 + "м<sup>2</sup>)");
     });
@@ -433,61 +424,59 @@ $(document).ready(function() {
 
     /* ----------------------------------------- */
 
-    // Запрос сметы
+
+
+    // Смета
+    let estimateTotal = 0;
     $("#order_estimate_btn").click(function(event) {
         event.preventDefault();
-
+        const $this = $(this);
         //
         $("#price_list").val(JSON.stringify(conList));
-
-        //
-        $.post('/order/price', $("#order_form").serialize(), function(data) {
+        // Запрос сметы
+        console.log($("#order_form").serialize());
+        $.ajax({
+            url: '/order/price',
+            type: 'POST',
+            dataType: 'json',
+            data: $("#order_form").serialize(),
+            beforeSend: function() {
+                $this.attr('disabled', true).closest(".btn_area").addClass("preloader");
+            }
+        })
+        .always(function(data) {
             console.log(data);
-
+            $("#estimate").val(JSON.stringify(data));
+            $this.attr('disabled', false).closest(".btn_area").removeClass("preloader");
+            // Очистка сметы
+            $(".field_group.estimate .query").detach();
             // Показать смету
             $(".field_group.estimate").show().find('.label_tr');
-
             // Наполнение сметы
-            $.each(data.order, function(key, value){
-                console.log(key);
-                /*
-                model
-                grave
-                text
-
-                material +
-                size +
-                tombstone +
-                fence +
-                vase +
-                */
-                let new_tr;
-                switch(key) {
-                    /*
-                    case '': {
-                        new_tr = '';
-                    } break;
-                    */
-                    case 'material':
-                    case 'size':
-                    case 'tombstone':
-                    case 'fence':
-                    case 'vase': {
-                        new_tr = '<tr class="'+key+'"><td>' + value.label + '</td><td class="tac">-</td><td class="tac">-</td><td class="tac">' + value.price + '</td></tr>';
-                    } break;
-                }
-                $(".field_group.estimate .total_tr").before(new_tr);
-
+            $.each(data.order, function(key, value) {
+                $(".field_group.estimate .total_tr").before('<tr class="query descr"><td colspan="4">' + conLabel[key] + '</td></tr>');
+                $.each(value, function(slug, item) {
+                    $(".field_group.estimate .total_tr").before('<tr class="query ' + slug + '"><td class="label">' + item.label + '</td><td class="tac count">' + item.count + '</td><td class="tac subtotal">' + item.subtotal + '</td><td class="tac total">' + item.total + '</td></tr>');
+                });
             });
-
-            // Итого
+            // Итого сметы
             $(".field_group.estimate .price_td .digit").html(data.price);
-
+            estimateTotal = data.price;
+            // Ротация кнопок
+            $this.hide();
+            $("#order_create_btn").show();
         });
+    });
 
-        //console.log(conList.serialize());
-        //console.log();
-        //console.log($("#eskiz_field").val());
+    // Платеж
+    $("#payment").keyup(function(event) {
+        console.log($(this).val());
+        console.log(estimateTotal);
+    });
+    // Корректировка итога
+    $("#total_correct").keyup(function(event) {
+        console.log($(this).val());
+        console.log(estimateTotal);
     });
 
 });
