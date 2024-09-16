@@ -44,20 +44,37 @@ class OrderController extends Controller
 
     // Обработка создания заказа
     public function store(OrderRequest $request) {
-        // dump($request);
-        $data = $request->validated();
 
-        $data['services'] = serialize($data['services']);
-        unset($data['eskiz']);
-        unset($data['payment']);
-        $data['deadline_date'] = prepareDate($data['deadline_date']);
+        # Подготовка данных
+        $orderData = $request->validated();
+        $orderData['services'] = serialize($orderData['services']);
+        // Вынос платежа
+        $payment = $orderData['payment'];
+        unset($orderData['payment']);
+        // Вынос эскиза
+        $eskiz = $orderData['eskiz'];
+        unset($orderData['eskiz']);
+        // Подготовка даты дедлайн
+        $orderData['deadline_date'] = prepareDate($orderData['deadline_date']);
 
 
         # Создаем заказ
-        $newItem = Order::create($data);
+        $newOrder = Order::create($orderData);
 
-        // На страницу заказа
-        return redirect()->route('order.item', $newItem->id);
+        # Файлы от клиента
+        // $eskiz
+
+        # Прием оплаты
+        if($payment) {
+            $payStatus = Pay::create([
+                'amount' => $payment,
+                // 'comment' => '',
+                'order_id' => $newOrder->id,
+            ]);
+        }
+
+        # На страницу заказа
+        return redirect()->route('order.item', $newOrder->id);
     }
 
     public function conLabel($key = '') {
@@ -80,10 +97,11 @@ class OrderController extends Controller
     // Страница заказа
     public function item(Order $order) {
 
-        // Сбор данных
+        # Сбор данных
         $statusList = Status::all();
+        $paymentList = $order->pay;
 
-        dump($this->conLabel('model'));
+        // dump($this->conLabel('model'));
 
         /*
         $productList = Product::all();
@@ -99,7 +117,7 @@ class OrderController extends Controller
         $order->remain = $order->price_list['total'] - $order->paid;
         // Шаблон страницы
         */
-        return view('order.item', compact('order', 'statusList')); // , 'productList', 'categoryList'
+        return view('order.item', compact('order', 'statusList', 'paymentList')); // , 'productList', 'categoryList'
     }
 
     // ajax-запрос сметы

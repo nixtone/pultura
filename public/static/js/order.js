@@ -479,4 +479,20 @@ $(document).ready(function() {
         console.log(estimateTotal);
     });
 
+    // Смена статуса заказа
+    $("#order_status").change(function(event) {
+        /*
+        $.ajax({
+            url: '/path/to/file',
+            type: 'POST',
+            dataType: 'json',
+            data: $(this).closest('form').serialize(),
+        })
+        .always(function(data) {
+
+        });
+        */
+
+    });
+
 });

@@ -131,18 +131,27 @@
 <script src="{{ asset('/static/fancy/jquery.fancybox.min.js') }}"></script>
 
 <!-- Заказ -->
-@if(Route::is('order.create'))
+
+
 <div class="overlay" style="display: none;">
     <div class="popup">
         <div class="close"></div>
         <div class="inner">
-            @include('order.inc.window', ['title' => 'Модели памятников', 'field' => 'model', 'parent_cat' => 1, 'displayName' => 0, 'constructor' => 'image'])
-            @include('order.inc.window', ['title' => 'Материал', 'field' => 'material', 'parent_cat' => 4, 'displayName' => 1, 'constructor' => 'back'])
-            @include('order.inc.window', ['title' => 'Портрет', 'field' => 'portrait', 'parent_cat' => 7, 'displayName' => 1, 'constructor' => 'image'])
-            @include('order.inc.window', ['title' => 'Гравировка', 'field' => 'grave', 'parent_cat' => 10, 'displayName' => 1, 'constructor' => 'image'])
-            @include('order.inc.window', ['title' => 'Цветник / надгробие', 'field' => 'tombstone', 'parent_cat' => 17, 'displayName' => 1, 'constructor' => 'blank'])
-            @include('order.inc.window', ['title' => 'Ограда', 'field' => 'fence', 'parent_cat' => 18, 'displayName' => 1, 'constructor' => 'blank'])
-            @include('order.inc.window', ['title' => 'Вазы', 'field' => 'vase', 'parent_cat' => 19, 'displayName' => 1, 'constructor' => 'blank'])
+
+            @if(Route::is('order.create'))
+                @include('order.inc.window', ['title' => 'Модели памятников', 'field' => 'model', 'parent_cat' => 1, 'displayName' => 0, 'constructor' => 'image'])
+                @include('order.inc.window', ['title' => 'Материал', 'field' => 'material', 'parent_cat' => 4, 'displayName' => 1, 'constructor' => 'back'])
+                @include('order.inc.window', ['title' => 'Портрет', 'field' => 'portrait', 'parent_cat' => 7, 'displayName' => 1, 'constructor' => 'image'])
+                @include('order.inc.window', ['title' => 'Гравировка', 'field' => 'grave', 'parent_cat' => 10, 'displayName' => 1, 'constructor' => 'image'])
+                @include('order.inc.window', ['title' => 'Цветник / надгробие', 'field' => 'tombstone', 'parent_cat' => 17, 'displayName' => 1, 'constructor' => 'blank'])
+                @include('order.inc.window', ['title' => 'Ограда', 'field' => 'fence', 'parent_cat' => 18, 'displayName' => 1, 'constructor' => 'blank'])
+                @include('order.inc.window', ['title' => 'Вазы', 'field' => 'vase', 'parent_cat' => 19, 'displayName' => 1, 'constructor' => 'blank'])
+            @endif
+
+            @if(Route::is('order.item'))
+                @include('pay.popup', ['order_id' => $order->id])
+            @endif
+
         </div>
     </div>
 </div>
@@ -171,7 +180,7 @@ function convert(whatReturn) {
 </script>
 <script src="{{ asset('/static/js/interact.min.js') }}"></script>
 <script src="{{ asset('/static/js/order.js') }}"></script>
-@endif
+
 <!-- /Заказ -->
 
 <script src="{{ asset('/static/js/custom.js') }}"></script>

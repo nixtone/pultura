@@ -46,6 +46,10 @@ class Order extends Model
         //return date("d.m.Y", strtotime($value));
     }
 
+    public function Pay() {
+        return $this->hasMany(Pay::class);
+    }
+
     /*
     public function getFilesAttribute($value) {
         foreach(Storage::files("/public/order/{$this->id}/files") as $file) {
@@ -125,8 +129,6 @@ class Order extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public function Pay() {
-        return $this->hasMany(Pay::class);
-    }
+
     */
 }
