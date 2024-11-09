@@ -21,8 +21,22 @@ return new class extends Migration
             $table->foreignId('status_id')->constrained()->default(1); // Статус выполнения заказа
             $table->text('comment')->nullable(); // Комментарий к заказу
 
-            // Внешний вид памятника
+            // Услуги
+            $table->mediumText('services')->nullable(); // Адрес доставки, Км доставки, Установка, Демонтаж
 
+            $table->mediumText('price_list')->nullable(); // Данные от конструктора
+            $table->mediumText('estimate')->nullable(); // Данные от конструктора
+            $table->float('price')->nullable();
+            $table->float('total_correct')->nullable();
+
+            // Даты
+            $table->date('deadline_date')->nullable(); // Исполнить заказ до
+            $table->softDeletes();
+            $table->timestamps();
+
+
+
+            // Внешний вид памятника
             /*
             // Модель памятника (mm - monument)
             $table->foreignId('mm_model')
@@ -48,20 +62,6 @@ return new class extends Migration
 
             // Содержимое памятника
             // $table->mediumText('mm_details')->nullable(); // текста, гравировки, дополнения, облицовка
-
-            // Услуги
-            $table->mediumText('services')->nullable(); // Адрес доставки, Км доставки, Установка, Демонтаж
-
-            $table->mediumText('price_list')->nullable(); // Данные от конструктора
-            $table->mediumText('estimate')->nullable(); // Данные от конструктора
-            $table->float('total_correct')->nullable();
-
-            // Даты
-            $table->date('deadline_date')->nullable(); // Исполнить заказ до
-            $table->softDeletes();
-            $table->timestamps();
-
-
             /*
             // Текст для памятника
             $table->string('lastname')->default('');

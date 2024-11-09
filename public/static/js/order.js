@@ -206,6 +206,12 @@ $(document).ready(function() {
 
     });
 
+    // Приведение к нулю
+    function getZero(data) {
+        data = parseInt(data);
+        return isNaN(data) ? 0 : data;
+    }
+
     /* ----------------------------------------- */
 
 
@@ -416,7 +422,6 @@ $(document).ready(function() {
         // добавляем в смету
         conList['face']['m2'] = face.m2;
         conList['face']['facing'] = face.facing;
-        console.log(conList); // TODO: не доходит до сметы
         // выводим выбор
         $(".field_group.face .result").html("- " + faceName + " (" + face.m2 + "м<sup>2</sup>)");
     });
@@ -432,6 +437,7 @@ $(document).ready(function() {
         event.preventDefault();
         const $this = $(this);
         //
+        console.log(conList);
         $("#price_list").val(JSON.stringify(conList));
         // Запрос сметы
         console.log($("#order_form").serialize());
@@ -461,6 +467,7 @@ $(document).ready(function() {
             });
             // Итого сметы
             $(".field_group.estimate .price_td .digit").html(data.price);
+            $("#price").val(data.price);
             estimateTotal = data.price;
             // Ротация кнопок
             $this.hide();
@@ -468,31 +475,63 @@ $(document).ready(function() {
         });
     });
 
-    // Платеж
-    $("#payment").keyup(function(event) {
-        console.log($(this).val());
-        console.log(estimateTotal);
-    });
-    // Корректировка итога
-    $("#total_correct").keyup(function(event) {
-        console.log($(this).val());
-        console.log(estimateTotal);
+
+    // Итог сметы
+    $("#total_correct, #payment").val('').keyup(function(event) {
+        let correct = getZero($("#total_correct").val()),
+            payment = getZero($("#payment").val()),
+            whoIsTotal = 0,
+            rest = 0;
+        if(isNaN(correct) || !correct) { // Берем итог
+            whoIsTotal = estimateTotal;
+            $("#estimate_total").removeClass('noactive');
+        }
+        else { // Корректировка
+            whoIsTotal = correct;
+            $("#estimate_total").addClass('noactive');
+        }
+        rest = whoIsTotal - payment;
+        $("#rest .digit").html(rest);
+
     });
 
+    // Номер текущего заказа
+    const currentOrderID = $("#order").data("id");
+
     // Смена статуса заказа
-    $("#order_status").change(function(event) {
-        /*
+    $("#status_id").change(function(event) {
         $.ajax({
-            url: '/path/to/file',
+            url: '/order/update/' + currentOrderID,
             type: 'POST',
             dataType: 'json',
             data: $(this).closest('form').serialize(),
         })
         .always(function(data) {
-
+            //console.log(data);
         });
-        */
 
+    });
+
+    // Внесение платежа
+    $("#pay_add").submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: '/pay/store',
+            type: 'POST',
+            dataType: 'json',
+            data: $(this).serialize(),
+        })
+        .always(function(data) {
+            location.reload(true);
+            /*
+            console.log(data);
+            $("#pay_list .pay").last().after(data.responseText);
+            // $("#pay_list .pay").last().after('<tr class="pay"><td>'+data.comment+'</td><td class="tac">'+data.created_at+'</td><td class="tac">'+data.amount+'</td></tr>');
+
+            closePopup();
+
+             */
+        });
     });
 
 });

@@ -116,7 +116,8 @@
                                 <div class="field_area">
                                     <label for="client_file">Файлы от клиента (фото усопшего, документы...)</label>
                                     <div class="err">@error('client_file') {{ $message }} @enderror</div>
-                                    <input type="file" name="client_file" id="client_file" class="field">
+                                    <input type="file" name="client_file[]" id="client_file" class="field" multiple>
+                                    <!-- <input type="file" name="files[]" id="files" class="field" multiple> -->
                                 </div>
                                 <div class="field_area">
                                     <label for="deadline_date">Исполнить до (ДД.ММ.ГГГГ):</label>
@@ -141,18 +142,26 @@
                                     <th>Сумма</th>
                                     <th>Итого</th>
                                 </tr>
-                                {{--
-                                <tr>
-                                    <td>Гравировка</td>
-                                    <td class="tac">2</td>
-                                    <td class="tac">500</td>
-                                    <td class="tac">1000</td>
-                                </tr>
-                                --}}
+                                <!-- Итог сметы -->
                                 <tr class="total_tr">
-                                    <td><input type="text" name="payment" id="payment" class="field" placeholder="Платеж"></td>
-                                    <td><input type="text" name="total_correct" id="total_correct" class="field" placeholder="Корректировка"></td>
-                                    <td colspan="2" class="price_td tac">Итого: <strong class="digit">0</strong> ₽</td>
+                                    <td colspan="3" class="tar" style="border-top: 1px solid #dddbdb">Итого: </td>
+                                    <td colspan="1" class="price_td tac" id="estimate_total" style="border-top: 1px solid #dddbdb"><strong id="" class="digit est_val total" style="font-size: 1.5em">0</strong> ₽</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="tar">Корректировка:</td>
+                                    <td colspan="1" class="tac">
+                                        <input type="number" name="total_correct" id="total_correct" class="field tac" size="6" style="display: inline-block; width: unset; margin-right: 5px;" autocomplete="false"> ₽
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="tar">Платеж:</td>
+                                    <td colspan="1" class="tac">
+                                        <input type="number" name="payment" id="payment" size="6" class="field tac" style="display: inline-block; width: unset; margin-right: 5px;" autocomplete="false"> ₽
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="tar">Остаток:</td>
+                                    <td colspan="1" class="tac" id="rest"><strong class="digit">0</strong> ₽</td>
                                 </tr>
                             </table>
                         </div>
@@ -185,6 +194,7 @@
                         <input type="hidden" name="estimate" id="estimate">
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="status_id" value="1">
+                        <input type="hidden" name="price" id="price">
                         <div class="btn_area">
                             <input type="submit" id="order_estimate_btn" class="btn" value="Подсчет сметы">
                         </div>

@@ -21,11 +21,19 @@ Laravel v10.13.5
 2. Сгенерировать файл .env  
 3. php artisan key:generate  
 4. Создать БД  
-5. php artisan migrate  
-6. php artisan db:seed  
+5. php artisan migrate:fresh --seed
 7. php artisan storage:link  
 8. Разместить в корне .htaccess  
 9. Копировать каталог картинок "product" в "/storage/app/public/"  
+
+
+__.htaccess sprinthost__  
+``  
+RewriteEngine on  
+RewriteRule ^$ public/ [L]  
+RewriteCond %{REQUEST_FILENAME} !-f  
+RewriteRule ((?s).*) public/$1 [L]  
+`` 
 
 ### Материалы  
 

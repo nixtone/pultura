@@ -1,4 +1,5 @@
-<form action="" method="post" class="payment" style="margin: -16px">
+<form action="" method="post" class="pay_add" id="pay_add" style="margin: -16px">
+
     <div class="field_group" style="margin: 0">
         <h2>Внесение платежа</h2>
         <div style="padding: 15px">
@@ -19,4 +20,5 @@
 
         </div>
     </div>
+
 </form>

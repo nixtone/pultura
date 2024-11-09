@@ -53,13 +53,14 @@ class OrderRequest extends FormRequest
             'comment' => 'string|nullable',
 
             'services' => '',
-            'deadline_date' => '',
+            'deadline_date' => 'string',
 
             'eskiz' => '',
             'client_file' => '',
             'price_list' => '',
             'estimate' => '',
             'payment' => '',
+            'price' => '',
             'total_correct' => '',
 
         ];

@@ -5,6 +5,7 @@
 <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <title>Заказ {{ $order->id }}</title>
 <style>
+/* Структура */
 @page {
     margin: 20px 25px !important;
 }
@@ -12,33 +13,40 @@ body {
     font-family: "Arial", "Times New Roman";
     font-size: 10px;
 }
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 10px 0;
-}
-table.s1 td,
-table.s1 th {
-    border: 1px solid;
-}
-/*table.s1 td,
-table.s1 th {
-    padding: 0px;
-}*/
-td, th {
-    padding: 3px;
-}
-h1, h2, h3 {
-    margin: 0 0 15px;
-}
 
+/* Атомарные */
 .tac {
     text-align: center;
 }
 .tar {
     text-align: right;
 }
+.italic {
+    font-style: italic;
+}
+table.list {
+    border-collapse: collapse;
+    margin: 15px 0;
+    width: 100%;
 
+}
+table.list td, table.list th {
+    padding: 4px;
+    box-sizing: border-box;
+    border: 1px solid #dddbdb;
+}
+
+/* Reset */
+h1, h2, h3 {
+    margin: 0 0 15px;
+}
+p {
+    line-height: 18px;
+}
+ul, ol, li {
+    margin: 0;
+    padding: 0;
+}
 ol {
     /* убираем стандартную нумерацию */
     list-style: none;
@@ -56,53 +64,118 @@ li:before {
     content: counters(li, ".") ". ";
 }
 
-ul, ol, li {
-    margin: 0;
-    padding: 0;
-}
-.first {
-    font-weight: bold;
-}
-p {
-    line-height: 18px;
-}
 </style>
 </head>
 <body>
 
 <div id="page">
-    <div class="tac">Наряд-заказ № {{ $order->id }} (И.П.Сафиуллин С.Х.)</div>
+    <div class="tac">Наряд-заказ № <strong>{{ $order->id }}</strong> (И.П.Сафиуллин С.Х.)</div>
     <div class="tac">Расчет стоимости материалов и работ.</div>
 
-
-    <table>
+    <table style="margin: 15px 0">
         <tr>
             <td width="50%">Дата приема: {{ date("d.m.Y", strtotime($order->created_at)) }}</td>
-            <td style="text-align: right;">Желаемый срок исполнения до @if($order->deadline_date) {{ $order->deadline_date }} @else ____________________ @endif г.</td>
+            <td style="text-align: right;">Желаемый срок исполнения до {{ date("d.m.Y", strtotime($order->deadline_date)) }} г.</td>
         </tr>
         <tr>
             <td colspan="2"><strong>Заказчик:</strong> {{ $order->client->name }} / <strong>Телефон:</strong> {{ $order->client->phone }}</td>
         </tr>
         @if(!empty($order->client->addr))
-        <tr>
-            <td>Адрес: {{ $order->client->addr }}</td>
-        </tr>
+            <tr>
+                <td>Адрес: {{ $order->client->addr }}</td>
+            </tr>
         @endif
         <tr>
             <td colspan="2">Монтажные работы(чьи,где): ___________________________________________________________________________________________________________________</td>
         </tr>
+        {{--
         <tr>
             <td>Материал изделия: @if(isset($order->material)) {{ $categoryList->find($order->material->category_id)->name }} @else _______________________ @endif</td>
             <td>Цвет: @if(isset($order->material)) {{ $order->material->name }} @else _______________________ @endif</td>
         </tr>
+        --}}
     </table>
+
+    <h2 class="tac">Смета</h2>
+
+    <table id="smeta" class="list">
+        <tr>
+            <th>Наименование</th>
+            <th>Количество</th>
+            <th>Сумма</th>
+            <th>Итого</th>
+        </tr>
+        @foreach($order->estimateRU as $label => $arEstItem)
+            <tr class="descr">
+                <td colspan="4" class="italic tac">{{ $label }}</td>
+            </tr>
+            @foreach($arEstItem as $estItem)
+                <tr>
+                    <td>{!! $estItem['label'] !!} @if($label == "Тексты") {{ $estItem['valueString'] }} @endif</td>
+                    <td class="tac">{{ $estItem['count'] }}</td>
+                    <td class="tac">{{ $estItem['subtotal'] }}</td>
+                    <td class="tac">{{ $estItem['total'] }}</td>
+                </tr>
+            @endforeach
+        @endforeach
+
+        <tr>
+            <td class="tar" colspan="3">Итого:</td>
+            @if($order->total_correct)
+                <td class="tac noactive" style="font-size: 1.5em; font-weight: bold;">
+            @else
+                <td class="tac" style="font-size: 1.5em; font-weight: bold; color: @if($estimateTotal['rest']) red @else green @endif">
+            @endif
+                {{ $order->price }}
+                </td>
+        </tr>
+
+        @if($order->total_correct)
+            <tr>
+                <td class="tar" colspan="3">Корректировка:</td>
+                <td class="tac" style="font-size: 1.5em; font-weight: bold;">{{ $order->total_correct }}</td>
+            </tr>
+            {{--
+            <tr>
+                <td class="tar" colspan="3">Разница итога и корректировки:</td>
+                <td class="tac">{{ $estimateTotal['diff_total'] }}</td>
+            </tr>
+            --}}
+        @endif
+        {{--
+
+        --}}
+        <tr>
+            <td class="tar" colspan="3">Осталось:</td>
+            <td class="tac">{{ $estimateTotal['rest'] }}</td>
+        </tr>
+    </table>
+
+    <h2 class="tac">Эскиз гравировки</h2>
+
+    <table class="list">
+        <tr>
+            <td>*картинка*</td>
+        </tr>
+    </table>
+
+
+    <p>Памятник осмотрен со всех сторон, претензий не имею, с условиями заказа ознакомлен и согласен, данные, надписей верны,<br>
+        адрес и номер телефона верны. __________________ Подпись Заказчика</p>
+    <p>Аванс, (полную оплату) в сумме _________________________________________________________________________________________________________________<br>
+        ______________________________________________________________________________________ 00 коп получил. _________ Подпись приёмщика, печать.</p>
+    <p>Справку на оформление "Разрешения" (см.п.3.2.2 "Договора") получил: __________________ Подпись заказчика.</p>
+
+
+{{--
+
 
     <table class="s1">
         <tr>
             <th width="140px">Фамилия</th>
             <td>{{ $order->lastname }}</td>
             <td rowspan="6" width="460px" class="tac">
-{{--                <h3>Эскиз</h3>--}}
+
                 <img src="{{ $order->EskizBase64 }}" alt="" style="max-height: 200px">
             </td>
         </tr>
@@ -205,16 +278,16 @@ p {
             <tr>
                 <td>ФИО и ДАТЫ</td>
                 <td class="tac">{{ $order->price_list['lastname'] }}</td>
-                <td class="tac">{{-- TODO: Количество --}}</td>
+                <td class="tac">Количество</td>
                 <td class="tac">
-                    {{--
+
                     TODO: фиксировать вывод пустых значений
                     $order->price_list['lastname'] +
                     $order->price_list['firstname'] +
                     $order->price_list['fathername'] +
                     $order->price_list['birth_date'] +
                     $order->price_list['death_date']
-                    --}}
+
                 </td>
             </tr>
         @endif
@@ -326,11 +399,8 @@ p {
         </tr>
     </table>
 
-    <p>Памятник осмотрен со всех сторон, претензий не имею, с условиями заказа ознакомлен и согласен, данные, надписей верны,<br>
-        адрес и номер телефона верны. __________________ Подпись Заказчика</p>
-    <p>Аванс, (полную оплату) в сумме _________________________________________________________________________________________________________________<br>
-        ______________________________________________________________________________________ 00 коп получил. _________ Подпись приёмщика, печать.</p>
-    <p>Справку на оформление "Разрешения" (см.п.3.2.2 "Договора") получил: __________________ Подпись заказчика.</p>
+
+
 
     {{--
     <table>
@@ -504,9 +574,7 @@ p {
         </tr>
     </table>
 
-    <div>Памятник осмотрен со всех сторон, претензий не имею, с условиями заказа ознакомлен и согласен, данные, надписей верны,<br> адрес и № телефона верны./_______/ Подпись Заказчика</div>
-    <div>Аванс, (полную оплату) в сумме _____ 00 коп получил. /___/ Подпись приёмщика, печать.</div>
-    <div>Справку на оформление "Разрешения" (см.п.3.2.2 "Договора") получил: /___/ Подпись заказчика.</div>
+
     --}}
 </div>
 

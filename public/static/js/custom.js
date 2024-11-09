@@ -107,4 +107,5 @@ $(document).ready(function() {
         $("#search_area .field." + field_name).show();
     });
 
+
 });

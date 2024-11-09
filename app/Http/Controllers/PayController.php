@@ -12,12 +12,18 @@ class PayController extends Controller
         return view('pay.create', compact('order'));
     }
 
-    public function store(PayRequest $request)
-    {
-        $data = $request->validated();
+    public function store(PayRequest $request) {
+        $newPay = Pay::create($request->validated());
 
-        $newPay = Pay::create($data);
-        return redirect()->route('order.item', $data['order_id']);
+        return '
+        <tr class="pay">
+            <td>'.$newPay->comment.'</td>
+            <td class="tac">'.$newPay->created_at_ru.'</td>
+            <td class="tac">'.$newPay->amount.'</td>
+        </tr>';
+
+        return $newPay;
+        // return redirect()->route('order.item', $data['order_id']);
     }
 
     public function edit(Pay $pay) {

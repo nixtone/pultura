@@ -40,14 +40,68 @@ class Order extends Model
         return objectToArray(json_decode($value));
     }
 
-    //
-    public function getDeadlineDateRuAttribute($value) {
-        return Carbon::parse($this->deadline_date)->translatedFormat("d F Y");
-        //return date("d.m.Y", strtotime($value));
-    }
-
+    # Список платежей
     public function Pay() {
         return $this->hasMany(Pay::class);
+    }
+
+    public function getPayTotalAttribute() {
+        $payTotal = 0;
+        foreach($this->hasMany(Pay::class) as $pay) {
+            $payTotal += $pay->amount;
+        }
+        return $payTotal;
+    }
+
+    # Смета на русском
+    public function getEstimateRUAttribute() {
+        $conLabel = [
+            'model' => "Модель",
+            'size' => "Размер",
+            'material' => "Материал",
+            'grave' => "Гравировки",
+            'portrait' => "Портреты",
+            'text' => "Тексты",
+            'face' => "Облицовка",
+            'tombstone' => "Цветник / надгробие",
+            'fence' => "Ограда",
+            'vase' => "Вазы",
+            'services' => "Услуги"
+        ];
+        $estimateRU = [];
+        foreach($this->estimate['order'] as $label => $orderItem) {
+            // $estimateRU[$this->conLabel($label)] = $orderItem;
+            $estimateRU[$conLabel[$label]] = $orderItem;
+        }
+        return $estimateRU;
+    }
+
+    # Дедлайн на русском
+    public function getDeadlineDateRuAttribute($value) {
+        return Carbon::parse($this->deadline_date)->translatedFormat("d F Y");
+    }
+
+    # Сколько осталось дней?
+    public function getDayRestAttribute() {
+        $diff = Carbon::parse($this->deadline_date)->diffInDays(Carbon::now());
+        if(Carbon::parse($this->deadline_date)->isPast()) $diff = 0;
+        return $diff;
+    }
+
+    # Дата создания на русском
+    public function getCreatedAtRuAttribute() {
+        return Carbon::parse($this->created_at)->translatedFormat("d F Y / H:i");
+    }
+
+    public function getEskizAttribute() {
+
+        $eskizPath = "storage/order/".$this->id."/eskiz/eskiz.png";
+        return asset($eskizPath);
+
+        // Проверка существования файла (не срабатывает)
+        return Storage::disk('local')->exists($eskizPath);
+        return Storage::fileExists($eskizPath);
+        return Storage::disk('public')->exists($eskizPath);
     }
 
     /*
@@ -67,17 +121,7 @@ class Order extends Model
         return Storage::disk('public')->get("order/".$this->id."/eskiz.base64");
     }
 
-    # Дедлайн на русском
-    public function getDeadlineDateRuAttribute($value) {
-        return Carbon::parse($this->deadline_date)->translatedFormat("d F Y");
-    }
 
-    # Сколько осталось дней?
-    public function getDayRestAttribute() {
-        $diff = Carbon::parse($this->deadline_date)->diffInDays(Carbon::now());
-        if(Carbon::parse($this->deadline_date)->isPast()) $diff = 0;
-        return $diff;
-    }
 
     #
     public function getLevelAttribute() {
@@ -110,10 +154,7 @@ class Order extends Model
         return $level;
     }
 
-    # Дата создания на русском
-    public function getCreatedAtRuAttribute() {
-        return Carbon::parse($this->created_at)->translatedFormat("d F Y / H:i");
-    }
+
 
 
 
