@@ -501,6 +501,16 @@ header {
         display: flex;
         gap: 5px;
     }
+    .eskiz_link {
+        display: grid;
+        place-items:center;
+        .eskiz {
+            max-width: 100px;
+        }
+    }
+    .client-file_area {
+        vertical-align: top;
+    }
     &.new .inner {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));

@@ -104,6 +104,14 @@ class Order extends Model
         return Storage::disk('public')->exists($eskizPath);
     }
 
+    public function getClientFileAttribute() {
+        $fileList = [];
+        foreach(Storage::files('/public/order/'.$this->id.'/client') as $filePath) {
+            $fileList[basename($filePath)] = str_replace("public", "storage", $filePath);
+        }
+        return $fileList;
+    }
+
     /*
     public function getFilesAttribute($value) {
         foreach(Storage::files("/public/order/{$this->id}/files") as $file) {

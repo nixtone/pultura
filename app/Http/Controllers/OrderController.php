@@ -82,20 +82,13 @@ class OrderController extends Controller
             }
         }
         // Эскиз
-        $newDirEskiz = Storage::makeDirectory($newDir."/eskiz");
-        // TODO: не создается файл эскиза
+        $newDirEskiz = $newDir."/eskiz";
+        Storage::makeDirectory($newDirEskiz);
         $putEskiz = Storage::put(
             $newDirEskiz.'/eskiz.png',
             base64_decode(str_replace("data:image/png;base64,", "", $eskiz))
         );
         $putEskizBase64 = Storage::put($newDirEskiz.'/eskiz.base64', $eskiz);
-
-        /*
-        dump($putEskiz);
-        dump($putEskizBase64);
-        dd('---');
-        */
-
 
         # Прием оплаты
         if($payment) {
@@ -124,7 +117,7 @@ class OrderController extends Controller
         // Разница итога и корректировки
         $result['diff_total'] = abs($order->price - $order->total_correct);
 
-        // Кто в итоге? Итог или корректировка (при наличии)
+        // Кто в итоге?! Итог или корректировка (при наличии)
         $whoIsTotal = $order->total_correct ?? $order->price;
         // Остаток
         $result['rest'] = $whoIsTotal - $result['payTotal'];
@@ -135,22 +128,7 @@ class OrderController extends Controller
     // Страница заказа
     public function item(Order $order) {
 
-        /*
-        // Подсчет итога
-        $paymentList = $order->pay;
-        $payTotal = 0;
-        foreach($paymentList as $pay) {
-            $payTotal += $pay->amount;
-        }
-
-        // Разница итога и корректировки
-        $diff_total = abs($order->price - $order->total_correct);
-
-        // Кто в итоге? Итог или корректировка (при наличии)
-        $whoIsTotal = $order->total_correct ?? $order->price;
-        // Остаток
-        $rest = $whoIsTotal - $payTotal;
-        */
+        //dd($order->ClientFile);
 
         # Сбор данных
         $statusList = Status::all();
@@ -161,12 +139,6 @@ class OrderController extends Controller
             'order',
             'statusList',
             'estimateTotal',
-            /*
-            'paymentList',
-            'payTotal',
-            'diff_total',
-            'rest'
-            */
         ));
     }
 
@@ -372,8 +344,9 @@ class OrderController extends Controller
 
 
 
-    /****
-    ****/
+    /*
+     * PDF, Договор
+     * */
 
     public function pdf(Order $order) { //
 

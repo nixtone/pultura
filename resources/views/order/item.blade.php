@@ -18,7 +18,6 @@
             <th>Исполнить до</th>
             <th>Осталось дней</th>
             <th>Клиент</th>
-
         </tr>
         <tr>
             <td>
@@ -51,13 +50,39 @@
         </tr>
         @endif
         <tr>
+            <th colspan="1">Эскиз:</th>
+            <th colspan="4">Файлы от клиента:</th>
+        </tr>
+        <tr>
+            <td colspan="1">
+                <a href="{{ $order->eskiz }}" data-fancybox="gallery" class="eskiz_link">
+                    <img src="{{ $order->eskiz }}" alt="" class="bimg eskiz">
+                </a>
+            </td>
+            <td colspan="4" class="client-file_area">
+                @foreach($order->ClientFile as $fileName => $filePath)
+                    <div><a href="{{ asset($filePath) }}" target="_blank">{{ $fileName }}</a></div>
+                @endforeach
+            </td>
+        </tr>
+        {{--
+        <tr>
             <th colspan="5">Экиз:</th>
         </tr>
         <tr>
             <td colspan="5">
-                <img src="{{ $order->eskiz }}" alt="">
+
             </td>
         </tr>
+        <tr>
+            <th colspan="5">Файлы от клиента:</th>
+        </tr>
+        <tr>
+            <td colspan="5">
+
+            </td>
+        </tr>
+        --}}
     </table>
 
     <table id="smeta" class="list">
