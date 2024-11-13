@@ -293,7 +293,7 @@ class OrderController extends Controller
                 $deliveryTotal += ($services['delivery']['km'] - 10) * $deliveryPrice['perkm'];
             }
             $order['services']['delivery'] = [
-                'label' => "Доставка", // TODO: адрес доставки
+                'label' => "Доставка (".$services['delivery']['addr'].")",
                 'count' => $services['delivery']['km'],
                 'subtotal' => '',
                 'total' => $deliveryTotal
